@@ -1,0 +1,12 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="resource" 
+          allowDelete="false" 
+          allowCreate="false">
+    <invokers>
+        <invoker folderid="/explorer/master/comis" caption="Resource" action="init"  
+                 cols="objid,state,name" 
+                 index="-9"
+                 role="MASTER"
+        />
+    </invokers>
+</workunit>

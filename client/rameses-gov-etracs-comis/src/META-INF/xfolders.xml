@@ -1,0 +1,18 @@
+<folders>
+    <folder id="home">
+        <folder id="comis" caption="COMIS" icon="home/icons/comis.png"/>
+    </folder>
+    <folder id="explorer">
+        <folder id="master" caption="Master">
+            <folder id="comis" caption="COMIS"/>
+        </folder>   
+        <folder id="rulemgmt" caption="Rule Management">
+            <folder id="comis" caption="COMIS" index="5"/>
+        </folder>  
+    </folder>
+     <folder id="menucategory">
+        <folder id="comis" caption="COMIS">
+            <folder id="cemetery-mgmt" caption="Cemetery Management" index="0" icon="home/icons/folder.png"/>
+        </folder>
+    </folder>
+</folders>    
