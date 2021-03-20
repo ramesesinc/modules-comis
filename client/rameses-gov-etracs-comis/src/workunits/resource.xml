@@ -1,0 +1,34 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+          schemaName="resource" 
+          allowEdit="#{entity.state == 'DRAFT'}"
+>
+    <invokers>
+        <invoker type="comis_resource:create" caption="Resource (New)" 
+                 action="create"  
+                 role="MASTER"
+                 target="popup"
+        />
+        <invoker type="comis_resource:open" caption="Resource" 
+                 action="open"  
+                 role="MASTER"
+                 target="popup"
+        />
+        
+        <invoker type="formActions" 
+            action="approve"
+            caption="Approve"
+            visibleWhen="#{entity.state == 'DRAFT'}"
+        />
+        
+        <invoker type="formActions" 
+            action="deactivate"
+            caption="Deactivate"
+            visibleWhen="#{entity.state == 'ACTIVE'}"
+        />
+        
+    </invokers>
+    <code class="comis.models.ResourceModel" />
+    <pages>
+        <page template="comis.views.ResourcePage" />
+    </pages>
+</workunit>
