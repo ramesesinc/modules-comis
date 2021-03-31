@@ -1,6 +1,5 @@
 <workunit extends="com/rameses/seti2/templates/CrudList.xml" 
     schemaName="cemetery_section" 
-    allowCreate="#{entity.state != 'INACTIVE'}"
     allowFilter="false"
     allowPrint="false"
     allowShowCols="false"
@@ -8,7 +7,7 @@
     orderBy="code"
 >
     <invokers>
-        <invoker type="cemetery_sections:open" 
+        <invoker type="cemetery_sections:view" 
             action="init"
             cols="code,name,state" 
             caption="Sections" />
