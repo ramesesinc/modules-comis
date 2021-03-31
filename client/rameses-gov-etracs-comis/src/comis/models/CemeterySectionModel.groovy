@@ -11,16 +11,27 @@ class CemeterySectionModel extends CrudFormModel {
     @Service('ComisCemeteryService')
     def svc;
     
-    public void afterInit(){
+    public void afterOpen(){
+        updateAllowCreate();
+    }
+    
+    public void afterCreate(){
         updateAllowCreate();
     }
     
     public void afterSave(){
+        if (mode == 'create') {
+            caller.refreshSections();
+            caller.reload();
+        }
         updateAllowCreate();
     }
     
     void updateAllowCreate() {
-        entity.allowcreate = caller.cemetery.state != 'INACTIVE';
+        entity.allowcreate = false;
+        if (caller.cemetery) {
+            entity.allowcreate = caller.cemetery.state != 'INACTIVE';
+        }
     }
     
     boolean isShowConfirm() {

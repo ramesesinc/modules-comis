@@ -10,7 +10,7 @@
         <invoker type="cemetery_sections:view" 
             action="init"
             cols="code,name,state" 
-            caption="Sections" />
+            caption="Cemetery Sections" />
                
     </invokers>
     <code class="comis.models.CemeterySectionListModel" />

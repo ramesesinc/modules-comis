@@ -13,8 +13,8 @@ class CemeteryModel extends CrudFormModel {
     @Service('ComisCemeteryService')
     def svc;
     
-    def sections = [];
-    def resources = [];
+    def sections;
+    
     
     boolean isShowConfirm() {
         return false;
@@ -38,94 +38,26 @@ class CemeteryModel extends CrudFormModel {
         }
     }    
     
-    void refresh() {
-        binding.refresh("sections");
+
+    /*==============================
+     * SECTIONS SUPPORT 
+     * ============================*/
+    def refreshSections = {
+        sections = svc.getSections(entity);
+        binding.refresh("selectedSection");
     }
     
     def getSectionsOpener() {
-        return Inv.lookupOpener('cemetery_sections:view', [cemetery: entity])
+        return Inv.lookupOpener('cemetery_sections:view', [cemetery: entity, refreshSections: refreshSections])
     }
     
-//    
-//    
-//    
-//    
-//    
-//    /*=====================================
-//    **
-//    **  SECTION SUPPORT 
-//    **
-//    =======================================*/
-//    
-//    def selectedSection;
-//    
-//    void setSelectedSection( selectedSection ) {
-//        this.selectedSection = selectedSection;
-//        resources = [];
-//        if (selectedSection) {
-//            resources = svc.getSectionResources(selectedSection);
-//        }
-//        resourceListHandler.reload();
-//    }
-//    
-//    void refresh() {
-//        sections = sections = svc.getSections(entity);
-//        sectionListHandler.reload();
-//    }
-//    
-//    def sectionListHandler = [
-//        fetchList: { sections }
-//    ] as BasicListModel;
-//    
-//    def newSection() {
-//        return Inv.lookupOpener("cemetery_section:create", [:]);
-//    }
-//    
-//    def openSection() {
-//        return Inv.lookupOpener("cemetery_section:open", [entity: selectedSection]);
-//    }
-//    
-//    void deleteSection() {
-//        if (MsgBox.confirm('Delete section?')) {
-//            svc.deleteSection(selectedSection);
-//            refresh();
-//        }
-//    }
-//
-//    
-//    /*=====================================
-//    **
-//    **  SECTION RESOURCE SUPPORT 
-//    **
-//    =======================================*/
-//    def selectedResource;
-//    
-//    void refreshResources() {
-//        resources = [];
-//        if (selectedSection) {
-//            resources = svc.getSectionResources(selectedSection);
-//        }
-//        resourceListHandler.reload();
-//    }
-//    
-//    def resourceListHandler = [
-//        fetchList: { resources }
-//    ] as BasicListModel;
-//    
-//    def newResource() {
-//        return Inv.lookupOpener("cemetery_section_resource:create", [:]);
-//    }
-//    
-//    def openResource() {
-//        return Inv.lookupOpener("cemetery_section_resource:open", [entity: selectedResource]);
-//    }
-//    
-//    void deleteResource() {
-//        if (MsgBox.confirm('Delete section?')) {
-//            svc.deleteSectionResource(selectedResource);
-//            refreshResources();
-//        }
-//    }
-//
-//    
+    
+    /*==============================
+     * RESOURCE SUPPORT 
+     * ============================*/
+    def selectedSection;
+    
+    def getResourceOpener() {
+        return Inv.lookupOpener('cemetery_section_resources:view', [section: selectedSection])
+    }
 }

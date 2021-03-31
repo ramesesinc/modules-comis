@@ -15,21 +15,29 @@ class CemeterySectionResourceModel extends CrudFormModel {
         return false;
     }
     
+    void afterCreate(){
+        entity.state = 'DRAFT';
+    }
+    
     void beforeSave(mode){
-        entity.parentid = caller.selectedSection.objid;
+        entity.parentid = caller.section.objid;
+    }
+    
+    void afterSave(){
+        caller.reload();
     }
     
     void approve() {
         if (MsgBox.confirm('Approve resource?')) {
             entity.putAll(svc.approveResource(entity));
-            caller.refreshResources();
+            caller.reload();
         }
     }
     
     void deactivate() {
         if (MsgBox.confirm('Deactivate resource?')) {
             entity.putAll(svc.deactivateResource(entity));
-            caller.refreshResources();
+            caller.reload();
         }
     }
 }
