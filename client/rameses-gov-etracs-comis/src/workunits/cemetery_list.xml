@@ -1,0 +1,21 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="cemetery" 
+          allowDelete="#{entity.state == 'DRAFT'}">
+    <invokers>
+        <invoker folderid="/explorer/master/comis" 
+            caption="Cemeteries" action="init"  
+            cols="code,name,location" 
+            hiddenCols="state"
+            index="5"
+            role="MASTER"
+        />
+        <invoker folderid="/menucategory/comis/master"  
+            caption="Cemeteries" 
+            action="init"  
+            cols="code,name,location" 
+            hiddenCols="state"
+            role="MASTER"
+            index="5"
+        />
+    </invokers>
+</workunit>

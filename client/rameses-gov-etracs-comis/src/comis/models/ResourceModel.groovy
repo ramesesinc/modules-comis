@@ -9,9 +9,13 @@ class ResourceModel extends CrudFormModel {
     @Service('PersistenceService')
     def persistence;
     
+    boolean isShowConfirm() {
+        return false;
+    }
+    
     void approve() {
         if (MsgBox.confirm('Approve resource?')) {
-            entity._schemaname = 'comis_resource';
+            entity._schemaname = 'resource';
             entity.state = 'ACTIVE';
             persistence.update(entity);
         }
@@ -19,7 +23,7 @@ class ResourceModel extends CrudFormModel {
     
     void deactivate() {
         if (MsgBox.confirm('Deactivate resource?')) {
-            entity._schemaname = 'comis_resource';
+            entity._schemaname = 'resource';
             entity.state = 'INACTIVE';
             persistence.update(entity);
         }

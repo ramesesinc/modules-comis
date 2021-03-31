@@ -1,19 +1,17 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
-          schemaName="resource" 
+          schemaName="cemetery" 
           allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
-        <invoker type="resource:create" caption="Resource (New)" 
-                 action="create"  
-                 role="MASTER"
-                 target="popup"
+        <invoker type="cemetery:create" caption="Cemetery (New)" 
+            action="create"  
+            role="MASTER"
         />
-        <invoker type="resource:open" caption="Resource" 
-                 action="open"  
-                 role="MASTER"
-                 target="popup"
+        <invoker type="cemetery:open" caption="Cemetery" 
+            action="open"  
+            role="MASTER"
         />
-        
+
         <invoker type="formActions" 
             action="approve"
             caption="Approve"
@@ -27,8 +25,8 @@
         />
         
     </invokers>
-    <code class="comis.models.ResourceModel" />
+    <code class="comis.models.CemeteryModel" />
     <pages>
-        <page template="comis.views.ResourcePage" />
+        <page template="comis.views.CemeteryPage" />
     </pages>
 </workunit>

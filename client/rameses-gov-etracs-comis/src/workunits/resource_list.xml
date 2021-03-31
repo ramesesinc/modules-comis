@@ -1,16 +1,19 @@
 <workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
-          schemaName="comis_resource" 
+          schemaName="resource" 
           allowDelete="#{entity.state == 'DRAFT'}">
     <invokers>
-        <invoker folderid="/explorer/master/comis" caption="Resource" action="init"  
+        <invoker folderid="/explorer/master/comis" 
+                 caption="Resources" action="init"  
                  cols="code,name" 
                  hiddenCols="state"
-                 index="-9"
+                 index="1"
                  role="MASTER"
         />
-        <invoker folderid="/menucategory/comis/master"  caption="Resource" action="init"  
+        <invoker folderid="/menucategory/comis/master"  
+                 caption="Resources" action="init"  
                  cols="code,name" 
                  hiddenCols="state"
+                 index="1"
                  role="MASTER"
         />
     </invokers>

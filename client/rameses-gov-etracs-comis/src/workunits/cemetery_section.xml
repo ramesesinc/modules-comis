@@ -1,14 +1,15 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
-          schemaName="resource" 
+          schemaName="cemetery_section" 
+          allowCreate="#{caller.entity.state != 'INACTIVE'}"
           allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
-        <invoker type="resource:create" caption="Resource (New)" 
+        <invoker type="cemetery_section:create" caption="Cemetery Section (New)" 
                  action="create"  
                  role="MASTER"
                  target="popup"
         />
-        <invoker type="resource:open" caption="Resource" 
+        <invoker type="cemetery_section:open" caption="Cemetery Section" 
                  action="open"  
                  role="MASTER"
                  target="popup"
@@ -17,18 +18,18 @@
         <invoker type="formActions" 
             action="approve"
             caption="Approve"
-            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
+            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
         />
         
         <invoker type="formActions" 
             action="deactivate"
             caption="Deactivate"
-            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read'}"
+            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
         />
         
     </invokers>
-    <code class="comis.models.ResourceModel" />
+    <code class="comis.models.CemeterySectionModel" />
     <pages>
-        <page template="comis.views.ResourcePage" />
+        <page template="comis.views.CemeterySectionPage" />
     </pages>
 </workunit>
