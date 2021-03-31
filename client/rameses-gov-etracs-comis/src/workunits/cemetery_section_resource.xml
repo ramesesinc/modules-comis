@@ -1,7 +1,7 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
         schemaName="vw_cemetery_section_resource"
         entitySchemaName="cemetery_section_resource" 
-        allowCreate="#{caller.entity.state != 'INACTIVE'}"
+        allowCreate="#{caller.section.state != 'INACTIVE'}"
         allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
@@ -17,13 +17,13 @@
         <invoker type="formActions" 
             action="approve"
             caption="Approve"
-            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
+            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
         />
         
         <invoker type="formActions" 
             action="deactivate"
             caption="Deactivate"
-            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
+            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read'}"
         />
         
     </invokers>

@@ -1,0 +1,18 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" 
+    entitySchemaName="cemetery_section_resource" 
+    schemaName="vw_cemetery_section_resource" 
+    allowFilter="false"
+    allowPrint="false"
+    allowShowCols="false"
+    allowDelete="#{entity.state == 'DRAFT'}"
+    orderBy="code"
+>
+    <invokers>
+        <invoker type="cemetery_section_resources:view" 
+            action="init"
+            cols="code,name,areasqm,resource.type,state" 
+            caption="Section Resources" />
+               
+    </invokers>
+    <code class="comis.models.CemeterySectionResourceListModel" />
+</workunit>

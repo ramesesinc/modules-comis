@@ -5,14 +5,20 @@ import com.rameses.rcp.annotations.*;
 import com.rameses.seti2.models.CrudListModel;
 
 class CemeterySectionListModel extends CrudListModel {
-    @Caller
-    def caller;
     
-    def parent; 
+    def cemetery;
+    def refreshSections;
+    
     boolean showClose = false;
     
     def getCustomFilter() {
-        return ["parentid = :objid", parent];
+        return ["parentid = :objid", cemetery];
     }    
+    
+    void removeEntity() {
+        super.removeEntity();
+        refreshSections();
+    }
+    
     
 }
