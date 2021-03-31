@@ -2,6 +2,8 @@
     <element tablename="cemetery_section_resource">
         <field name="objid" primary="true" prefix="CSR" />
         <field name="parentid" required="true" />
+        <field name="code" required="true" />
+        <field name="name" required="true" />
         <field name="currentinfoid" />
         <field name="currentappid" />
     </element>

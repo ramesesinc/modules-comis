@@ -26,7 +26,6 @@ class ComisCemeteryInterceptor {
 	@After(pattern="PersistenceService.update", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
 	public void afterUpdateResource(def evt) {
 		def resource = evt.result;
-
 		def info = [:]
 		info.putAll(resource);
 		info.objid = resource.currentinfoid;
@@ -35,9 +34,28 @@ class ComisCemeteryInterceptor {
 		info = em_section_resource_info.update(info);
 	}	
 
-	@After(pattern="PersistenceService.read", eval="#{ args[0]._schemaname == 'vw_cemetery_section_resource' }")
-	public void xafterOpenResource(def evt) {
+	@After(pattern="PersistenceService.read", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
+	public void afterOpenResource(def evt) {
 		def entity = evt.result;
-		entity.resource = em_resource.find([objid: entity.resource.objid]).first();
+		def info = em_section_resource_info.find([objid: entity.currentinfoid]).first();
+		entity.resource = em_resource.find([objid: info.resource.objid]).first();
+	}	
+
+	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'cemetery_section' }")
+	public void beforeDeleteSection(def evt) {
+		def section = evt.args[0];
+		def resources = em_section_resource.find([parentid: section.objid]).list();
+		resources.each{
+			em_section_resource.find([objid: it.objid]).update([currentinfoid: null]);
+			em_section_resource_info.find([parentid: it.objid]).delete();
+			em_section_resource.find([objid: it.objid]).delete();
+		 }
+	}	
+
+	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
+	public void beforeDeleteResource(def evt) {
+		def resource = evt.args[0];
+		em_section_resource.find([objid: resource.objid]).update([currentinfoid: null]);
+		em_section_resource_info.find([parentid: resource.objid]).delete();
 	}	
 }
