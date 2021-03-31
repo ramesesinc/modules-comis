@@ -1,0 +1,8 @@
+<schema>
+    <element tablename="cemetery_section_resource">
+        <field name="objid" primary="true" prefix="CSR" />
+        <field name="parentid" required="true" />
+        <field name="currentinfoid" />
+        <field name="currentappid" />
+    </element>
+</schema>

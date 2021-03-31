@@ -1,14 +1,14 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
-          schemaName="resource" 
+          schemaName="cemetery" 
           allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
-        <invoker type="resource:create" caption="Resource (New)" 
+        <invoker type="cemetery:create" caption="Resource (New)" 
                  action="create"  
                  role="MASTER"
                  target="popup"
         />
-        <invoker type="resource:open" caption="Resource" 
+        <invoker type="cemetery:open" caption="Resource" 
                  action="open"  
                  role="MASTER"
                  target="popup"

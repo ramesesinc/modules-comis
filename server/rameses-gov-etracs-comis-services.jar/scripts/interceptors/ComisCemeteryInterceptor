@@ -1,0 +1,43 @@
+import com.rameses.annotations.*;
+import com.rameses.common.*;
+import com.rameses.services.extended.*;
+
+class ComisCemeteryInterceptor {
+	@DataContext('resource')
+	def em_resource;
+
+	@DataContext('cemetery_section_resource')
+	def em_section_resource;
+
+	@DataContext('cemetery_section_resource_info')
+	def em_section_resource_info;
+
+	@After(pattern="PersistenceService.create", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
+	public void afterCreateResource(def evt) {
+		def resource = evt.result;
+		def info = [:]
+		info.putAll(resource);
+		info.parentid = resource.objid;
+		info.state = 'DRAFT';
+		info = em_section_resource_info.create(info);
+		em_section_resource.find([objid: resource.objid]).update([currentinfoid: info.objid]);
+	}	
+
+	@After(pattern="PersistenceService.update", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
+	public void afterUpdateResource(def evt) {
+		def resource = evt.result;
+
+		def info = [:]
+		info.putAll(resource);
+		info.objid = resource.currentinfoid;
+		info.parentid = resource.objid;
+		info._schemaname = 'cemetery_section_resource_info';
+		info = em_section_resource_info.update(info);
+	}	
+
+	@After(pattern="PersistenceService.read", eval="#{ args[0]._schemaname == 'vw_cemetery_section_resource' }")
+	public void xafterOpenResource(def evt) {
+		def entity = evt.result;
+		entity.resource = em_resource.find([objid: entity.resource.objid]).first();
+	}	
+}

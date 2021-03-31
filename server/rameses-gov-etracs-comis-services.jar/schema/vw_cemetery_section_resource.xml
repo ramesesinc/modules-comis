@@ -1,0 +1,16 @@
+<schema>
+    <element tablename="vw_cemetery_section_resource">
+        <field name="objid" primary="true" />
+        <field name="parentid" />
+        <field name="currentinfoid" />
+        <field name="currentappid" />
+        <field name="code" caption="Code" searchable="true" />
+        <field name="name" caption="Name" searchable="true" />
+        <field name="areasqm" caption="Area (sqm)" />
+        <!-- DRAFT, ACTIVE, INACTIVE -->
+        <field name="state" caption="State" searchable="true" />
+        <field name="resource_objid" />
+        <field name="resource_type" caption="Type" searchable="true" />
+        <field name="ui" />
+    </element>
+</schema>
