@@ -1,0 +1,18 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" 
+    schemaName="cemetery_section" 
+    allowCreate="#{entity.state != 'INACTIVE'}"
+    allowFilter="false"
+    allowPrint="false"
+    allowShowCols="false"
+    allowDelete="#{entity.state == 'DRAFT'}"
+    orderBy="code"
+>
+    <invokers>
+        <invoker type="cemetery_sections:open" 
+            action="init"
+            cols="code,name,state" 
+            caption="Sections" />
+               
+    </invokers>
+    <code class="comis.models.CemeterySectionListModel" />
+</workunit>

@@ -1,0 +1,10 @@
+<workunit extends="com/rameses/seti2/templates/CrudLookup.xml" schemaName="resource">
+    <invokers>
+        <invoker type="resource:lookup" caption="Lookup Cemetery Resource" 
+            cols="code,name,state"
+            maxRows="50"
+            rows="50"
+            customFilter="state = 'ACTIVE'"
+            action="init" target="popup" />
+    </invokers>
+</workunit>

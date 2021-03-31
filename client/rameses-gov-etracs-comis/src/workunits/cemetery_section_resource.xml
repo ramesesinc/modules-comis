@@ -1,0 +1,34 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+        schemaName="vw_cemetery_section_resource"
+        entitySchemaName="cemetery_section_resource" 
+        allowCreate="#{caller.entity.state != 'INACTIVE'}"
+        allowEdit="#{entity.state == 'DRAFT'}"
+>
+    <invokers>
+        <invoker type="cemetery_section_resource:create" caption="Section Resource (New)" 
+                 action="create"  
+                 target="popup"
+        />
+        <invoker type="cemetery_section_resource:open" caption="Section Resource" 
+                 action="open"  
+                 target="popup"
+        />
+        
+        <invoker type="formActions" 
+            action="approve"
+            caption="Approve"
+            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
+        />
+        
+        <invoker type="formActions" 
+            action="deactivate"
+            caption="Deactivate"
+            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read' &amp;&amp; caller.entity.state != 'DRAFT'}"
+        />
+        
+    </invokers>
+    <code class="comis.models.CemeterySectionResourceModel" />
+    <pages>
+        <page template="comis.views.CemeterySectionResourcePage" />
+    </pages>
+</workunit>
