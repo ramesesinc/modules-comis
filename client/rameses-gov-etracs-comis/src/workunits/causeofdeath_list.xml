@@ -1,0 +1,20 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="causeofdeath" 
+          allowDelete="#{entity.state == 'DRAFT'}">
+    <invokers>
+        <invoker folderid="/explorer/master/comis" 
+                 caption="Cause of Deaths" action="init"  
+                 cols="objid,title" 
+                 hiddenCols="state"
+                 index="10"
+                 role="MASTER"
+        />
+        <invoker folderid="/menucategory/comis/master"  
+                 caption="Cause of Deaths" action="init"  
+                 cols="objid,title" 
+                 hiddenCols="state"
+                 index="10"
+                 role="MASTER"
+        />
+    </invokers>
+</workunit>

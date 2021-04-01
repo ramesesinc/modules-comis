@@ -1,0 +1,34 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+          schemaName="causeofdeath" 
+          allowEdit="#{entity.state == 'DRAFT'}"
+>
+    <invokers>
+        <invoker type="causeofdeath:create" caption="Cause of Death (New)" 
+                 action="create"  
+                 role="MASTER"
+                 target="popup"
+        />
+        <invoker type="causeofdeath:open" caption="Cause of Death" 
+                 action="open"  
+                 role="MASTER"
+                 target="popup"
+        />
+        
+        <invoker type="formActions" 
+            action="approve"
+            caption="Approve"
+            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
+        />
+        
+        <invoker type="formActions" 
+            action="deactivate"
+            caption="Deactivate"
+            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read'}"
+        />
+        
+    </invokers>
+    <code class="comis.models.CauseOfDeathModel" />
+    <pages>
+        <page template="comis.views.CauseOfDeathPage" />
+    </pages>
+</workunit>

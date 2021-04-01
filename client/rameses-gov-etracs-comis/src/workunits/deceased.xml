@@ -1,0 +1,21 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+          schemaName="deceased" 
+          allowEdit="#{entity.state == 'DRAFT'}"
+>
+    <invokers>
+        <invoker type="deceased:create" caption="Deceased Person (New)" 
+            action="create"  
+            role="LCR"
+            target="popup"
+        />
+        <invoker type="deceased:open" caption="Deceased Person" 
+            action="open"  
+            role="LCR"
+            target="popup"
+        />
+    </invokers>
+    <code class="comis.models.DeceasedModel" />
+    <pages>
+        <page template="comis.views.DeceasedPage" />
+    </pages>
+</workunit>

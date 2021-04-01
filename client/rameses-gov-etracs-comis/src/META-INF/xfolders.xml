@@ -14,6 +14,7 @@
         <folder id="comis" caption="COMIS">
             <folder id="master" caption="Master" index="1" icon="home/icons/folder.png"/>
             <folder id="mgmt" caption="Cemetery Management" index="2" icon="home/icons/folder.png"/>
+            <folder id="burial" caption="Burial Permit Management" index="3" icon="home/icons/folder.png"/>
         </folder>
     </folder>
 </folders>    

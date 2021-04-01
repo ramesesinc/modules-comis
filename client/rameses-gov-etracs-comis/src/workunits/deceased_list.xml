@@ -1,0 +1,14 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" 
+          schemaName="deceased" 
+          alloweEdit="#{entity.state == 'DRAFT'}"
+          allowDelete="#{entity.state == 'DRAFT'}">
+    <invokers>
+        <invoker folderid="/menucategory/comis/burial"  
+            caption="Deceased Persons" 
+            action="init"  
+            cols="state,name,nationality,age,sex,dtdied,causeofdeath.title" 
+            role="LCR"
+            index="5"
+        />
+    </invokers>
+</workunit>
