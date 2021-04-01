@@ -1,0 +1,29 @@
+<schema>
+    <element tablename="application">
+        <field name="objid" primary="true"/>
+        <!-- DRAFT, FORAPPROVAL, ACTIVE, RENEWED, EXPIRED -->
+        <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT" />
+        <field name="resourceinfo_objid" required="true" />
+        <field name="online" required="true" type="boolean" defaultValue="true" />
+        <!-- NEW, RENEWAL -->
+        <field name="apptype" required="true" caption="App Type" indexed="true" defaultValue="NEW" />
+        <field name="appno" caption="App No." searchable="true" />
+        <field name="dtapplied" required="true" caption="App Date" />
+        <field name="dtapproved" caption="Date Approved" />
+        <field name="appyear" required="true" caption="App Year" />
+        <field name="applicant_name" required="true" caption="Applicant" searchable="true" />
+        <field name="applicant_address" required="true" caption="Address" />
+        <field name="deceased_objid" required="true" />
+        <field name="dtexpiry" caption="Expiry Date" searchable="true" />
+        <field name="reportid" />
+        <complex name="deceased" ref="deceased" jointype="many-to-one" required="true">
+            <key field="deceased_objid" target="objid" />
+        </complex>
+        <complex name="relation" ref="relation" jointype="many-to-one" required="true">
+            <key field="relation_objid" target="objid" />
+        </complex>
+        <complex name="resourceinfo" ref="cemetery_section_resource_info" jointype="many-to-one" required="true">
+            <key field="resourceinfo_objid" target="objid" />
+        </complex>
+    </element>
+</schema>

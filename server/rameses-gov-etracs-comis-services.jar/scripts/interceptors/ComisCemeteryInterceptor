@@ -6,11 +6,25 @@ class ComisCemeteryInterceptor {
 	@DataContext('resource')
 	def em_resource;
 
+	@DataContext('cemetery_section')
+	def em_section;
+
 	@DataContext('cemetery_section_resource')
 	def em_section_resource;
 
 	@DataContext('cemetery_section_resource_info')
 	def em_section_resource_info;
+
+	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'cemetery' }")
+	public void beforeDeleteCemetery(def evt) {
+		def cemetery = evt.args[0];
+		def sections = em_section.find([parentid: cemetery.objid]).list();
+		println 'sections => ' + sections;
+		sections.each{section ->
+			deleteSectionResources(section);
+			em_section.find([objid: section.objid]).delete();
+		}
+	}	
 
 	@After(pattern="PersistenceService.create", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
 	public void afterCreateResource(def evt) {
@@ -44,12 +58,7 @@ class ComisCemeteryInterceptor {
 	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'cemetery_section' }")
 	public void beforeDeleteSection(def evt) {
 		def section = evt.args[0];
-		def resources = em_section_resource.find([parentid: section.objid]).list();
-		resources.each{
-			em_section_resource.find([objid: it.objid]).update([currentinfoid: null]);
-			em_section_resource_info.find([parentid: it.objid]).delete();
-			em_section_resource.find([objid: it.objid]).delete();
-		 }
+		deleteSectionResources(section);
 	}	
 
 	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
@@ -58,4 +67,14 @@ class ComisCemeteryInterceptor {
 		em_section_resource.find([objid: resource.objid]).update([currentinfoid: null]);
 		em_section_resource_info.find([parentid: resource.objid]).delete();
 	}	
+
+
+	void deleteSectionResources(section) {
+		def resources = em_section_resource.find([parentid: section.objid]).list();
+		resources.each {
+			em_section_resource.find([objid: it.objid]).update([currentinfoid: null]);
+			em_section_resource_info.find([parentid: it.objid]).delete();
+			em_section_resource.find([objid: it.objid]).delete();
+		}
+	}
 }

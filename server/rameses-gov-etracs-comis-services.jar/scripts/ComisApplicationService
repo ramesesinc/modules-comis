@@ -1,0 +1,13 @@
+import com.rameses.annotations.*
+import com.rameses.services.extended.*
+
+class ComisApplicationService {
+    @DataContext('relation')
+    def em_relation;
+    
+    @ProxyMethod
+    public def getRelations() {
+        return em_relation.find([state: 'ACTIVE']).orderBy('title').list();
+    }
+
+}

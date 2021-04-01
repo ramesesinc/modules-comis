@@ -10,7 +10,18 @@
         <!-- DRAFT, ACTIVE, INACTIVE -->
         <field name="state" caption="State" searchable="true" />
         <field name="resource_objid" />
-        <field name="resource_type" caption="Type" searchable="true" />
+        <field name="resource_name" caption="Type" searchable="true" />
+        <field name="section_code" caption="Section Code" searchable="true" />
+        <field name="section_name" caption="Section" searchable="true" />
         <field name="ui" />
+        <field name="appno" caption="App No." searchable="true" />
+        <field name="apptype" caption="App Type" />
+        <field name="applicant_name" caption="Applicant" searchable="true" />
+        <field name="applicant_address" caption="Address" />
+        <field name="deceased_name" caption="Deceased Name" searchable="true" />
+        <field name="deceased_nationality" caption="Nationality" />
+        <field name="deceased_sex" caption="Sex" />
+        <field name="deceased_age" caption="Age" />
+        <field name="deceased_causeofdeath" caption="Cause of Death" />
     </element>
 </schema>

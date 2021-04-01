@@ -8,5 +8,8 @@
         <field name="name" required="true" caption="Resource" searchable="true" />
         <field name="areasqm" required="true" caption="Area (sqm)" />
         <field name="ui" />
+        <complex name="resource" ref="resource" jointype="many-to-one" required="true">
+            <key field="resource_objid" target="objid" />
+        </complex>
     </element>
 </schema>
