@@ -31,8 +31,9 @@ public class CemeteryPage extends javax.swing.JPanel {
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xTextField3 = new com.rameses.rcp.control.XTextField();
+        xPanel1 = new com.rameses.rcp.control.XPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        xSubFormPanel1 = new com.rameses.rcp.control.XSubFormPanel();
+        xSubFormPanel3 = new com.rameses.rcp.control.XSubFormPanel();
         jPanel1 = new javax.swing.JPanel();
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
@@ -60,21 +61,25 @@ public class CemeteryPage extends javax.swing.JPanel {
         xTextField3.setRequired(true);
         xFormPanel1.add(xTextField3);
 
-        xSubFormPanel1.setHandler("sectionsOpener");
-        xSubFormPanel1.setName("sections"); // NOI18N
+        xPanel1.setVisibleWhen("#{mode != 'create'}");
+        xPanel1.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout xSubFormPanel1Layout = new javax.swing.GroupLayout(xSubFormPanel1);
-        xSubFormPanel1.setLayout(xSubFormPanel1Layout);
-        xSubFormPanel1Layout.setHorizontalGroup(
-            xSubFormPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        xSubFormPanel3.setDepends(new String[] {"entity"});
+        xSubFormPanel3.setHandler("sectionsOpener");
+        xSubFormPanel3.setDynamic(true);
+
+        javax.swing.GroupLayout xSubFormPanel3Layout = new javax.swing.GroupLayout(xSubFormPanel3);
+        xSubFormPanel3.setLayout(xSubFormPanel3Layout);
+        xSubFormPanel3Layout.setHorizontalGroup(
+            xSubFormPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 726, Short.MAX_VALUE)
         );
-        xSubFormPanel1Layout.setVerticalGroup(
-            xSubFormPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        xSubFormPanel3Layout.setVerticalGroup(
+            xSubFormPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 294, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Sections", xSubFormPanel1);
+        jTabbedPane1.addTab("Sections", xSubFormPanel3);
 
         xComboBox1.setCaption("Section");
         xComboBox1.setExpression("#{item.name}");
@@ -125,6 +130,8 @@ public class CemeteryPage extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Resources", jPanel1);
 
+        xPanel1.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,7 +142,7 @@ public class CemeteryPage extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1))
+                    .addComponent(xPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -144,7 +151,7 @@ public class CemeteryPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(xPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -155,8 +162,9 @@ public class CemeteryPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XLabel xLabel1;
-    private com.rameses.rcp.control.XSubFormPanel xSubFormPanel1;
+    private com.rameses.rcp.control.XPanel xPanel1;
     private com.rameses.rcp.control.XSubFormPanel xSubFormPanel2;
+    private com.rameses.rcp.control.XSubFormPanel xSubFormPanel3;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;

@@ -24,6 +24,10 @@ class CemeteryModel extends CrudFormModel {
         sections = svc.getSections(entity);
     }
     
+    void afterCreate(){
+        sections = [];
+    }
+    
     void approve() {
         if (MsgBox.confirm('Approve cemtery?')) {
             entity.putAll(svc.approve(entity));
@@ -48,7 +52,7 @@ class CemeteryModel extends CrudFormModel {
     }
     
     def getSectionsOpener() {
-        return Inv.lookupOpener('cemetery_sections:view', [cemetery: entity, refreshSections: refreshSections])
+        return Inv.lookupOpener('cemetery_sections:view', [cemetery: entity, refreshSections: refreshSections]);
     }
     
     

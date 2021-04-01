@@ -1,7 +1,7 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
         schemaName="vw_cemetery_section_resource"
         entitySchemaName="cemetery_section_resource" 
-        allowCreate="#{caller.section.state != 'INACTIVE'}"
+        allowCreate="#{caller.caller.cemetery.state != 'DRAFT'}"
         allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
