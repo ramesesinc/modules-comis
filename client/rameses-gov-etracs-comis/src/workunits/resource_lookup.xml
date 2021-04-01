@@ -4,7 +4,7 @@
             cols="code,name,state"
             maxRows="50"
             rows="50"
-            customFilter="state == 'ACTIVE'"
+            customFilter="state = 'ACTIVE'"
             action="init" target="popup" />
     </invokers>
 </workunit>

@@ -1,0 +1,17 @@
+"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ entity.online ] {
+    enabled:false;
+    required:false;
+}
+
+"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ !entity.online ] {
+    enabled:true;
+    required:true;
+}
+
+"entity.relation" [mode == 'create'] {
+    enabled:true;
+}
+
+"entity.relation" [mode != 'create'] {
+    enabled:false;
+}

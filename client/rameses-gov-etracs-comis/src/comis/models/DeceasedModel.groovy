@@ -5,8 +5,10 @@ import com.rameses.rcp.annotations.*;
 import com.rameses.seti2.models.CrudFormModel;
 
 class DeceasedModel extends CrudFormModel {
-    @Service('DeceasedPersonService')
+    @Service('ComisDeceasedPersonService')
     def svc;
+    
+    def afterSaveCallback = {};
     
     def sexes = ['MALE', 'FEMALE'];
     
@@ -20,6 +22,10 @@ class DeceasedModel extends CrudFormModel {
     
     boolean isShowConfirm() {
         return false;
+    }
+    
+    void afterSave() {
+        afterSaveCallback(entity);
     }
     
 }

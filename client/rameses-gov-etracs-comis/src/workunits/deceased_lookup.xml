@@ -1,0 +1,13 @@
+<workunit extends="com/rameses/seti2/templates/CrudLookup.xml" schemaName="deceased">
+    <invokers>
+        <invoker type="deceased:lookup" 
+            action="init"
+            caption="Lookup Deceased Person" 
+            cols="name,nationality,sex,age,dtdied"
+            hiddenCols="causeofdeath.*"
+            maxRows="50"
+            rows="50"
+            width="500"
+            target="popup" />
+    </invokers>
+</workunit>

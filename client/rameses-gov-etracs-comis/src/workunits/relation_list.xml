@@ -1,0 +1,20 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="relation" 
+          allowDelete="#{entity.state == 'DRAFT'}">
+    <invokers>
+        <invoker folderid="/explorer/master/comis" 
+                 caption="Relations" action="init"  
+                 cols="objid,title" 
+                 hiddenCols="state"
+                 index="15"
+                 role="MASTER"
+        />
+        <invoker folderid="/menucategory/comis/master"  
+                 caption="Relations" action="init"  
+                 cols="objid,title" 
+                 hiddenCols="state"
+                 index="15"
+                 role="MASTER"
+        />
+    </invokers>
+</workunit>

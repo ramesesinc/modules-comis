@@ -4,11 +4,11 @@
           allowDelete="#{entity.state == 'DRAFT'}">
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  
-            caption="Deceased Persons" 
+            caption="View Deceased Persons" 
             action="init"  
             cols="state,name,nationality,age,sex,dtdied,causeofdeath.title" 
             role="LCR"
-            index="5"
+            index="100"
         />
     </invokers>
 </workunit>
