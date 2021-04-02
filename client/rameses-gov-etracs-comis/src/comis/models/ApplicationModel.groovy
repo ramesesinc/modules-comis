@@ -57,4 +57,16 @@ class ApplicationModel extends CrudFormModel {
         }
     }
     
+    def getLookupApplicant() {
+        return Inv.lookupOpener("entity:lookup", [
+                onselect: { 
+                    entity.applicant = it;
+                    entity.applicant.address = it.address.text;
+                },
+                onempty: {
+                    entity.applicant = [:];
+                }
+        ])
+    }
+    
 }
