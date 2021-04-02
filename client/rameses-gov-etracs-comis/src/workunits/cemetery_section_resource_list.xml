@@ -4,7 +4,7 @@
     allowFilter="false"
     allowPrint="false"
     allowShowCols="false"
-    allowDelete="#{entity.state == 'DRAFT'}"
+    allowDelete="#{entity &amp;&amp; entity.state == 'DRAFT'}"
     orderBy="code"
 >
     <invokers>

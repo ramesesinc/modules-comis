@@ -1,0 +1,14 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="application" 
+          allowDelete="#{entity &amp;&amp; entity.state == 'DRAFT'}">
+    <invokers>
+        <invoker folderid="/menucategory/comis/burial"  
+            action="init"  
+            caption="View Applications" 
+            cols="apptype,appno,dtapplied,applicant.name,deceased.name,deceased.relation.title,deceased.age,deceased.sex,dtapproved,dtexpiry" 
+            hiddenCols="state"
+            role="LCR"
+            index="100"
+        />
+    </invokers>
+</workunit>

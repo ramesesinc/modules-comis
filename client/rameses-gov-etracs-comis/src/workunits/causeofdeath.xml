@@ -1,16 +1,16 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
-        schemaName="vw_cemetery_section_resource"
-        entitySchemaName="cemetery_section_resource" 
-        allowCreate="#{caller.caller.cemetery.state != 'DRAFT'}"
-        allowEdit="#{entity.state == 'DRAFT'}"
+          schemaName="causeofdeath" 
+          allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
-        <invoker type="cemetery_section_resource:create" caption="Section Resource (New)" 
+        <invoker type="causeofdeath:create" caption="Cause of Death (New)" 
                  action="create"  
+                 role="MASTER"
                  target="popup"
         />
-        <invoker type="cemetery_section_resource:open" caption="Section Resource" 
+        <invoker type="causeofdeath:open" caption="Cause of Death" 
                  action="open"  
+                 role="MASTER"
                  target="popup"
         />
         
@@ -27,8 +27,8 @@
         />
         
     </invokers>
-    <code class="comis.models.CemeterySectionResourceModel" />
+    <code class="comis.models.CauseOfDeathModel" />
     <pages>
-        <page template="comis.views.CemeterySectionResourcePage" />
+        <page template="comis.views.CauseOfDeathPage" />
     </pages>
 </workunit>
