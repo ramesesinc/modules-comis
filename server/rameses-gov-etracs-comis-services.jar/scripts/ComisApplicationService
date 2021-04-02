@@ -2,12 +2,72 @@ import com.rameses.annotations.*
 import com.rameses.services.extended.*
 
 class ComisApplicationService {
+    @Service('DateService')
+    def dtSvc;
+
+    @Service('SequenceService')
+    def seqSvc;
+
+    @DataContext('application')
+    def em_application;
+
     @DataContext('relation')
     def em_relation;
-    
+
+    @DataContext('deceased')
+    def em_deceased;
+
+
+    def STATE_DRAFT = 'DRAFT';
+    def STATE_FORAPPROVAL = 'FORAPPROVAL';
+    def STATE_ACTIVE = 'ACTIVE';
+    def STATE_EXPIRED = 'EXPIRED';
+    def STATE_RENEWED = 'RENEWED';
+
     @ProxyMethod
     public def getRelations() {
         return em_relation.find([state: 'ACTIVE']).orderBy('title').list();
+    }
+
+    @ProxyMethod
+    public def submitForApproval(entity) {
+        def old = em_application.read(entity);
+
+        if (old.state != STATE_DRAFT) 
+        throw new Exception('Unable to submit application. Only draft record is allowed.');
+
+        entity.state = STATE_FORAPPROVAL;
+        em_application.find([objid: entity.objid]).update([state: entity.state]);
+        return entity;
+    }
+
+    @ProxyMethod
+    public def approve(entity) {
+        def old = em_application.read(entity);
+
+        if (old.state != STATE_FORAPPROVAL) 
+        throw new Exception('Unable to approve application. Only for approval record is allowed.');
+
+        entity.state = STATE_ACTIVE;
+        entity.appno = getNextSeries()
+        entity.dtapproved = dtSvc.serverDate;
+        entity.dtexpiry = getExpiryDate(entity);
+        em_application.update(entity);
+        em_deceased.find([objid: entity.deceased.objid]).update([state: 'ACTIVE']);
+        return entity;
+    }
+
+    def getNextSeries() {
+        def cy = dtSvc.serverYear;
+        def keyid = 'COMIS-' + cy;
+        def series = seqSvc.getNextFormattedSeries(keyid);
+        return cy + '' + series;
+    }
+
+    def getExpiryDate(entity) {
+        def rentDuration = 1;
+        def interval = rentDuration+"y";
+        return dtSvc.add(entity.dtapproved, interval);
     }
 
 }

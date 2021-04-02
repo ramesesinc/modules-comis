@@ -3,6 +3,6 @@
 ### Online Transactions
 
 - Online Transaction
-    * Appliction for burial extension
+    * Application for burial extension
     * Online payment of taxes and fees 
     

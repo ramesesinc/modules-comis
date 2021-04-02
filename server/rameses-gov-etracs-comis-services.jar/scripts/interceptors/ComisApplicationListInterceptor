@@ -7,11 +7,11 @@ class ComisApplicationListInterceptor {
 	@After(pattern="QueryService.getNodeList", eval="#{args[0]._schemaname=='application'}") 
 	public void getNodeList( evt ) {
 		def result = evt.result
+		result << [id: "DRAFT", title: "DRAFT"]
+		result << [id: "FORAPPROVAL", title: "FORAPPROVAL"]
 		result << [id: "ACTIVE", title: "ACTIVE"]
 		result << [id: "EXPIRED", title: "EXPIRED"]
 		result << [id: "RENEWED", title: "RENEWED"]
-		result << [id: "FORAPPROVAL", title: "FORAPPROVAL"]
-		result << [id: "DRAFT", title: "DRAFT"]
 	}
 
 	@Before(pattern="QueryService.getList", eval="#{ args[0]._schemaname == 'application' }")

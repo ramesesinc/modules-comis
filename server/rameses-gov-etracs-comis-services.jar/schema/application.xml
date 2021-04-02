@@ -11,6 +11,7 @@
         <field name="dtapplied" required="true" caption="App Date" />
         <field name="dtapproved" caption="Date Approved" />
         <field name="appyear" required="true" caption="App Year" />
+        <field name="applicant_objid" required="true" />
         <field name="applicant_name" required="true" caption="Applicant" searchable="true" />
         <field name="applicant_address" required="true" caption="Address" />
         <field name="deceased_objid" required="true" />

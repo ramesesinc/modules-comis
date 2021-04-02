@@ -1,5 +1,5 @@
 <schema>
-    <element tablename="vw_cemetery_resource">
+    <element tablename="vw_cemetery_section_resource">
         <field name="objid" primary="true" />
         <field name="parentid" />
         <field name="currentinfoid" />

@@ -51,6 +51,7 @@ class ComisCemeteryInterceptor {
 	@After(pattern="PersistenceService.read", eval="#{ args[0]._schemaname == 'cemetery_section_resource' }")
 	public void afterOpenResource(def evt) {
 		def entity = evt.result;
+		println 'entity => ' + entity
 		def info = em_section_resource_info.find([objid: entity.currentinfoid]).first();
 		entity.resource = em_resource.find([objid: info.resource.objid]).first();
 	}	
