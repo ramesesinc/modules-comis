@@ -1,17 +1,9 @@
-"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ entity.online ] {
+"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ entity.online == 1 || entity.online ] {
     enabled:false;
     required:false;
 }
 
-"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ !entity.online ] {
+"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry)" [ entity.online == 0 || !entity.online ] {
     enabled:true;
     required:true;
-}
-
-"entity.relation" [mode == 'create'] {
-    enabled:true;
-}
-
-"entity.relation" [mode != 'create'] {
-    enabled:false;
 }

@@ -1,6 +1,6 @@
 <workunit extends="com/rameses/seti2/templates/CrudList.xml" 
           schemaName="deceased" 
-          alloweEdit="#{entity.state == 'DRAFT'}"
+          allowCreate="false"
           allowDelete="#{entity.state == 'DRAFT'}">
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  

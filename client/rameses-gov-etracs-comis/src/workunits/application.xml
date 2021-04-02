@@ -29,7 +29,7 @@
         <invoker type="formActions" 
             action="approve"
             caption="Approve"
-            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
+            visibleWhen="#{entity.state == 'FORAPPROVAL' &amp;&amp; mode == 'read'}"
             role="LCR_APPROVER"
         />
     </invokers>
