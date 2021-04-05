@@ -29,6 +29,7 @@ class ApplicationModel extends CrudFormModel {
         entity.dtapplied = pdate.date;
         entity.applicant = [:];
         entity.deceased = [:];
+        entity.renewable = false;
     }
     
     void submitForApproval() {
@@ -69,4 +70,12 @@ class ApplicationModel extends CrudFormModel {
         ])
     }
     
+
+    def getAmount() {
+        return entity.fees.amount.sum();
+    }
+    
+    def getAmtpaid() {
+        return entity.fees.amtpaid.sum();
+    }
 }

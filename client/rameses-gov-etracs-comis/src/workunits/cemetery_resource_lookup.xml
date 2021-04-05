@@ -2,7 +2,7 @@
     <invokers>
         <invoker type="cemetery_resource:lookup" caption="Lookup Cemetery Resource" 
             cols="resource.name,section.code,code,name,areasqm,state"
-            hiddenCols="currentinfoid"
+            hiddenCols="currentinfoid,cemeteryid"
             maxRows="50"
             rows="50"
             customFilter="state = 'ACTIVE'"

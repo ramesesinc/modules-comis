@@ -1,6 +1,6 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
           schemaName="application" 
-          allowEdit="#{entity &amp;&amp; entity.state == 'DRAFT'}"
+          allowEdit="#{entity &amp;&amp; entity.state.matches('DRAFT|FORAPPROVAL')}"
 >
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  

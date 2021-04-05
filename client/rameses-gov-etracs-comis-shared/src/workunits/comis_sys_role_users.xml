@@ -1,0 +1,9 @@
+<workunit extends="com/rameses/admin/plugin/templates/RoleUsersList.xml">
+    <invokers>
+        <invoker folderid="/explorer/master/comis" 
+                 caption="COMIS Role Users" 
+                 action="init" 
+                 index="200" />
+    </invokers>
+    
+</workunit>
