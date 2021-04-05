@@ -1,0 +1,8 @@
+<workunit extends="com/rameses/admin/plugin/templates/UserRoleList.xml">
+    <invokers>
+        <invoker type="sys_user_role_list:comis" 
+                 caption="COMIS User Role" 
+                 action="init" 
+                 index="10" />
+    </invokers>
+</workunit>

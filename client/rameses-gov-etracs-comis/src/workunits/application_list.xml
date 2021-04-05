@@ -5,7 +5,7 @@
         <invoker folderid="/menucategory/comis/burial"  
             action="init"  
             caption="View Applications" 
-            cols="apptype,appno,dtapplied,applicant.name,deceased.name,deceased.relation.title,deceased.age,deceased.sex,dtapproved,dtexpiry" 
+            cols="apptype,appno,dtapplied,applicant.name,deceased.name,deceased.relation.title,deceased.age,deceased.sex,dtapproved,leaseduration,dtexpiry" 
             hiddenCols="state"
             role="LCR"
             index="100"

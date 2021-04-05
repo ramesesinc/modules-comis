@@ -1,0 +1,22 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="comis_itemaccount">
+    <invokers>
+        <invoker folderid="/menucategory/comis/master"  
+            caption="Item Accounts" 
+            title="COMIS Item Accounts"
+            action="init" 
+            index="20"
+            cols="objid,title,item.code,item.title,item.fund.title" 
+            orderBy="title" 
+            role="MASTER" 
+        />
+        <invoker folderid="/explorer/master/comis" 
+            caption="Item Accounts" 
+            title="COMIS Item Accounts"
+            action="init" 
+            index="20"
+            cols="objid,title,item.code,item.title,item.fund.title" 
+            orderBy="title" 
+            role="MASTER" 
+        />
+    </invokers>
+</workunit>

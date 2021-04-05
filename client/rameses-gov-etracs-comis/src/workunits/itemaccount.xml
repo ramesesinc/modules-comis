@@ -1,0 +1,19 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml"  schemaName="comis_itemaccount">
+    <invokers>
+        <invoker type="comis_itemaccount:create" 
+                 caption="COMIS Item Account" 
+                 action="create" 
+                 index="1" 
+                 target="popup" />
+        
+        <invoker type="comis_itemaccount:open" 
+                 caption="COMIS Item Account" 
+                 action="open" 
+                 index="1" 
+                 target="popup" />
+    </invokers>
+    <code class="comis.models.ItemAccountModel" />
+     <pages>
+        <page template="comis.views.ItemAccountPage" />
+    </pages>
+</workunit>
