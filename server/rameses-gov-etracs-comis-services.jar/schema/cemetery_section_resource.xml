@@ -6,5 +6,8 @@
         <field name="name" required="true" />
         <field name="currentinfoid" />
         <field name="currentappid" />
+        <complex name="parent" ref="cemetery_section" jointype="many-to-one" required="true">
+            <key field="parentid" target="objid" />
+        </complex>
     </element>
 </schema>

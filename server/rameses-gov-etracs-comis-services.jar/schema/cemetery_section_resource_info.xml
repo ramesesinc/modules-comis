@@ -11,5 +11,8 @@
         <complex name="resource" ref="resource" jointype="many-to-one" required="true">
             <key field="resource_objid" target="objid" />
         </complex>
+        <complex name="parent" ref="cemetery_section_resource" jointype="many-to-one" required="true">
+            <key field="parentid" target="objid" />
+        </complex>
     </element>
 </schema>

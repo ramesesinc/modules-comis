@@ -8,6 +8,9 @@ class ComisApplicationService {
     @Service('SequenceService')
     def seqSvc;
 
+    @Service('ComisApplicationRuleService')
+    def ruleSvc;
+
     @DataContext('application')
     def em_application;
 
@@ -51,7 +54,6 @@ class ComisApplicationService {
         entity.state = STATE_ACTIVE;
         entity.appno = getNextSeries()
         entity.dtapproved = dtSvc.serverDate;
-        entity.dtexpiry = getExpiryDate(entity);
         em_application.update(entity);
         em_deceased.find([objid: entity.deceased.objid]).update([state: 'ACTIVE']);
         return entity;
@@ -62,12 +64,6 @@ class ComisApplicationService {
         def keyid = 'COMIS-' + cy;
         def series = seqSvc.getNextFormattedSeries(keyid);
         return cy + '' + series;
-    }
-
-    def getExpiryDate(entity) {
-        def rentDuration = 1;
-        def interval = rentDuration+"y";
-        return dtSvc.add(entity.dtapproved, interval);
     }
 
 }

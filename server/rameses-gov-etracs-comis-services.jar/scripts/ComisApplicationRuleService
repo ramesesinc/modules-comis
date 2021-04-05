@@ -1,0 +1,30 @@
+import com.rameses.annotations.*;
+import com.rameses.util.*;
+import java.rmi.server.*;
+import comis.facts.*;
+
+public class ComisApplicationRuleService  {
+
+	@Service("RuleExecutorService")
+	def ruleSvc;
+
+	@ProxyMethod
+	public def execute( app ) {
+		def facts = [];
+		def resource = new CemeteryResource(app.resourceinfo);
+		facts << resource;
+
+		def cemetery = new Cemetery();
+		cemetery.objid = app.resourceinfo.cemeteryid ? app.resourceinfo.cemeteryid : app.resourceinfo.parent.parent.parentid;
+		facts << cemetery;
+
+		def bpa = new BurialPermitApplication(app);
+		facts << bpa;
+
+		def res = ruleSvc.execute( "burialpermitapplication", facts, null, null );
+		app.leaseduration = bpa.leaseduration;
+		app.renewable = bpa.renewable;
+		app.fees = bpa.fees;
+	}
+
+}

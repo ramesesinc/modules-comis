@@ -1,0 +1,34 @@
+import com.rameses.annotations.*
+import com.rameses.common.*;
+import com.rameses.services.extended.*
+
+class ComisApplicationInterceptor {
+	@Service('DateService')
+    def dtSvc;
+	
+	@Service('ComisApplicationRuleService')
+	def ruleSvc;
+
+	@DataContext('application_fee')
+	def em_fee;
+
+	@Before(pattern="PersistenceService.(create|update)", eval="#{args[0]._schemaname=='application'}") 
+	public void beforeCreateUpdate( evt ) {
+		def app = evt.args[0]
+		ruleSvc.execute(app);
+		updateExpiryDate(app);
+		em_fee.find([parentid: app.objid]).delete();
+	}
+
+	def updateExpiryDate(app) {
+		if (!app.leaseduration || app.leaseduration == 0)
+			app.dtexpiry = null;
+
+		if (app.online || app.online == 1) {
+			def interval = app.leaseduration+"y";
+			return dtSvc.add(app.dtapproved, interval);
+		}
+
+    }
+
+}

@@ -1,5 +1,5 @@
 <schema>
-    <element tablename="vw_cemetery_section_resource">
+    <element tablename="vw_cemetery_resource">
         <field name="objid" primary="true" />
         <field name="parentid" />
         <field name="currentinfoid" />
@@ -23,5 +23,6 @@
         <field name="deceased_sex" caption="Sex" />
         <field name="deceased_age" caption="Age" />
         <field name="deceased_causeofdeath" caption="Cause of Death" />
+        <field name="cemeteryid" />
     </element>
 </schema>
