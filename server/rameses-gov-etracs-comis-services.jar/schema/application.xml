@@ -18,7 +18,10 @@
         <field name="dtexpiry" caption="Expiry Date" searchable="true" />
         <field name="renewable" type="boolean" required="true" caption="Renewable?" indexed="true" defaultValue="false"/>
         <field name="leaseduration" type="integer" caption="Lease Duration" defaultValue="0" />
+        <field name="amount" type="decimal" caption="Amount" required="true" />
+        <field name="amtpaid" type="decimal" caption="Amount Paid" required="true" />
         <field name="reportid" />
+        <field name="balance" type="decimal" expr="amount - amtpaid" caption="Balance" />
         <complex name="deceased" ref="deceased" jointype="many-to-one" required="true">
             <key field="deceased_objid" target="objid" />
         </complex>

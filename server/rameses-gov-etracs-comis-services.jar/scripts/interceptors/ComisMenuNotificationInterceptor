@@ -1,0 +1,23 @@
+import com.rameses.annotations.*; 
+
+class ComisMenuNotificationInterceptor {
+	@Service("UserRoleService")
+	def userRole;
+
+	@DataContext("sys_wf")
+	def wfEm;
+
+	@Env
+	def env;
+
+	// @After(pattern="MenuNotificationService.getCount", eval="#{ args[0].notificationid == 'comis' }")
+	@After(pattern="MenuNotificationService.getCount")
+	public void getDomainCount( def evt ) {
+		def arg = evt.args[0];
+		def result = evt.result;
+		println 'arg => ' + arg;
+		println 'result => ' + result;
+		result.count = 5;
+	}	
+
+}

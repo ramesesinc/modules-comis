@@ -1,0 +1,80 @@
+import com.rameses.annotations.*;
+import com.rameses.services.extended.*;
+
+public class ComisBurialPermitReceiptService  {
+    @Service('DateService')
+    def dtSvc;
+
+    @DataContext('application')
+    def em_app;
+
+    @DataContext('application_fee')
+    def em_app_fee;
+
+    @DataContext('payment')
+    def em_payment;
+
+    @DataContext('payment_item')
+    def em_payment_item;
+
+    
+
+    
+    @ProxyMethod
+    public def getFees(application) {
+        def fees = em_app_fee.find([parentid: application.objid]).list();
+        fees.each{ it.item = it.item.item }
+        return fees;
+    }
+
+    @ProxyMethod
+    public def open(receipt) {
+        receipt.application = [:];
+        def pmt = em_payment.select('appid').find([refid: receipt.objid]).first();
+        if (pmt) {
+            receipt.application = em_app.find([objid: pmt.appid]).first();
+        }
+    }
+
+    @ProxyMethod
+    public def post(receipt) {
+        def app = receipt.application;
+        def fees = receipt.items;
+        
+        def pmt = [:]
+        pmt.appid = app.objid;
+        pmt.refid = receipt.objid;
+        pmt.refno = receipt.receiptno;
+        pmt.reftype = 'RECEIPT';
+        pmt.refdate = receipt.receiptdate;
+        pmt.discount = 0.0;
+        pmt.amount = receipt.amount;
+        pmt.voided = 0;
+        pmt.txnmode = 'ONLINE';
+        pmt.txndate = dtSvc.serverDate;
+        pmt = em_payment.create(pmt);
+
+        fees.each{ fee -> 
+            em_app_fee.find([objid: fee.objid]).update([amtpaid: fee.amount]);
+
+            def pmtitem = [:];
+            pmtitem.parentid = pmt.objid;
+            pmtitem.refid = fee.objid;
+            pmtitem.reftype = 'FEE';
+            pmtitem.amount = fee.amount;
+            pmtitem.discount = fee.discount;
+            em_payment_item.create(pmtitem);
+        }
+    }
+
+    @ProxyMethod
+    public void voidReceipt(receipt) {
+        def pmt = em_payment.find([refid: receipt.objid]).first();
+        if (pmt) {
+            em_payment.find([objid: pmt.objid]).update([voided: 1]);
+            em_payment_item.find([parentid: pmt.objid]).list().each{pmtitem ->
+                em_app_fee.find([objid: pmtitem.refid]).update([amtpaid: '{amtpaid - :amount}'], pmtitem)
+            }
+        }
+    }
+}

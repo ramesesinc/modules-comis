@@ -25,6 +25,11 @@ public class ComisApplicationRuleService  {
 		app.leaseduration = bpa.leaseduration;
 		app.renewable = bpa.renewable;
 		app.fees = bpa.fees;
+		app.amount = 0;
+		app.amtpaid = 0;
+		if (app.fees) {
+			app.amount = app.fees.amount.sum();
+		}
 	}
 
 }
