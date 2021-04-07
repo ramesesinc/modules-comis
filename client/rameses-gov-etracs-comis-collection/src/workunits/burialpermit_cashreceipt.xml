@@ -1,0 +1,16 @@
+<workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml"
+    connection="treasury"
+>
+    <invokers>
+        <invoker type="cashreceipt:comis_burialpermit" action="init" />
+        <invoker type="formActions" action="printDetail" immediate="true" caption="Print Detail" visibleWhen="#{completed == true &amp;&amp; entity.voided == false}" mnemonic="d"/>
+    </invokers>
+    
+    <code class="comis.models.BurialPermitCashReceiptModel" >
+    </code>
+    
+    <pages>
+        <page name="default" template="comis.views.BurialPermitCashReceiptPage" />
+    </pages>
+    
+</workunit>
