@@ -8,6 +8,11 @@
         <field name="age" required="true" caption="Age" />
         <field name="sex" required="true" caption="Sex" />
         <field name="dtdied" required="true" caption="Date of Death" type="date" />
+        <!-- INTER, DISINTER, REMOVE -->
+        <field name="permissiontype" required="true" caption="Permission" />
+        <field name="infectious"  />
+        <field name="embalmed"  />
+        <field name="disposition" />
         <complex name="causeofdeath" ref="causeofdeath" jointype="many-to-one">
             <key field="causeofdeath_objid" target="objid" />
         </complex>

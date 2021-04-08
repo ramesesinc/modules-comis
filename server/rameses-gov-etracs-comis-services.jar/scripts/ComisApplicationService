@@ -23,6 +23,7 @@ class ComisApplicationService {
 
     def STATE_DRAFT = 'DRAFT';
     def STATE_FORAPPROVAL = 'FORAPPROVAL';
+    def STATE_FORPAYMENT = 'FORPAYMENT';
     def STATE_ACTIVE = 'ACTIVE';
     def STATE_EXPIRED = 'EXPIRED';
     def STATE_RENEWED = 'RENEWED';
@@ -51,7 +52,7 @@ class ComisApplicationService {
         if (old.state != STATE_FORAPPROVAL) 
         throw new Exception('Unable to approve application. Only for approval record is allowed.');
 
-        entity.state = STATE_ACTIVE;
+        entity.state = STATE_FORPAYMENT;
         entity.appno = getNextSeries()
         entity.dtapproved = dtSvc.serverDate;
         em_application.update(entity);
