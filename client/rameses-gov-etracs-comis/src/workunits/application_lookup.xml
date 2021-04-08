@@ -2,10 +2,9 @@
     <invokers>
         <invoker type="burialpermitapplication:lookup" caption="Lookup Burial Permit Application" 
             cols="appno,apptype,appyear,applicant.name,deceased.name,deceased.age"
-            hiddenCols="balance,applicant.address,dtapproved"
+            hiddenCols="state,balance,applicant.address,dtapproved"
             maxRows="50"
             rows="50"
-            customFilter=" state = 'ACTIVE' "
             orderBy="appno"
             action="init" 
             target="popup" />

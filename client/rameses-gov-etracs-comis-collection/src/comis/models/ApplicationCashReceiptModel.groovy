@@ -7,12 +7,12 @@ import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.reports.*;
 
 
-class BurialPermitCashReceiptModel extends com.rameses.enterprise.treasury.cashreceipt.AbstractCashReceipt 
+class ApplicationCashReceiptModel extends com.rameses.enterprise.treasury.cashreceipt.AbstractCashReceipt 
 {
     @Binding
     def binding;
     
-    @Service(value='ComisBurialPermitReceiptService', connection="comis")
+    @Service(value='ComisApplicationReceiptService', connection="comis")
     def svc;
     
     @Service('DateService')
@@ -49,13 +49,16 @@ class BurialPermitCashReceiptModel extends com.rameses.enterprise.treasury.cashr
     def getLookupApplication(){
         return InvokerUtil.lookupOpener('burialpermitapplication:lookup',[
             onselect : {
+                if ( it.state != 'FORPAYMENT') 
+                    throw new Exception('Application has not yet been submitted for payment.');
+                    
                 if ( it.balance == 0) 
-                    throw new Exception('Application has already been fully paid.')
+                    throw new Exception('Application has already been fully paid.');
                     
                 application = it;
                 entity.application = it;
-                entity.payer = it.applicant
-                entity.paidby = it.applicant.name
+                entity.payer = it.applicant;
+                entity.paidby = it.applicant.name;
                 entity.paidbyaddress = it.applicant.address;
                 entity.items = svc.getFees([objid: it.objid]);
                 entity.amount = entity.items.amount.sum();

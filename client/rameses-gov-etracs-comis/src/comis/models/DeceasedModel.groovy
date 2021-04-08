@@ -11,6 +11,7 @@ class DeceasedModel extends CrudFormModel {
     def afterSaveCallback = {};
     
     def sexes = ['MALE', 'FEMALE'];
+    def permissiontypes = ['INTER', 'DISINTER', 'REMOVE'];
     
     def getNationalities() {
         return svc.getNationalities();

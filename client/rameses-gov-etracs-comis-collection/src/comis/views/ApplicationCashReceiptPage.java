@@ -12,10 +12,10 @@ import com.rameses.rcp.ui.annotations.Template;
 
 @Template(value=SerialCashReceiptPage.class, target="content")
 @StyleSheet()
-public class BurialPermitCashReceiptPage extends javax.swing.JPanel {
+public class ApplicationCashReceiptPage extends javax.swing.JPanel {
     
     /** Creates new form GeneralCollectionPage */
-    public BurialPermitCashReceiptPage() {
+    public ApplicationCashReceiptPage() {
         initComponents();
     }
     
@@ -123,7 +123,7 @@ public class BurialPermitCashReceiptPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "item.item.fund.title"}
+                new Object[]{"name", "item.fund.title"}
                 , new Object[]{"caption", "Fund"}
                 , new Object[]{"width", 100}
                 , new Object[]{"minWidth", 0}
