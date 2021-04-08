@@ -1,7 +1,7 @@
 <workunit extends="wtemplates/gov/treasury/BasicCashReceiptController.xml">
     <invokers>
         <invoker type="collectiontype:handler" caption="COMIS Burial Permit" 
-            name="comis_burialpermit" 
+            name="comis_burialpermitapp" 
             formno="58" 
             formtype="serial" 
             index="15"  
@@ -12,9 +12,6 @@
         <![CDATA[    
         import com.rameses.rcp.annotations.*
         import com.rameses.rcp.common.*
-        import com.rameses.osiris2.client.*
-        import com.rameses.osiris2.common.*
-        import com.rameses.enterprise.treasury.controllers.*
         
         class  ComisBurialPermitCollectionTypeController {
             @Caller 

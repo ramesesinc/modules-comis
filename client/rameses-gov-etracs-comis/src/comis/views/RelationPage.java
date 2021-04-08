@@ -34,6 +34,8 @@ public class RelationPage extends javax.swing.JPanel {
         xLabel1.setCaption("State");
         xLabel1.setExpression("#{entity.state}");
         xLabel1.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
+        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        xLabel1.setForeground(new java.awt.Color(255, 0, 0));
         xFormPanel1.add(xLabel1);
 
         xTextField1.setCaption("Code");

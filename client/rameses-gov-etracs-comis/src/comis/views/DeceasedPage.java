@@ -30,16 +30,23 @@ public class DeceasedPage extends javax.swing.JPanel {
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xComboBox3 = new com.rameses.rcp.control.XComboBox();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xDateField1 = new com.rameses.rcp.control.XDateField();
+        xComboBox3 = new com.rameses.rcp.control.XComboBox();
+        xComboBox4 = new com.rameses.rcp.control.XComboBox();
+        xLabel2 = new com.rameses.rcp.control.XLabel();
+        xTextField3 = new com.rameses.rcp.control.XTextField();
+        xTextField4 = new com.rameses.rcp.control.XTextField();
+        xTextField5 = new com.rameses.rcp.control.XTextField();
 
         xFormPanel1.setCaptionWidth(130);
 
         xLabel1.setCaption("State");
         xLabel1.setExpression("#{entity.state}");
         xLabel1.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
+        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        xLabel1.setForeground(new java.awt.Color(255, 0, 0));
         xFormPanel1.add(xLabel1);
 
         xTextField1.setCaption("Name");
@@ -54,14 +61,6 @@ public class DeceasedPage extends javax.swing.JPanel {
         xComboBox1.setPreferredSize(new java.awt.Dimension(0, 20));
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
-
-        xComboBox3.setCaption("Cause of Death");
-        xComboBox3.setExpression("#{item.title}");
-        xComboBox3.setItems("causeofdeaths");
-        xComboBox3.setName("entity.causeofdeath"); // NOI18N
-        xComboBox3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xComboBox3.setRequired(true);
-        xFormPanel1.add(xComboBox3);
 
         xTextField2.setCaption("Age");
         xTextField2.setName("entity.age"); // NOI18N
@@ -78,8 +77,52 @@ public class DeceasedPage extends javax.swing.JPanel {
 
         xDateField1.setCaption("Date of Death");
         xDateField1.setName("entity.dtdied"); // NOI18N
+        xDateField1.setCellPadding(new java.awt.Insets(0, 0, 20, 0));
         xDateField1.setRequired(true);
         xFormPanel1.add(xDateField1);
+
+        xComboBox3.setCaption("Cause of Death");
+        xComboBox3.setExpression("#{item.title}");
+        xComboBox3.setItems("causeofdeaths");
+        xComboBox3.setName("entity.causeofdeath"); // NOI18N
+        xComboBox3.setPreferredSize(new java.awt.Dimension(0, 20));
+        xComboBox3.setRequired(true);
+        xFormPanel1.add(xComboBox3);
+
+        xComboBox4.setCaption("Permission Type");
+        xComboBox4.setItems("permissiontypes");
+        xComboBox4.setName("entity.permissiontype"); // NOI18N
+        xComboBox4.setPreferredSize(new java.awt.Dimension(0, 20));
+        xComboBox4.setRequired(true);
+        xFormPanel1.add(xComboBox4);
+
+        xLabel2.setExpression("#{\"In case of disinterment\"}");
+        xLabel2.setCellPadding(new java.awt.Insets(5, 0, 0, 0));
+        xLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        xLabel2.setPreferredSize(new java.awt.Dimension(0, 19));
+        xLabel2.setShowCaption(false);
+        xFormPanel1.add(xLabel2);
+
+        xTextField3.setCaption("Infectious or Non-Infections");
+        xTextField3.setName("entity.infections"); // NOI18N
+        xTextField3.setCaptionWidth(190);
+        xTextField3.setCellPadding(new java.awt.Insets(5, 30, 0, 0));
+        xTextField3.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xTextField3);
+
+        xTextField4.setCaption("Body embalmed or not embalmed");
+        xTextField4.setName("entity.embalmed"); // NOI18N
+        xTextField4.setCaptionWidth(190);
+        xTextField4.setCellPadding(new java.awt.Insets(0, 30, 0, 0));
+        xTextField4.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xTextField4);
+
+        xTextField5.setCaption("Disposition of remains");
+        xTextField5.setName("entity.disposition"); // NOI18N
+        xTextField5.setCaptionWidth(190);
+        xTextField5.setCellPadding(new java.awt.Insets(0, 30, 0, 0));
+        xTextField5.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xTextField5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,7 +137,7 @@ public class DeceasedPage extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -102,10 +145,15 @@ public class DeceasedPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XComboBox xComboBox3;
+    private com.rameses.rcp.control.XComboBox xComboBox4;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLabel xLabel1;
+    private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;
+    private com.rameses.rcp.control.XTextField xTextField3;
+    private com.rameses.rcp.control.XTextField xTextField4;
+    private com.rameses.rcp.control.XTextField xTextField5;
     // End of variables declaration//GEN-END:variables
 }
