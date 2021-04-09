@@ -30,8 +30,10 @@ public class CemeterySectionResourcePage extends javax.swing.JPanel {
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
-        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField3 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
 
         xLabel1.setCaption("State");
         xLabel1.setExpression("#{entity.state}");
@@ -51,10 +53,6 @@ public class CemeterySectionResourcePage extends javax.swing.JPanel {
         xTextField2.setRequired(true);
         xFormPanel1.add(xTextField2);
 
-        xDecimalField1.setCaption("Area (sqm)");
-        xDecimalField1.setName("entity.areasqm"); // NOI18N
-        xFormPanel1.add(xDecimalField1);
-
         xLookupField1.setCaption("Type");
         xLookupField1.setExpression("#{item.name}");
         xLookupField1.setHandler("resource:lookup");
@@ -62,6 +60,20 @@ public class CemeterySectionResourcePage extends javax.swing.JPanel {
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
         xLookupField1.setRequired(true);
         xFormPanel1.add(xLookupField1);
+
+        xDecimalField2.setCaption("Length");
+        xDecimalField2.setName("entity.length"); // NOI18N
+        xFormPanel1.add(xDecimalField2);
+
+        xDecimalField3.setCaption("Width");
+        xDecimalField3.setName("entity.width"); // NOI18N
+        xFormPanel1.add(xDecimalField3);
+
+        xDecimalField1.setCaption("Area (sqm)");
+        xDecimalField1.setDepends(new String[] {"entity.length", "entity.width"});
+        xDecimalField1.setDisableWhen("#{true}");
+        xDecimalField1.setName("entity.areasqm"); // NOI18N
+        xFormPanel1.add(xDecimalField1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -76,12 +88,14 @@ public class CemeterySectionResourcePage extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.rameses.rcp.control.XDecimalField xDecimalField1;
+    private com.rameses.rcp.control.XDecimalField xDecimalField2;
+    private com.rameses.rcp.control.XDecimalField xDecimalField3;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLookupField xLookupField1;

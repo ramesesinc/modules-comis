@@ -14,6 +14,12 @@ class ApplicationModel extends CrudFormModel {
     def dtSvc;
     
     def apptypes = ['NEW', 'RENEW'];
+    def online = true;
+    
+    def initCapture() {
+        online = false;
+        return super.create();
+    }
     
     boolean isShowConfirm() {
         return false;
@@ -30,6 +36,9 @@ class ApplicationModel extends CrudFormModel {
         entity.applicant = [:];
         entity.deceased = [:];
         entity.renewable = false;
+        entity.online = online;
+        entity.amount = 0;
+        entity.amtpaid = 0;
     }
     
     void submitForApproval() {
@@ -41,6 +50,12 @@ class ApplicationModel extends CrudFormModel {
     void approve() {
         if (MsgBox.confirm('Approve application?')) {
             entity.putAll(svc.approve(entity));
+        }
+    }
+    
+    def release() {
+        if (MsgBox.confirm('Issue permit and release application?')) {
+            entity.putAll(svc.release(entity));
         }
     }
     

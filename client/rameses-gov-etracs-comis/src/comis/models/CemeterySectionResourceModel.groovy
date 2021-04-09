@@ -11,6 +11,16 @@ class CemeterySectionResourceModel extends CrudFormModel {
     @Service('ComisCemeteryService')
     def svc;
     
+    @PropertyChangeListener
+    def listener = [
+        "entity.(length|width)" : {
+            entity.areasqm = 0.0;
+            if (entity.length > 0 && entity.width > 0) {
+                entity.areasqm = entity.length * entity.width;
+            }
+        }
+    ]
+    
     boolean isShowConfirm() {
         return false;
     }
