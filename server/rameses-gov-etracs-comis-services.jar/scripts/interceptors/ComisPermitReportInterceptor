@@ -1,0 +1,57 @@
+import com.rameses.annotations.*
+import com.rameses.common.*;
+import com.rameses.services.extended.*
+
+class ComisPermitReportInterceptor {
+	@Service('DateService')
+	def dtSvc;
+
+	@DataContext('application')
+	def em_app;
+
+	@DataContext('permit')
+	def em_permit;
+
+	@DataContext('payment')
+	def em_payment;
+	
+	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'comis_burial_permit'}", index=100)
+	public void afterGetData(def evt) {
+		def appid  = evt.args[0].parameters.objid;
+		def app = em_app.read([objid: appid]);
+		if (!app) throw new Exception('Application does not exist or has already been deleted.')
+
+		def permit = em_permit.read([objid: app.permitid]);
+		app.deceased.dtdied = dtSvc.format('MMMMM dd, yyyy', app.deceased.dtdied);
+
+		def data = [:]
+		data.resourceinfo = app.remove('resourceinfo');
+		data.resourceinfo.measure = data.resourceinfo.width + "x" + data.resourceinfo.length;
+		data.resourceinfo.type = data.resourceinfo.resource.name
+		data.resourceinfo.title = data.resourceinfo.name + ' (' + data.resourceinfo.parent.parent.name + ')';
+		data.putAll(app);
+		data.putAll(permit);
+		data.issuedate = formalizeDate(permit.permitdate, "d") + " day of " + dtSvc.format('MMMMM, yyyy', permit.permitdate);
+		data.payment = em_payment.select('ref.*,amount').find([appid: app.objid]).where('voided = 0').first();
+
+		evt.result.data = data;
+	}
+
+	
+    def formalizeDate( date,  format ){
+        def dt = new java.text.SimpleDateFormat( format ).format(dtSvc.parse('yyyy-MM-dd', date)).toString();
+        
+        if( 'd'.equals(format) || 'dd'.equals(format)){
+            if( dt.matches('01|1|21|31') )
+                return dt + 'st';
+            else if( dt.matches('02|2|22') )
+                return dt + 'nd';
+            else if(dt.matches('03|3|23')) 
+                return dt + 'rd';
+            else return dt + 'th';
+        }
+        return dt;
+    } 
+
+	
+}

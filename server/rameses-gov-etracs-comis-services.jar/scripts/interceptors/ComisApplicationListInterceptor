@@ -8,8 +8,9 @@ class ComisApplicationListInterceptor {
 	public void getNodeList( evt ) {
 		def result = evt.result
 		result << [id: "DRAFT", title: "DRAFT"]
-		result << [id: "FORAPPROVAL", title: "FORAPPROVAL"]
-		result << [id: "FORPAYMENT", title: "FORPAYMENT"]
+		result << [id: "FORAPPROVAL", title: "FOR APPROVAL"]
+		result << [id: "FORPAYMENT", title: "FOR PAYMENT"]
+		result << [id: "FORRELEASE", title: "FOR RELEASE"]
 		result << [id: "ACTIVE", title: "ACTIVE"]
 		result << [id: "EXPIRED", title: "EXPIRED"]
 		result << [id: "RENEWED", title: "RENEWED"]

@@ -41,7 +41,6 @@ public class ComisApplicationReceiptService  {
         if (pmt) {
             receipt.application = em_app.find([objid: pmt.appid]).first();
         }
-        println 'receipt => ' + receipt
     }
 
     @ProxyMethod
@@ -50,7 +49,7 @@ public class ComisApplicationReceiptService  {
         def fees = receipt.items;
 
         em_app.find([objid: app.objid])
-              .update([state: 'ACTIVE', amtpaid: '{amtpaid + :amount}'], [amount: receipt.amount]);
+              .update([state: 'FORRELEASE', amtpaid: '{amtpaid + :amount}'], [amount: receipt.amount]);
         
         def pmt = [:]
         pmt.appid = app.objid;

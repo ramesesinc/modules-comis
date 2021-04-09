@@ -20,10 +20,20 @@ class ComisApplicationService {
     @DataContext('deceased')
     def em_deceased;
 
+    @DataContext('cemetery_section_resource')
+    def em_cemetery_resource;
 
+    @DataContext('payment')
+    def em_payment;
+
+    @DataContext('permit')
+    def em_permit;
+
+    
     def STATE_DRAFT = 'DRAFT';
     def STATE_FORAPPROVAL = 'FORAPPROVAL';
     def STATE_FORPAYMENT = 'FORPAYMENT';
+    def STATE_FORRELEASE = 'FORRELEASE';
     def STATE_ACTIVE = 'ACTIVE';
     def STATE_EXPIRED = 'EXPIRED';
     def STATE_RENEWED = 'RENEWED';
@@ -52,17 +62,49 @@ class ComisApplicationService {
         if (old.state != STATE_FORAPPROVAL) 
         throw new Exception('Unable to approve application. Only for approval record is allowed.');
 
-        entity.state = STATE_FORPAYMENT;
-        entity.appno = getNextSeries()
-        entity.dtapproved = dtSvc.serverDate;
+        if (entity.online == 1 || entity.online == true) {
+            entity.appno = getNextSeries('COMIS-APP')
+            entity.dtapproved = dtSvc.serverDate;
+            entity.state = STATE_FORPAYMENT;
+        } else {
+            entity.state = STATE_ACTIVE;
+        }
         em_application.update(entity);
         em_deceased.find([objid: entity.deceased.objid]).update([state: 'ACTIVE']);
+        em_cemetery_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
         return entity;
     }
 
-    def getNextSeries() {
+    @ProxyMethod
+    public def release(entity) {
+        def old = em_application.read(entity);
+
+        if (old.state != STATE_FORRELEASE) 
+        throw new Exception('Unable to release application. The application has not yet been fully paid.');
+
+        def pmt = em_payment.find([appid: entity.objid]).where('voided <> 1').first();
+        if (!pmt) throw new Exception('Payment does not exist or has already been voided.')
+
+        def permit = [:];
+        permit.appid = entity.objid;
+        permit.paymentid = pmt.objid;
+        permit.permitno = getNextSeries('COMIS-PERMIT')
+        permit.permitdate = dtSvc.serverDate;
+        permit.permittype = entity.apptype;
+        permit.application = entity;
+        permit.payment = pmt;
+        permit = em_permit.create(permit);
+
+        entity.state = STATE_ACTIVE;
+        em_application.find([objid: entity.objid])
+                      .update([state: entity.state, permitid: permit.objid]);
+
+        return entity;
+    }
+
+    def getNextSeries(prefix) {
         def cy = dtSvc.serverYear;
-        def keyid = 'COMIS-' + cy;
+        def keyid = prefix + '-' + cy;
         def series = seqSvc.getNextFormattedSeries(keyid);
         return cy + '' + series;
     }

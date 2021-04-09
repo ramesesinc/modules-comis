@@ -13,7 +13,6 @@
         <field name="resource_name" caption="Type" searchable="true" />
         <field name="section_code" caption="Section Code" searchable="true" />
         <field name="section_name" caption="Section" searchable="true" />
-        <field name="ui" />
         <field name="appno" caption="App No." searchable="true" />
         <field name="apptype" caption="App Type" />
         <field name="applicant_name" caption="Applicant" searchable="true" />
