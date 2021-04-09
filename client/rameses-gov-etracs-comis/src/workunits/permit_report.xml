@@ -1,10 +1,9 @@
-<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+<workunit extends="com/rameses/jasper/templates/JasperFormReport.xml"> 
     <invokers>
         <invoker type="application:form:formActions" 
                  caption="View Permit"
                  action="preview" 
-                 index="1" 
-                 visibleWhen="#{ entity.permitid !=null }"
+                 visibleWhen="#{ entity.permitid != null }"
                  reportId="comis_burial_permit" 
                  reportName="comis/reports/application.jasper"
         />
