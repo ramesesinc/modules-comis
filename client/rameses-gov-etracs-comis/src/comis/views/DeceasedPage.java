@@ -104,6 +104,7 @@ public class DeceasedPage extends javax.swing.JPanel {
         xFormPanel1.add(xLabel2);
 
         xTextField3.setCaption("Infectious or Non-Infections");
+        xTextField3.setDepends(new String[] {"entity.permissiontype"});
         xTextField3.setName("entity.infections"); // NOI18N
         xTextField3.setCaptionWidth(190);
         xTextField3.setCellPadding(new java.awt.Insets(5, 30, 0, 0));
@@ -111,6 +112,7 @@ public class DeceasedPage extends javax.swing.JPanel {
         xFormPanel1.add(xTextField3);
 
         xTextField4.setCaption("Body embalmed or not embalmed");
+        xTextField4.setDepends(new String[] {"entity.permissiontype"});
         xTextField4.setName("entity.embalmed"); // NOI18N
         xTextField4.setCaptionWidth(190);
         xTextField4.setCellPadding(new java.awt.Insets(0, 30, 0, 0));
@@ -118,6 +120,7 @@ public class DeceasedPage extends javax.swing.JPanel {
         xFormPanel1.add(xTextField4);
 
         xTextField5.setCaption("Disposition of remains");
+        xTextField5.setDepends(new String[] {"entity.permissiontype"});
         xTextField5.setName("entity.disposition"); // NOI18N
         xTextField5.setCaptionWidth(190);
         xTextField5.setCellPadding(new java.awt.Insets(0, 30, 0, 0));

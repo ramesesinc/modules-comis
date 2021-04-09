@@ -3,7 +3,7 @@
     required:false;
 }
 
-"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry|renewable|leaseduration)" [ entity.online == 0 || !entity.online ] {
+"entity.(apptype|appno|appyear|dtapplied|dtapproved|dtexpiry|renewable|leaseduration)" [ (entity.online == 0 || !entity.online) && mode == 'edit' ] {
     enabled:true;
     required:true;
 }

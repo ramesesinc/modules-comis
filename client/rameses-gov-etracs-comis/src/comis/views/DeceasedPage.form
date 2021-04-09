@@ -147,6 +147,11 @@
         <Component class="com.rameses.rcp.control.XTextField" name="xTextField3">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Infectious or Non-Infections"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="entity.permissiontype"/>
+              </StringArray>
+            </Property>
             <Property name="name" type="java.lang.String" value="entity.infections" noResource="true"/>
             <Property name="captionWidth" type="int" value="190"/>
             <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -160,6 +165,11 @@
         <Component class="com.rameses.rcp.control.XTextField" name="xTextField4">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Body embalmed or not embalmed"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="entity.permissiontype"/>
+              </StringArray>
+            </Property>
             <Property name="name" type="java.lang.String" value="entity.embalmed" noResource="true"/>
             <Property name="captionWidth" type="int" value="190"/>
             <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -173,6 +183,11 @@
         <Component class="com.rameses.rcp.control.XTextField" name="xTextField5">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Disposition of remains"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="entity.permissiontype"/>
+              </StringArray>
+            </Property>
             <Property name="name" type="java.lang.String" value="entity.disposition" noResource="true"/>
             <Property name="captionWidth" type="int" value="190"/>
             <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
