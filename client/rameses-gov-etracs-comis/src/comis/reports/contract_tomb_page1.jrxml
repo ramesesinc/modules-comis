@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="contract_tomb_page1"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="594"
+		 columnSpacing="0"
+		 leftMargin="9"
+		 rightMargin="9"
+		 topMargin="9"
+		 bottomMargin="9"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="PARENTLGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="RPTBillingLedger" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="RPTBillingLedgerItem" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="LGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBY" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTDATE" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="TREASUREROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBYTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERJOBTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TOPN" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="USERFULLNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="year" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="basicrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="sefrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="ASSESSORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ASSESSORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYOROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUADDRESS" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="applicant.name" class="java.lang.String"/>
+	<field name="applicant.address" class="java.lang.String"/>
+	<field name="resourceinfo.name" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Number"/>
+	<field name="leaseperiod" class="java.lang.String"/>
+	<field name="dtexpiry" class="java.util.Date"/>
+	<field name="datesigned" class="java.lang.String"/>
+	<field name="lessor.name" class="java.lang.String"/>
+	<field name="lessor.title" class="java.lang.String"/>
+	<field name="witness1.name" class="java.lang.String"/>
+	<field name="witness2.name" class="java.lang.String"/>
+	<field name="lessor.ctcno" class="java.lang.String"/>
+	<field name="lessor.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessor.ctcdtissued" class="java.lang.String"/>
+	<field name="lessee.ctcno" class="java.lang.String"/>
+	<field name="lessee.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessee.ctcdtissued" class="java.lang.String"/>
+	<field name="resourceinfo.type" class="java.lang.String"/>
+	<field name="resourceinfo.areasqm" class="java.lang.Number"/>
+	<field name="expirydate" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="498"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="486"
+						height="40"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="16" isBold="true"/>
+					</textElement>
+				<text><![CDATA[CONTRACT OF LEASE FOR INDIVIDUAL TOMB 
+AND MAUSOLEUM BURIAL PLOT]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="59"
+						width="486"
+						height="71"
+						key="textField-1"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         This contract of lease executed and entered into by and between the " + $P{LGUFORMALNAME} + ", city corporation only existing and created under the  laws of the Republic of the Philippines with principal address at " + $P{LGUADDRESS} + ", Philippines represented in this instance by the " + $F{lessor.title} + ", <style isBold=\"true\" isUnderline=\"true\">Hon. " + $F{lessor.name} + "</style> herein referred to as the LESSOR and <style isBold=\"true\" isUnderline=\"true\">" + $F{applicant.name} + "</style> of legal age married/single residing at <style isBold=\"true\" isUnderline=\"true\">" + $F{applicant.address} + "</style> herein referred to as the LESSEE."]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="152"
+						width="486"
+						height="13"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="11" isBold="true"/>
+					</textElement>
+				<text><![CDATA[WITNESSETH:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="168"
+						width="486"
+						height="28"
+						key="textField-2"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSOR is the owner and the operator of the Old and New City Cemetery situated at Tomolin, Ligao City;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="196"
+						width="486"
+						height="28"
+						key="textField-3"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSEE is desirous to lease a burial plot for use as a <style isBold=\"true\">" + $F{resourceinfo.type} + "</style> for the interment of departed family member/s."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="224"
+						width="486"
+						height="28"
+						key="textField-4"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Now, therefore</style>, for and in consideration of the hereunder specified mutual covenants and stipulations, the parties have agreed and do hereby agree to the following, to wit:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="28"
+						y="266"
+						width="458"
+						height="13"
+						key="textField-5"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["1. That the LESSOR agrees to lease to the LESSEE a burial plot <style isBold=\"true\" isUnderline=\"true\">" + $F{resourceinfo.name} + "</style> for use as interment of departed family member/s."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="285"
+						width="459"
+						height="13"
+						key="textField-7"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["2. That the LESSEE in consideration for the Lease of aforementioned burial plot with an area of <style isBold=\"true\" isUnderlined=\"true\">" + $F{resourceinfo.areasqm} + " sq.m.</style> hereby agrees to pay in advance the amount of <style isBold=\"true\" isUnderlined=\"true\">Php " + $F{amount} + "</style> per square meter as lease rental for a period of <style isItalic=\"true\">" + $F{leaseperiod} + "</style> to the LESSOR;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="304"
+						width="459"
+						height="13"
+						key="textField-8"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["3. That the LESSEE hereby agrees to lease the said burial plot pursuant to and in accordance with Ordinance No. 95-10 series of 1995 and as amended by Ordinance No. 97-13, s. 97;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="323"
+						width="459"
+						height="13"
+						key="textField-9"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["4. That the fees stipulated in No. 2 above do not include the cost of improvements that the LESSEE may undertake. That the LESSEE shall undertake improvements solely for his/her own account in accordance to existing ordinance/laws;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="342"
+						width="459"
+						height="13"
+						key="textField-10"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["5. That the LESSEE shall not sell and/or encumber the burial plot covered by this agreement;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="361"
+						width="459"
+						height="13"
+						key="textField-11"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["6. That upon expiry of the Lease Contract, the lease may be renewed for periods of <style isItalic=\"true\">" + $F{leaseperiod} + " years</style> at fees to be stipulated by ordinance at the time of renewal;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="380"
+						width="459"
+						height="13"
+						key="textField-12"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["7. That the LESSOR shall keep the cemetery in a clean and orderly manner and shall at all times keep the security and integrity of the cemetery in accordance with the culture, customs and traditions.\nThat the efficacy of this contract by the parties and until <style isBold=\"true\" isUnderlined=\"true\">" + $F{expirydate} + "</style>;"]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
