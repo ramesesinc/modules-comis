@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="contract_tomb_page2"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="594"
+		 columnSpacing="0"
+		 leftMargin="9"
+		 rightMargin="9"
+		 topMargin="9"
+		 bottomMargin="9"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="PARENTLGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="RPTBillingLedger" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="RPTBillingLedgerItem" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="LGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBY" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTDATE" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="TREASUREROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBYTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERJOBTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TOPN" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="USERFULLNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="year" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="basicrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="sefrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="ASSESSORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ASSESSORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYOROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUADDRESS" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="applicant.name" class="java.lang.String"/>
+	<field name="applicant.address" class="java.lang.String"/>
+	<field name="resourceinfo.name" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Number"/>
+	<field name="leaseperiod" class="java.lang.String"/>
+	<field name="dtexpiry" class="java.util.Date"/>
+	<field name="datesigned" class="java.lang.String"/>
+	<field name="lessor.name" class="java.lang.String"/>
+	<field name="lessor.title" class="java.lang.String"/>
+	<field name="witness1" class="java.lang.String"/>
+	<field name="witness2" class="java.lang.String"/>
+	<field name="lessor.ctcno" class="java.lang.String"/>
+	<field name="lessor.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessor.ctcdtissued" class="java.lang.String"/>
+	<field name="lessee.ctcno" class="java.lang.String"/>
+	<field name="lessee.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessee.ctcdtissued" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="702"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="26"
+						width="486"
+						height="30"
+						key="textField-18"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">IN WITNESS WHEREOF</style>, the parties have hereunto set their hands upon signing on <style isBold=\"true\" isUnderlined=\"true\">" + $F{datesigned} + "</style> at Ligao City, Philippines."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="115"
+						width="210"
+						height="17"
+						key="textField-19"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessor.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="276"
+						y="82"
+						width="210"
+						height="17"
+						key="textField-21"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{applicant.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="276"
+						y="99"
+						width="210"
+						height="13"
+						key="textField-22"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["LESSEE"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="132"
+						width="210"
+						height="13"
+						key="textField-23"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessor.title}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="175"
+						width="486"
+						height="14"
+						key="staticText-3"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SIGNED IN THE PRESENCE OF:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="214"
+						width="210"
+						height="17"
+						key="textField-24"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{witness1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="276"
+						y="214"
+						width="210"
+						height="17"
+						key="textField-25"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{witness2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="259"
+						width="486"
+						height="14"
+						key="staticText-4"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="10" isBold="true" isUnderline="true"/>
+					</textElement>
+				<text><![CDATA[A C K N O W L E D G E M E N T]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="290"
+						width="99"
+						height="12"
+						key="staticText-5"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Republic of the Philippines]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="302"
+						width="99"
+						height="12"
+						key="staticText-6"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Province of Albay]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="314"
+						width="99"
+						height="12"
+						key="staticText-7"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Polangui, Albay]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="325"
+						width="99"
+						height="12"
+						key="staticText-8"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[x  - - - - - - - - - - - - - - - - -]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="98"
+						y="290"
+						width="22"
+						height="12"
+						key="staticText-9"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="98"
+						y="302"
+						width="22"
+						height="12"
+						key="staticText-10"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[)s.s]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="98"
+						y="314"
+						width="22"
+						height="12"
+						key="staticText-11"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="98"
+						y="325"
+						width="22"
+						height="12"
+						key="staticText-12"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[x]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="352"
+						width="486"
+						height="14"
+						key="textField-26"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">BEFORE ME</style> this _______ day of ___________________ personally appeared:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="376"
+						width="209"
+						height="17"
+						key="textField-27"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["HON. " + $F{lessor.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="392"
+						width="209"
+						height="17"
+						key="textField-28"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{applicant.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="209"
+						y="376"
+						width="141"
+						height="17"
+						key="textField-29"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["in her/his capacity"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="209"
+						y="392"
+						width="141"
+						height="17"
+						key="textField-30"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["in her/his capacity"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="350"
+						y="376"
+						width="46"
+						height="17"
+						key="textField-31"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["   as  "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="350"
+						y="392"
+						width="46"
+						height="17"
+						key="textField-32"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["   as  "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="395"
+						y="376"
+						width="90"
+						height="17"
+						key="textField-33"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Lessor"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="395"
+						y="392"
+						width="90"
+						height="17"
+						key="textField-34"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Lessee"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="31"
+						y="416"
+						width="135"
+						height="15"
+						key="textField-35"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["CTC No."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="165"
+						y="416"
+						width="160"
+						height="15"
+						key="textField-36"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Place of Issue"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="325"
+						y="416"
+						width="119"
+						height="15"
+						key="textField-37"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Date of Issue"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="31"
+						y="432"
+						width="135"
+						height="13"
+						key="textField-38"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessor.ctcno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="165"
+						y="432"
+						width="160"
+						height="13"
+						key="textField-39"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessor.ctcplaceissued}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="325"
+						y="432"
+						width="119"
+						height="13"
+						key="textField-40"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessor.ctcdtissued}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="31"
+						y="445"
+						width="135"
+						height="13"
+						key="textField-41"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessee.ctcno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="165"
+						y="445"
+						width="160"
+						height="13"
+						key="textField-42"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessee.ctcplaceissued}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="325"
+						y="445"
+						width="119"
+						height="13"
+						key="textField-43"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lessee.ctcdtissued}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="-1"
+						y="477"
+						width="486"
+						height="27"
+						key="textField-44"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Known to me and to me known to be the same persons who executed the Foregoing instrument and they acknowledged to me that the same is their free voluntary act and deed."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="511"
+						width="486"
+						height="27"
+						key="textField-45"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["        <style isBold=\"true\">IN WITNESS WHEREOF</style>, I have hereunto set my hand and affix my notaries seal this ________ day of ___________________________ at Polangui, Albay, Philipppines."]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="639"
+						width="42"
+						height="12"
+						key="staticText-13"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Doc. No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="651"
+						width="42"
+						height="12"
+						key="staticText-14"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Page No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="663"
+						width="42"
+						height="12"
+						key="staticText-15"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Book No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="675"
+						width="42"
+						height="12"
+						key="staticText-16"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Series of]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="42"
+						y="639"
+						width="66"
+						height="12"
+						key="staticText-17"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[_____________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="42"
+						y="651"
+						width="66"
+						height="12"
+						key="staticText-18"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[_____________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="42"
+						y="663"
+						width="66"
+						height="12"
+						key="staticText-19"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[_____________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="42"
+						y="675"
+						width="66"
+						height="12"
+						key="staticText-20"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[_____________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="558"
+						width="216"
+						height="12"
+						key="staticText-21"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="10" isBold="true" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Notary Public]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="606"
+						width="48"
+						height="13"
+						key="staticText-22"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Until Dec.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="619"
+						width="48"
+						height="13"
+						key="staticText-23"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[PTR No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="632"
+						width="48"
+						height="13"
+						key="staticText-24"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[Issued at]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="306"
+						y="606"
+						width="180"
+						height="13"
+						key="staticText-25"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[___________________________________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="306"
+						y="619"
+						width="180"
+						height="13"
+						key="staticText-26"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[___________________________________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="306"
+						y="632"
+						width="180"
+						height="13"
+						key="staticText-27"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Helvetica" size="10" isBold="false" isUnderline="false"/>
+					</textElement>
+				<text><![CDATA[___________________ On _____________]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
