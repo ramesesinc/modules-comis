@@ -53,6 +53,24 @@ class ComisReportInterceptor {
 		evt.result.data = [app1: data, app2: data];
 	}
 
+	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'comis_contract_tomb'}", index=100)
+	public void getContractTombData(def evt) {
+		def appid  = evt.args[0].parameters.objid;
+		def app = em_app.read([objid: appid]);
+		if (!app) throw new Exception('Application does not exist or has already been deleted.')
+
+		def data = [:]
+		app.deceased.dtdied = dtSvc.format('MMMMM dd, yyyy', app.deceased.dtdied);
+		data.resourceinfo = getResourceInfo(app);
+		data.leaseperiod = numSvc.convertInt(app.leaseduration) + ' (' + app.leaseduration + ') ';
+		data.leaseperiod += app.leaseduration == 1 ? 'year' : 'years';
+		data.datesigned = formalizeDate(app.dtapplied, "d") + " day of " + dtSvc.format('MMMMM, yyyy', app.dtapplied);
+		app.expirydate = dtSvc.format('MMMMM dd, yyyy', app.dtexpiry);
+		data.putAll(app);
+
+		evt.result.data = [app1: data, app2: data];
+	}
+
 	def getResourceInfo(app) {
 		def resourceinfo = app.remove('resourceinfo');
 		resourceinfo.measure = resourceinfo.width + "x" + resourceinfo.length;
