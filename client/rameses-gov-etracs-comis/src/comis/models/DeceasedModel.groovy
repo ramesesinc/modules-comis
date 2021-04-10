@@ -17,6 +17,12 @@ class DeceasedModel extends CrudFormModel {
         return svc.getNationalities();
     }
     
+    void afterCreate() {
+        entity.permissiontype = 'INTER';
+        entity.nationality = 'FILIPINO';
+        entity.sex = 'MALE';
+    }
+    
     def getCauseofdeaths() {
         return svc.getCauseofdeaths();
     }

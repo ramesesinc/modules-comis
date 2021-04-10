@@ -10,6 +10,9 @@ class ApplicationModel extends CrudFormModel {
     @Service('ComisApplicationService')
     def svc;
     
+    @Service(value='ReportParameterService', connection="etracs")
+    def reportSvc;
+    
     @Service('DateService')
     def dtSvc;
     
@@ -35,10 +38,30 @@ class ApplicationModel extends CrudFormModel {
         entity.dtapplied = pdate.date;
         entity.applicant = [:];
         entity.deceased = [:];
+        entity.lessee = [:];
         entity.renewable = false;
         entity.online = online;
         entity.amount = 0;
         entity.amtpaid = 0;
+        
+        def params = reportSvc.getStandardParameter();
+        entity.lessor = [:];
+        entity.lessor.name = params.MAYORNAME;
+        entity.lessor.title = params.MAYORTITLE;
+        entity.lessor.ctcplaceissued = params.LGUADDRESS;
+        entity.lessee.ctcplaceissued = params.LGUADDRESS;
+    }
+    
+    void beforeSave(mode) {
+        required('Lessor Name', entity.lessor.name);
+        required('Lessor Title', entity.lessor.title);
+        required('Lessor CTC No.', entity.lessor.ctcno);
+        required('Lessor CTC Place Issued', entity.lessor.ctcplaceissued);
+        required('Lessor CTC Issue Date', entity.lessor.ctcdtissued);
+        
+        required('Lessee CTC No.', entity.lessee.ctcno);
+        required('Lessee CTC Place Issued', entity.lessee.ctcplaceissued);
+        required('Lessee CTC Issue Date', entity.lessee.ctcdtissued);
     }
     
     void submitForApproval() {
@@ -78,6 +101,7 @@ class ApplicationModel extends CrudFormModel {
                 onselect: { 
                     entity.applicant = it;
                     entity.applicant.address = it.address.text;
+                    binding.refresh('entity.lessee.*');
                 },
                 onempty: {
                     entity.applicant = [:];
@@ -92,5 +116,9 @@ class ApplicationModel extends CrudFormModel {
     
     def getAmtpaid() {
         return entity.fees.amtpaid.sum();
+    }
+    
+    void required(caption, value) {
+        if (!value) throw new Exception(caption + ' is required.');
     }
 }
