@@ -5,7 +5,7 @@
                  action="preview" 
                  visibleWhen="#{ entity.permitid != null }"
                  reportId="comis_burial_permit" 
-                 reportName="comis/reports/application.jasper"
+                 reportName="comis/reports/mayors_permit.jasper"
         />
     </invokers>
 </workunit>
