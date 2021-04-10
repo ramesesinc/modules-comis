@@ -1,7 +1,7 @@
 <schema>
     <element tablename="application">
         <field name="objid" primary="true" prefix="APP" />
-        <!-- DRAFT, FORAPPROVAL, ACTIVE, RENEWED, EXPIRED, CLOSED -->
+        <!-- DRAFT, FORAPPROVAL, FORPAYMENT, FORRELEASE, ACTIVE, RENEWED, EXPIRED, CLOSED -->
         <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT" />
         <field name="resourceinfo_objid" required="true" />
         <field name="online" required="true" type="boolean" defaultValue="true" />
@@ -23,6 +23,11 @@
         <field name="permitid" />
         <field name="reportid" />
         <field name="balance" type="decimal" expr="amount - amtpaid" caption="Balance" />
+        <complex name="lessor" serializer="default" required="true" />
+        <complex name="lessee" serializer="default" required="true" />
+        <field name="witness1" />
+        <field name="witness2" />
+        
         <complex name="deceased" ref="deceased" jointype="many-to-one" required="true">
             <key field="deceased_objid" target="objid" />
         </complex>

@@ -63,7 +63,7 @@ class ComisApplicationService {
         throw new Exception('Unable to approve application. Only for approval record is allowed.');
 
         if (entity.online == 1 || entity.online == true) {
-            entity.appno = getNextSeries('COMIS-APP')
+            entity.appno = getNextSeries('BURIAL-PERMIT-APP')
             entity.dtapproved = dtSvc.serverDate;
             entity.state = STATE_FORPAYMENT;
         } else {
@@ -88,7 +88,7 @@ class ComisApplicationService {
         def permit = [:];
         permit.appid = entity.objid;
         permit.paymentid = pmt.objid;
-        permit.permitno = getNextSeries('COMIS-PERMIT')
+        permit.permitno = getNextSeries('BURIAL-PERMIT')
         permit.permitdate = dtSvc.serverDate;
         permit.permittype = entity.apptype;
         permit.application = entity;
