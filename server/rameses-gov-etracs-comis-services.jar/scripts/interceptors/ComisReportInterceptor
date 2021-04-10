@@ -18,20 +18,17 @@ class ComisReportInterceptor {
 	@DataContext('payment')
 	def em_payment;
 	
-	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'comis_burial_permit'}", index=100)
-	public void getBurialPermitData(def evt) {
+	
+	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'comis_application'}", index=100)
+	public void getApplicationData(def evt) {
 		def appid  = evt.args[0].parameters.objid;
 		def app = em_app.read([objid: appid]);
 		if (!app) throw new Exception('Application does not exist or has already been deleted.')
 
 		def data = [:]
-		def permit = em_permit.read([objid: app.permitid]);
-		app.deceased.dtdied = dtSvc.format('MMMMM dd, yyyy', app.deceased.dtdied);
+		app.applicant.address = app.applicant.address.replaceAll("\n","");
 		data.resourceinfo = getResourceInfo(app);
 		data.putAll(app);
-		data.putAll(permit);
-		data.issuedate = formalizeDate(permit.permitdate, "d") + " day of " + dtSvc.format('MMMMM, yyyy', permit.permitdate);
-		data.payment = em_payment.select('ref.*,amount').find([appid: app.objid]).where('voided = 0').first();
 
 		evt.result.data = data;
 	}
@@ -69,6 +66,24 @@ class ComisReportInterceptor {
 		data.putAll(app);
 
 		evt.result.data = [app1: data, app2: data];
+	}
+
+	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'comis_burial_permit'}", index=100)
+	public void getBurialPermitData(def evt) {
+		def appid  = evt.args[0].parameters.objid;
+		def app = em_app.read([objid: appid]);
+		if (!app) throw new Exception('Application does not exist or has already been deleted.')
+
+		def data = [:]
+		def permit = em_permit.read([objid: app.permitid]);
+		app.deceased.dtdied = dtSvc.format('MMMMM dd, yyyy', app.deceased.dtdied);
+		data.resourceinfo = getResourceInfo(app);
+		data.putAll(app);
+		data.putAll(permit);
+		data.issuedate = formalizeDate(permit.permitdate, "d") + " day of " + dtSvc.format('MMMMM, yyyy', permit.permitdate);
+		data.payment = em_payment.select('ref.*,amount').find([appid: app.objid]).where('voided = 0').first();
+
+		evt.result.data = data;
 	}
 
 	def getResourceInfo(app) {
