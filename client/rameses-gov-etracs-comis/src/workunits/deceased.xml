@@ -1,5 +1,6 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
           schemaName="deceased" 
+          closeOnSave="true"
           allowCreate="false"
           allowEdit="#{entity.state == 'DRAFT'}"
 >

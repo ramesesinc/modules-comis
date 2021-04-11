@@ -25,6 +25,7 @@ class CemeteryModel extends CrudFormModel {
     }
     
     void afterCreate(){
+        entity.isnew = true;
         sections = [];
     }
     

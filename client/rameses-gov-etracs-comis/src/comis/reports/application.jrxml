@@ -3,7 +3,8 @@
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
 		 name="application"
-		 columnCount="1"
+
+		 language="groovy"		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Landscape"
 		 pageWidth="612"
@@ -54,6 +55,11 @@
 	<field name="relation.title" class="java.lang.String"/>
 	<field name="deceased.name" class="java.lang.String"/>
 	<field name="deceased.dtdied" class="java.util.Date"/>
+	<field name="isoldniche" class="java.lang.Boolean"/>
+	<field name="isnewniche" class="java.lang.Boolean"/>
+	<field name="istomb" class="java.lang.Boolean"/>
+	<field name="isossuary" class="java.lang.Boolean"/>
+	<field name="ismausoleum" class="java.lang.Boolean"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -449,29 +455,29 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="0"
+						x="20"
 						y="209"
-						width="202"
+						width="177"
 						height="14"
 						key="staticText-50"/>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
-				<text><![CDATA[[      ] Old existing Apartment Type Niche]]></text>
+				<text><![CDATA[Old existing Apartment Type Niche]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="266"
+						x="287"
 						y="209"
-						width="202"
+						width="181"
 						height="14"
 						key="staticText-51"/>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
-				<text><![CDATA[[      ] Individual Tomb]]></text>
+				<text><![CDATA[Individual Tomb]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -553,19 +559,6 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="25"
-						y="281"
-						width="20"
-						height="12"
-						key="staticText-58"/>
-					<box></box>
-					<textElement verticalAlignment="Top">
-						<font fontName="Times New Roman" size="9"/>
-					</textElement>
-				<text><![CDATA[[    ]]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
 						x="0"
 						y="293"
 						width="202"
@@ -631,16 +624,16 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="0"
+						x="20"
 						y="362"
-						width="202"
+						width="177"
 						height="14"
 						key="staticText-64"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
-				<text><![CDATA[[      ] Mausoleum]]></text>
+				<text><![CDATA[Mausoleum]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -1077,16 +1070,16 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="266"
+						x="286"
 						y="402"
-						width="202"
+						width="182"
 						height="14"
 						key="staticText-96"/>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Times New Roman"/>
 					</textElement>
-				<text><![CDATA[[      ] Ossuary]]></text>
+				<text><![CDATA[Ossuary]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -1179,6 +1172,96 @@
 					</textElement>
 				<text><![CDATA[3.]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="209"
+						width="16"
+						height="14"
+						key="textField-32"/>
+					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{isoldniche} ? "X" : ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="24"
+						y="281"
+						width="16"
+						height="12"
+						key="textField-33"/>
+					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{isnewniche} ? "X" : ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="267"
+						y="209"
+						width="16"
+						height="14"
+						key="textField-34"/>
+					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{istomb} ? "X" : ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="267"
+						y="402"
+						width="16"
+						height="14"
+						key="textField-35"/>
+					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{isossuary} ? "X" : ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="361"
+						width="16"
+						height="14"
+						key="textField-36"/>
+					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ismausoleum} ? "X" : ""]]></textFieldExpression>
+				</textField>
 			</band>
 		</title>
 		<pageHeader>

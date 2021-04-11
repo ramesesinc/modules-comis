@@ -4,20 +4,9 @@
 >
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  
-            caption="New Application" 
-            action="create"  
-            index="1"
-            role="LCR"
-        />
-        
-        <invoker folderid="/menucategory/comis/support"  
-            caption="Capture Application" 
-            action="initCapture"  
-            role="ENCODER"
-        />
-        
-        <invoker type="application:create" caption="Burial Permit Application (New)" 
-            action="create"  
+            caption="Renew Application" 
+            action="create"
+            index="2"  
             role="LCR"
         />
         
@@ -54,8 +43,9 @@
             role="LICENSING"
         />
     </invokers>
-    <code class="comis.models.ApplicationModel" />
+    <code class="comis.models.ApplicationRenewalModel" />
     <pages>
+        <page name="create" template="comis.views.ApplicationRenewalInitPage" />
         <page template="comis.views.ApplicationPage" />
     </pages>
 </workunit>

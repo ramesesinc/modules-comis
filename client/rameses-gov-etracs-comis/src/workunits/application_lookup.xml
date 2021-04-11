@@ -1,12 +1,13 @@
 <workunit extends="com/rameses/seti2/templates/CrudLookup.xml" schemaName="application">
     <invokers>
         <invoker type="burialpermitapplication:lookup" caption="Lookup Burial Permit Application" 
-            cols="appno,apptype,appyear,applicant.name,deceased.name,deceased.age"
-            hiddenCols="state,balance,applicant.address,dtapproved"
+            cols="appno,apptype,appyear,applicant.name,deceased.name,deceased.age,state"
+            hiddenCols="balance,applicant.address,dtapproved,relation.title,deceased.nationality,deceased.age,deceased.sex"
             maxRows="50"
             rows="50"
             orderBy="appno"
             action="init" 
+            width="500"
             target="popup" />
     </invokers>
 </workunit>
