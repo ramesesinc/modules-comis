@@ -16,7 +16,7 @@ class ApplicationModel extends CrudFormModel {
     @Service('DateService')
     def dtSvc;
     
-    def apptypes = ['NEW', 'RENEW'];
+    def apptypes = ['NEW', 'RENEWAL'];
     def online = true;
     
     def initCapture() {
@@ -53,6 +53,9 @@ class ApplicationModel extends CrudFormModel {
     }
     
     void beforeSave(mode) {
+        if (mode == 'create' && entity.apptype == 'RENEWAL')
+            return;
+        
         required('Lessor Name', entity.lessor.name);
         required('Lessor Title', entity.lessor.title);
         required('Lessor CTC No.', entity.lessor.ctcno);
@@ -62,6 +65,9 @@ class ApplicationModel extends CrudFormModel {
         required('Lessee CTC No.', entity.lessee.ctcno);
         required('Lessee CTC Place Issued', entity.lessee.ctcplaceissued);
         required('Lessee CTC Issue Date', entity.lessee.ctcdtissued);
+        
+        required('1st Witness', entity.witness1);
+        required('2nd Witness', entity.witness2);
     }
     
     void submitForApproval() {
@@ -100,13 +106,13 @@ class ApplicationModel extends CrudFormModel {
         return Inv.lookupOpener("entity:lookup", [
                 onselect: { 
                     entity.applicant = it;
-                    entity.applicant.address = it.address.text;
+                    entity.applicant.address = it.address.text.replaceAll('\n','');
                     binding.refresh('entity.lessee.*');
                 },
                 onempty: {
                     entity.applicant = [:];
                 }
-        ])
+        ]);
     }
     
 

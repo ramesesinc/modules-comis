@@ -54,11 +54,6 @@ public class ApplicationPage extends javax.swing.JPanel {
         xLabel9 = new com.rameses.rcp.control.XLabel();
         xIntegerField2 = new com.rameses.rcp.control.XIntegerField();
         xCheckBox1 = new com.rameses.rcp.control.XCheckBox();
-        jPanel1 = new javax.swing.JPanel();
-        xDataTable1 = new com.rameses.rcp.control.XDataTable();
-        xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
-        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
-        xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
         jPanel3 = new javax.swing.JPanel();
         xFormPanel4 = new com.rameses.rcp.control.XFormPanel();
         xLabel11 = new com.rameses.rcp.control.XLabel();
@@ -72,8 +67,15 @@ public class ApplicationPage extends javax.swing.JPanel {
         xLabel14 = new com.rameses.rcp.control.XLabel();
         xTextField7 = new com.rameses.rcp.control.XTextField();
         xTextField8 = new com.rameses.rcp.control.XTextField();
-        xTextField9 = new com.rameses.rcp.control.XTextField();
         xDateField4 = new com.rameses.rcp.control.XDateField();
+        xLabel15 = new com.rameses.rcp.control.XLabel();
+        xTextField9 = new com.rameses.rcp.control.XTextField();
+        xTextField10 = new com.rameses.rcp.control.XTextField();
+        jPanel1 = new javax.swing.JPanel();
+        xDataTable1 = new com.rameses.rcp.control.XDataTable();
+        xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
+        xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
 
         jPanel2.setAutoscrolls(true);
 
@@ -256,6 +258,136 @@ public class ApplicationPage extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Application", jPanel2);
 
+        xLabel11.setExpression("#{\"LESSOR\"}");
+        xLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        xLabel11.setShowCaption(false);
+        xFormPanel4.add(xLabel11);
+
+        xTextField2.setCaption("Mayor Name");
+        xTextField2.setName("entity.lessor.name"); // NOI18N
+        xTextField2.setCaptionWidth(120);
+        xTextField2.setCellPadding(new java.awt.Insets(10, 20, 0, 0));
+        xTextField2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField2.setRequired(true);
+        xFormPanel4.add(xTextField2);
+
+        xTextField3.setCaption("Mayor Title");
+        xTextField3.setName("entity.lessor.title"); // NOI18N
+        xTextField3.setCaptionWidth(120);
+        xTextField3.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField3.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField3.setRequired(true);
+        xFormPanel4.add(xTextField3);
+
+        xTextField4.setCaption("CTC No.");
+        xTextField4.setName("entity.lessor.ctcno"); // NOI18N
+        xTextField4.setCaptionWidth(120);
+        xTextField4.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField4.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField4.setRequired(true);
+        xFormPanel4.add(xTextField4);
+
+        xTextField5.setCaption("Place Issued");
+        xTextField5.setName("entity.lessor.ctcplaceissued"); // NOI18N
+        xTextField5.setCaptionWidth(120);
+        xTextField5.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField5.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField5.setRequired(true);
+        xFormPanel4.add(xTextField5);
+
+        xDateField5.setCaption("Date Issued");
+        xDateField5.setName("entity.lessor.ctcdtissued"); // NOI18N
+        xDateField5.setCaptionWidth(120);
+        xDateField5.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xDateField5.setRequired(true);
+        xFormPanel4.add(xDateField5);
+
+        xLabel12.setExpression("#{\"LESSEE\"}");
+        xLabel12.setCellPadding(new java.awt.Insets(15, 0, 0, 0));
+        xLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        xLabel12.setShowCaption(false);
+        xFormPanel4.add(xLabel12);
+
+        xLabel13.setCaption("Applicant Name");
+        xLabel13.setDepends(new String[] {"entity.applicant"});
+        xLabel13.setExpression("#{entity.applicant.name}");
+        xLabel13.setCaptionWidth(120);
+        xLabel13.setCellPadding(new java.awt.Insets(10, 20, 0, 0));
+        xLabel13.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel4.add(xLabel13);
+
+        xLabel14.setCaption("Applicant Address");
+        xLabel14.setDepends(new String[] {"entity.applicant"});
+        xLabel14.setExpression("#{entity.applicant.address}");
+        xLabel14.setCaptionWidth(120);
+        xLabel14.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xLabel14.setPreferredSize(new java.awt.Dimension(0, 19));
+        xFormPanel4.add(xLabel14);
+
+        xTextField7.setCaption("CTC No.");
+        xTextField7.setName("entity.lessee.ctcno"); // NOI18N
+        xTextField7.setCaptionWidth(120);
+        xTextField7.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField7.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField7.setRequired(true);
+        xFormPanel4.add(xTextField7);
+
+        xTextField8.setCaption("Place Issued");
+        xTextField8.setName("entity.lessee.ctcplaceissued"); // NOI18N
+        xTextField8.setCaptionWidth(120);
+        xTextField8.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField8.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField8.setRequired(true);
+        xFormPanel4.add(xTextField8);
+
+        xDateField4.setCaption("Date Issued");
+        xDateField4.setName("entity.lessee.ctcdtissued"); // NOI18N
+        xDateField4.setCaptionWidth(120);
+        xDateField4.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xDateField4.setRequired(true);
+        xFormPanel4.add(xDateField4);
+
+        xLabel15.setExpression("#{\"WITNESSES\"}");
+        xLabel15.setCellPadding(new java.awt.Insets(15, 0, 0, 0));
+        xLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        xLabel15.setShowCaption(false);
+        xFormPanel4.add(xLabel15);
+
+        xTextField9.setCaption("1st Witness");
+        xTextField9.setName("entity.witness1"); // NOI18N
+        xTextField9.setCaptionWidth(120);
+        xTextField9.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField9.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField9.setRequired(true);
+        xFormPanel4.add(xTextField9);
+
+        xTextField10.setCaption("2nd Witness");
+        xTextField10.setName("entity.witness2"); // NOI18N
+        xTextField10.setCaptionWidth(120);
+        xTextField10.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xTextField10.setPreferredSize(new java.awt.Dimension(0, 20));
+        xTextField10.setRequired(true);
+        xFormPanel4.add(xTextField10);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Signatories", jPanel3);
+
         xDataTable1.setHandler("itemHandlers.fees");
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
             new com.rameses.rcp.common.Column(new Object[]{
@@ -341,122 +473,6 @@ public class ApplicationPage extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Assessment", jPanel1);
 
-        xLabel11.setExpression("#{\"LESSOR\"}");
-        xLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        xLabel11.setShowCaption(false);
-        xFormPanel4.add(xLabel11);
-
-        xTextField2.setCaption("Mayor Name");
-        xTextField2.setName("entity.lessor.name"); // NOI18N
-        xTextField2.setCaptionWidth(120);
-        xTextField2.setCellPadding(new java.awt.Insets(10, 20, 0, 0));
-        xTextField2.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField2.setRequired(true);
-        xFormPanel4.add(xTextField2);
-
-        xTextField3.setCaption("Mayor Title");
-        xTextField3.setName("entity.lessor.title"); // NOI18N
-        xTextField3.setCaptionWidth(120);
-        xTextField3.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField3.setRequired(true);
-        xFormPanel4.add(xTextField3);
-
-        xTextField4.setCaption("CTC No.");
-        xTextField4.setName("entity.lessor.ctcno"); // NOI18N
-        xTextField4.setCaptionWidth(120);
-        xTextField4.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField4.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField4.setRequired(true);
-        xFormPanel4.add(xTextField4);
-
-        xTextField5.setCaption("Place Issued");
-        xTextField5.setName("entity.lessor.ctcplaceissued"); // NOI18N
-        xTextField5.setCaptionWidth(120);
-        xTextField5.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField5.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField5.setRequired(true);
-        xFormPanel4.add(xTextField5);
-
-        xDateField5.setCaption("Date Issued");
-        xDateField5.setName("entity.lessor.ctcdtissued"); // NOI18N
-        xDateField5.setCaptionWidth(120);
-        xDateField5.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xDateField5.setRequired(true);
-        xFormPanel4.add(xDateField5);
-
-        xLabel12.setExpression("#{\"LESSEE\"}");
-        xLabel12.setCellPadding(new java.awt.Insets(15, 0, 0, 0));
-        xLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        xLabel12.setShowCaption(false);
-        xFormPanel4.add(xLabel12);
-
-        xLabel13.setCaption("Applicant Name");
-        xLabel13.setDepends(new String[] {"entity.applicant"});
-        xLabel13.setExpression("#{entity.applicant.name}");
-        xLabel13.setCaptionWidth(120);
-        xLabel13.setCellPadding(new java.awt.Insets(10, 20, 0, 0));
-        xLabel13.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel4.add(xLabel13);
-
-        xLabel14.setCaption("Applicant Address");
-        xLabel14.setDepends(new String[] {"entity.applicant"});
-        xLabel14.setExpression("#{entity.applicant.address}");
-        xLabel14.setCaptionWidth(120);
-        xLabel14.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xLabel14.setPreferredSize(new java.awt.Dimension(0, 19));
-        xFormPanel4.add(xLabel14);
-
-        xTextField7.setCaption("CTC No.");
-        xTextField7.setName("entity.lessee.ctcno"); // NOI18N
-        xTextField7.setCaptionWidth(120);
-        xTextField7.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField7.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField7.setRequired(true);
-        xFormPanel4.add(xTextField7);
-
-        xTextField8.setCaption("Place Issued");
-        xTextField8.setName("entity.lessee.ctcplaceissued"); // NOI18N
-        xTextField8.setCaptionWidth(120);
-        xTextField8.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField8.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField8.setRequired(true);
-        xFormPanel4.add(xTextField8);
-
-        xTextField9.setCaption("Date Issued");
-        xTextField9.setName("entity.lessee.ctcdtissued"); // NOI18N
-        xTextField9.setCaptionWidth(120);
-        xTextField9.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xTextField9.setPreferredSize(new java.awt.Dimension(0, 20));
-        xTextField9.setRequired(true);
-        xFormPanel4.add(xTextField9);
-
-        xDateField4.setCaption("Date Issued");
-        xDateField4.setName("entity.lessee.ctcdtissued"); // NOI18N
-        xDateField4.setCaptionWidth(120);
-        xDateField4.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
-        xDateField4.setRequired(true);
-        xFormPanel4.add(xDateField4);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(xFormPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(xFormPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Signatories", jPanel3);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -503,6 +519,7 @@ public class ApplicationPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLabel xLabel12;
     private com.rameses.rcp.control.XLabel xLabel13;
     private com.rameses.rcp.control.XLabel xLabel14;
+    private com.rameses.rcp.control.XLabel xLabel15;
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLabel xLabel3;
     private com.rameses.rcp.control.XLabel xLabel4;
@@ -514,6 +531,7 @@ public class ApplicationPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XLookupField xLookupField2;
     private com.rameses.rcp.control.XTextField xTextField1;
+    private com.rameses.rcp.control.XTextField xTextField10;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
