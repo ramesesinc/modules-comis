@@ -1,0 +1,16 @@
+<!-- workunit extends="com/rameses/jasper/templates/JasperFormReport.xml"--> 
+<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+    <invokers>
+        <invoker folderid="/menucategory/comis/reports"  
+                 caption="List of Expired Lease Contract"
+                 action="query" 
+                 reportId="expired_lease_contract_listing" 
+                 reportName="comis/reports/expired_lease_contract_listing.jasper"
+                 role="REPORTS" 
+        />
+    </invokers>
+    <code class="comis.models.ExpiredLeaseContractReportModel" />
+    <pages>
+        <page name="query" template="comis.views.ExpiredLeaseContractInitReportPage" />
+    </pages>
+</workunit>
