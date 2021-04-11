@@ -1,0 +1,26 @@
+import com.rameses.annotations.*
+import com.rameses.common.*
+import com.rameses.services.extended.*
+
+class ComisApplicationExpiryTask 
+{
+	@Service('DateService')
+	def dtSvc 
+
+	@DataContext('application')
+	def em_app;
+
+	@Schedule(interval=600)
+	public def updateExiredApplication(task) {
+		println 'comis [INFO]: Updating expired applications';
+		def dtexpiry = dtSvc.add(dtSvc.serverDate, '1d');
+		def list = em_app.select('objid')
+							.where('state = :active AND dtexpiry < :dtexpiry', [active: 'ACTIVE', dtexpiry: dtexpiry])
+							.list();
+		list.each{
+			em_app.find([objid: it.objid]).update([state: 'EXPIRED'])
+		}
+	}	
+
+}
+
