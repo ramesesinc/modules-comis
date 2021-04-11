@@ -4,7 +4,7 @@
         <!-- DRAFT, FORAPPROVAL, FORPAYMENT, FORRELEASE, ACTIVE, RENEWED, EXPIRED, CLOSED -->
         <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT" />
         <field name="resourceinfo_objid" required="true" />
-        <field name="online" required="true" type="boolean" defaultValue="true" />
+        <field name="online" required="true" type="boolean" />
         <!-- NEW, RENEWAL -->
         <field name="apptype" required="true" caption="App Type" indexed="true" defaultValue="NEW" />
         <field name="appno" caption="App No." searchable="true" />
@@ -27,6 +27,7 @@
         <complex name="lessee" serializer="default" required="true" />
         <field name="witness1" />
         <field name="witness2" />
+        <field name="prevappid" />
         
         <complex name="deceased" ref="deceased" jointype="many-to-one" required="true">
             <key field="deceased_objid" target="objid" />

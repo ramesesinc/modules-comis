@@ -6,20 +6,40 @@ class ComisApplicationInterceptor {
 	@Service('DateService')
     def dtSvc;
 	
+	@Service('ComisApplicationService')
+	def svc;
+
 	@Service('ComisApplicationRuleService')
 	def ruleSvc;
 
 	@DataContext('application_fee')
 	def em_fee;
 
-	@Before(pattern="PersistenceService.(create|update)", eval="#{args[0]._schemaname=='application'}") 
-	public void beforeCreateUpdate( evt ) {
+	@Before(pattern="PersistenceService.create", eval="#{args[0]._schemaname=='application'}") 
+	public void beforeCreate( evt ) {
+		def app = evt.args[0]
+		if (app.online == true || app.online == 1) {
+			if ('RENEWAL'.equalsIgnoreCase(app.apptype)) {
+				svc.renewApplication(app);
+			}
+			executeApplicationRule(app)
+		}
+	}
+
+	@Before(pattern="PersistenceService.update", eval="#{args[0]._schemaname=='application'}") 
+	public void beforeUpdate( evt ) {
 		def app = evt.args[0]
 		if (app.online == true || app.online == 1) {
 			ruleSvc.execute(app);
 			updateExpiryDate(app);
 			em_fee.find([parentid: app.objid]).delete();
 		}
+	}
+
+	void executeApplicationRule(app) {
+		ruleSvc.execute(app);
+		updateExpiryDate(app);
+		em_fee.find([parentid: app.objid]).delete();
 	}
 
 	def updateExpiryDate(app) {

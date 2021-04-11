@@ -12,6 +12,9 @@ class ComisReportInterceptor {
 	@DataContext('application')
 	def em_app;
 
+	@DataContext('cemetery')
+	def em_cemetery;
+
 	@DataContext('permit')
 	def em_permit;
 
@@ -25,8 +28,14 @@ class ComisReportInterceptor {
 		def app = em_app.read([objid: appid]);
 		if (!app) throw new Exception('Application does not exist or has already been deleted.')
 
+		def cemetery = em_cemetery.find([objid: app.resourceinfo.parent.parent.parentid]).first();
 		def data = [:]
 		app.applicant.address = app.applicant.address.replaceAll("\n","");
+		app.isoldniche = app.resourceinfo.resource.objid == 'NICHE' && !cemetery.isnew;
+		app.isnewniche = app.resourceinfo.resource.objid == 'NICHE' && cemetery.isnew;
+		app.istomb = app.resourceinfo.resource.objid == 'TOMB';
+		app.ismausoleum = app.resourceinfo.resource.objid == 'MAUSOLEUM';
+		app.isossuary = app.resourceinfo.resource.objid == 'OSSUARY';
 		data.resourceinfo = getResourceInfo(app);
 		data.putAll(app);
 

@@ -44,6 +44,13 @@ class ComisApplicationService {
     }
 
     @ProxyMethod
+    public void renewApplication(app) {
+        def prevapp = em_application.read([objid: app.prevapp.objid]);
+        app.deceased = prevapp.deceased;
+        app.resourceinfo = prevapp.resourceinfo;
+    }
+
+    @ProxyMethod
     public def submitForApproval(entity) {
         def old = em_application.read(entity);
 
@@ -95,10 +102,17 @@ class ComisApplicationService {
         permit.payment = pmt;
         permit = em_permit.create(permit);
 
+        entity.permit = permit;
+        entity.permitid = permit.objid;
+
         entity.state = STATE_ACTIVE;
         em_application.find([objid: entity.objid])
                       .update([state: entity.state, permitid: permit.objid]);
 
+        if (entity.apptype == 'RENEWAL') {
+            em_application.find([objid: entity.prevappid]).update([state: STATE_RENEWED]);
+            em_cemetery_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
+        }
         return entity;
     }
 
