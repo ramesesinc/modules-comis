@@ -45,6 +45,7 @@ class ComisApplicationService {
 
     @ProxyMethod
     public void renewApplication(app) {
+        if (!app.renewable) throw new Exception('Application is not renewable.');
         def prevapp = em_application.read([objid: app.prevapp.objid]);
         app.deceased = prevapp.deceased;
         app.resourceinfo = prevapp.resourceinfo;
