@@ -1,15 +1,15 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
-        schemaName="vw_cemetery_section_resource"
-        entitySchemaName="cemetery_section_resource" 
+        entitySchemaName="cemetery_resource" 
+        schemaName="vw_cemetery_resource"
         allowCreate="#{caller.caller.cemetery.state != 'DRAFT'}"
         allowEdit="#{entity.state == 'DRAFT'}"
 >
     <invokers>
-        <invoker type="cemetery_section_resource:create" caption="Section Resource (New)" 
+        <invoker type="cemetery_resource:create" caption="Section Resource (New)" 
                  action="create"  
                  target="popup"
         />
-        <invoker type="cemetery_section_resource:open" caption="Section Resource" 
+        <invoker type="cemetery_resource:open" caption="Section Resource" 
                  action="open"  
                  target="popup"
         />
@@ -27,8 +27,8 @@
         />
         
     </invokers>
-    <code class="comis.models.CemeterySectionResourceModel" />
+    <code class="comis.models.CemeteryResourceModel" />
     <pages>
-        <page template="comis.views.CemeterySectionResourcePage" />
+        <page template="comis.views.CemeteryResourcePage" />
     </pages>
 </workunit>

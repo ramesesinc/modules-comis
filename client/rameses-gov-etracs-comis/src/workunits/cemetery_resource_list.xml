@@ -1,6 +1,6 @@
 <workunit extends="com/rameses/seti2/templates/CrudList.xml" 
-    entitySchemaName="cemetery_section_resource" 
-    schemaName="vw_cemetery_section_resource" 
+    entitySchemaName="cemetery_resource" 
+    schemaName="vw_cemetery_resource" 
     allowFilter="false"
     allowPrint="false"
     allowShowCols="false"
@@ -8,11 +8,11 @@
     orderBy="code"
 >
     <invokers>
-        <invoker type="cemetery_section_resources:view" 
+        <invoker type="cemetery_resource:list" 
             action="init"
             cols="code,name,areasqm,resource.type,state,appno,apptype,applicant.name,deceased.name" 
-            caption="Section Resources" />
+            caption="Resources" />
                
     </invokers>
-    <code class="comis.models.CemeterySectionResourceListModel" />
+    <code class="comis.models.CemeteryResourceListModel" />
 </workunit>

@@ -5,9 +5,9 @@
 package comis.views;
 
 import com.rameses.rcp.ui.annotations.Template;
-import com.rameses.seti2.views.CrudFormPage;
+import com.rameses.seti2.views.CrudListPage;
 
-@Template(CrudFormPage.class)
+@Template(CrudListPage.class)
 public class CemeteryPage extends javax.swing.JPanel {
 
     /**
@@ -26,19 +26,22 @@ public class CemeteryPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xTextField3 = new com.rameses.rcp.control.XTextField();
         xCheckBox1 = new com.rameses.rcp.control.XCheckBox();
-        xPanel1 = new com.rameses.rcp.control.XPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jSplitPane1 = new javax.swing.JSplitPane();
         xSubFormPanel3 = new com.rameses.rcp.control.XSubFormPanel();
-        jPanel1 = new javax.swing.JPanel();
-        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
-        xComboBox1 = new com.rameses.rcp.control.XComboBox();
+        jSplitPane4 = new javax.swing.JSplitPane();
+        xSubFormPanel1 = new com.rameses.rcp.control.XSubFormPanel();
         xSubFormPanel2 = new com.rameses.rcp.control.XSubFormPanel();
+
+        setLayout(new java.awt.BorderLayout());
+
+        xFormPanel1.setPreferredSize(new java.awt.Dimension(190, 100));
 
         xLabel1.setCaption("State");
         xLabel1.setExpression("#{entity.state}");
@@ -64,114 +67,97 @@ public class CemeteryPage extends javax.swing.JPanel {
         xTextField3.setRequired(true);
         xFormPanel1.add(xTextField3);
 
-        xCheckBox1.setCellPadding(new java.awt.Insets(0, 80, 0, 0));
         xCheckBox1.setShowCaption(false);
         xCheckBox1.setText("Is new?");
         xFormPanel1.add(xCheckBox1);
 
-        xPanel1.setVisibleWhen("#{mode != 'create'}");
-        xPanel1.setLayout(new java.awt.BorderLayout());
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(346, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        xSubFormPanel3.setDepends(new String[] {"entity"});
+        add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jSplitPane1.setDividerLocation(350);
+
         xSubFormPanel3.setHandler("sectionsOpener");
-        xSubFormPanel3.setDynamic(true);
+        xSubFormPanel3.setName("selectedSection"); // NOI18N
 
         javax.swing.GroupLayout xSubFormPanel3Layout = new javax.swing.GroupLayout(xSubFormPanel3);
         xSubFormPanel3.setLayout(xSubFormPanel3Layout);
         xSubFormPanel3Layout.setHorizontalGroup(
             xSubFormPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 726, Short.MAX_VALUE)
+            .addGap(0, 349, Short.MAX_VALUE)
         );
         xSubFormPanel3Layout.setVerticalGroup(
             xSubFormPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Sections", xSubFormPanel3);
+        jSplitPane1.setLeftComponent(xSubFormPanel3);
 
-        xComboBox1.setCaption("Section");
-        xComboBox1.setExpression("#{item.name}");
-        xComboBox1.setItems("sections");
-        xComboBox1.setName("selectedSection"); // NOI18N
-        xComboBox1.setAllowNull(false);
-        xComboBox1.setDynamic(true);
-        xComboBox1.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel2.add(xComboBox1);
+        jSplitPane4.setDividerLocation(350);
+
+        xSubFormPanel1.setDepends(new String[] {"selectedBlock"});
+        xSubFormPanel1.setHandler("resourcesOpener");
+        xSubFormPanel1.setName("selectedResource"); // NOI18N
+        xSubFormPanel1.setDynamic(true);
+
+        javax.swing.GroupLayout xSubFormPanel1Layout = new javax.swing.GroupLayout(xSubFormPanel1);
+        xSubFormPanel1.setLayout(xSubFormPanel1Layout);
+        xSubFormPanel1Layout.setHorizontalGroup(
+            xSubFormPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        xSubFormPanel1Layout.setVerticalGroup(
+            xSubFormPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 295, Short.MAX_VALUE)
+        );
+
+        jSplitPane4.setRightComponent(xSubFormPanel1);
 
         xSubFormPanel2.setDepends(new String[] {"selectedSection"});
-        xSubFormPanel2.setHandler("resourceOpener");
+        xSubFormPanel2.setHandler("blocksOpener");
+        xSubFormPanel2.setName("selectedBlock"); // NOI18N
         xSubFormPanel2.setDynamic(true);
 
         javax.swing.GroupLayout xSubFormPanel2Layout = new javax.swing.GroupLayout(xSubFormPanel2);
         xSubFormPanel2.setLayout(xSubFormPanel2Layout);
         xSubFormPanel2Layout.setHorizontalGroup(
             xSubFormPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 349, Short.MAX_VALUE)
         );
         xSubFormPanel2Layout.setVerticalGroup(
             xSubFormPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
+            .addGap(0, 295, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(xFormPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 368, Short.MAX_VALUE))
-                    .addComponent(xSubFormPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(xFormPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(xSubFormPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jSplitPane4.setLeftComponent(xSubFormPanel2);
 
-        jTabbedPane1.addTab("Resources", jPanel1);
+        jSplitPane1.setRightComponent(jSplitPane4);
 
-        xPanel1.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(xPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(xPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane4;
     private com.rameses.rcp.control.XCheckBox xCheckBox1;
-    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XLabel xLabel1;
-    private com.rameses.rcp.control.XPanel xPanel1;
+    private com.rameses.rcp.control.XSubFormPanel xSubFormPanel1;
     private com.rameses.rcp.control.XSubFormPanel xSubFormPanel2;
     private com.rameses.rcp.control.XSubFormPanel xSubFormPanel3;
     private com.rameses.rcp.control.XTextField xTextField1;

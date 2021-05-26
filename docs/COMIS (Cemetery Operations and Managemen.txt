@@ -1,0 +1,21 @@
+COMIS (Cemetery Operations and Management Information System)
+
+* Cemetery Resource Management 
+    - Manage Cemeteries, sections, blocks and resources e.g. Niche, Tomb, Mausoluem and Ossuary 
+    - Tracking, monitoring and allocation of resources
+
+* Burial Permit Application
+    - Application for New, Renewal and Cancellation of burial permit application 
+    - Automated computation of fees, surcharges and penalties based on cemetery resources 
+
+* Online Transactions Support 
+    - Online renewal of burial permit application 
+    - Online payment of application 
+
+* Work Order Management 
+    - Scheduling, tracking and monitoring of work orders such as resource maintenance
+    - Effective allocation of cemetery personnels
+
+* Records Management 
+    - Archiving of historical burial records and applications 
+    - Efficient search and query facilities on burial records and applications

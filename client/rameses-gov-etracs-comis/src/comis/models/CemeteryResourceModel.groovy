@@ -4,7 +4,7 @@ import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
 import com.rameses.seti2.models.CrudFormModel;
 
-class CemeterySectionResourceModel extends CrudFormModel {
+class CemeteryResourceModel extends CrudFormModel {
     @Caller
     def caller;
     
@@ -30,11 +30,14 @@ class CemeterySectionResourceModel extends CrudFormModel {
     }
     
     void beforeSave(mode){
-        entity.parentid = caller.section.objid;
+        entity.parent = caller.parent;
+        entity.parentid = caller.parent.objid;
     }
     
     void afterSave(){
-        caller.reload();
+        if (mode == 'create') {
+            caller.reload();
+        }
     }
     
     void approve() {

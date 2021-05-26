@@ -5,6 +5,7 @@ import com.rameses.rcp.annotations.*;
 import com.rameses.osiris2.client.*;
 import com.rameses.osiris2.common.*;
 import com.rameses.seti2.models.CrudFormModel;
+import system.explorer.*;
 
 class CemeteryModel extends CrudFormModel {
     @Binding
@@ -12,21 +13,14 @@ class CemeteryModel extends CrudFormModel {
     
     @Service('ComisCemeteryService')
     def svc;
-    
-    def sections;
-    
+
     
     boolean isShowConfirm() {
         return false;
     }
     
-    void afterInit(){
-        sections = svc.getSections(entity);
-    }
-    
     void afterCreate(){
         entity.isnew = true;
-        sections = [];
     }
     
     void approve() {
@@ -42,27 +36,50 @@ class CemeteryModel extends CrudFormModel {
             refresh();
         }
     }    
-    
 
-    /*==============================
-     * SECTIONS SUPPORT 
-     * ============================*/
-    def refreshSections = {
-        sections = svc.getSections(entity);
-        binding.refresh("selectedSection");
-    }
-    
-    def getSectionsOpener() {
-        return Inv.lookupOpener('cemetery_sections:view', [cemetery: entity, refreshSections: refreshSections]);
-    }
-    
-    
-    /*==============================
-     * RESOURCE SUPPORT 
-     * ============================*/
+
+    /* SECTIONS */
     def selectedSection;
-    
-    def getResourceOpener() {
-        return Inv.lookupOpener('cemetery_section_resources:view', [section: selectedSection])
+
+    def getSectionsOpener() {
+        return Inv.lookupOpener('cemetery_section:list', [parent: entity])
+    }
+
+    void setSection(section) {
+        selectedSection = section;
+        if (!section) {
+            selectedBlock = null;
+            selectedResource = null;
+        }
+        binding.refresh("selectedBlock|selectedResource");
+    }
+
+    /* BLOCKS */
+    def selectedBlock;
+
+    def getBlocksOpener() {
+        if (selectedSection) {
+            return Inv.lookupOpener('cemetery_block:list', [parent: selectedSection])
+        }
+        return null;
+    }
+
+    void setBlock(block) {
+        selectedBlock = block;
+        binding.refresh("selectedResource")
+    }
+
+    /* RESOURCES */
+    def selectedResource;
+
+    def getResourcesOpener() {
+        if (selectedBlock) {
+            return Inv.lookupOpener('cemetery_resource:list', [parent: selectedBlock])
+        }
+        return null;
+    }
+
+    void setResource(resource) {
+        selectedResource = resource;
     }
 }
