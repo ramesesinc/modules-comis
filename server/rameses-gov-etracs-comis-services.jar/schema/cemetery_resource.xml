@@ -1,12 +1,12 @@
 <schema>
-    <element tablename="cemetery_section_resource">
+    <element tablename="cemetery_section_block_resource">
         <field name="objid" primary="true" prefix="CSR" />
         <field name="parentid" required="true" />
         <field name="code" required="true" />
         <field name="name" required="true" />
         <field name="currentinfoid" />
         <field name="currentappid" />
-        <complex name="parent" ref="cemetery_section" jointype="many-to-one" required="true">
+        <complex name="parent" ref="cemetery_block" jointype="many-to-one" required="true">
             <key field="parentid" target="objid" />
         </complex>
     </element>

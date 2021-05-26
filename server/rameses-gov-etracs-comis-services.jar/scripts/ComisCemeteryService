@@ -8,14 +8,14 @@ class ComisCemeteryService {
     @DataContext('cemetery_section')
     def em_section;
 
-    @DataContext('cemetery_section_resource')
-    def em_section_resource;
+    // @DataContext('cemetery_section_resource')
+    // def em_section_resource;
 
-    @DataContext('cemetery_section_resource_info')
-    def em_section_resource_info;
+    // @DataContext('cemetery_section_resource_info')
+    // def em_section_resource_info;
 
-    @DataContext('vw_cemetery_section_resource')
-    def vw_section_resource;
+    // @DataContext('vw_cemetery_section_resource')
+    // def vw_section_resource;
 
 
     def DRAFT_STATE = 'DRAFT';
@@ -57,77 +57,77 @@ class ComisCemeteryService {
     }
 
 
-	@ProxyMethod
-    public def approveSection(section) {
-        def old = em_section.read(section);
-        if (!old) 
-        throw new Exception('Section does not exist or has already been deleted');
+	// @ProxyMethod
+    // public def approveSection(section) {
+    //     def old = em_section.read(section);
+    //     if (!old) 
+    //     throw new Exception('Section does not exist or has already been deleted');
 
-        if (INACTIVE_STATE.equalsIgnoreCase(old.state)) 
-        throw new Exception('Section has already been deactivated');
+    //     if (INACTIVE_STATE.equalsIgnoreCase(old.state)) 
+    //     throw new Exception('Section has already been deactivated');
         
-        if (DRAFT_STATE.equalsIgnoreCase(old.state)) {
-            section.state = ACTIVE_STATE;
-            em_section.update(section);
-        }
-        return section;
-    }
+    //     if (DRAFT_STATE.equalsIgnoreCase(old.state)) {
+    //         section.state = ACTIVE_STATE;
+    //         em_section.update(section);
+    //     }
+    //     return section;
+    // }
     
-	@ProxyMethod
-    public def deactivateSection(section) {
-        def old = em_section.read(section);
-        if (!old) 
-        throw new Exception('Section does not exist or has already been deleted');
+	// @ProxyMethod
+    // public def deactivateSection(section) {
+    //     def old = em_section.read(section);
+    //     if (!old) 
+    //     throw new Exception('Section does not exist or has already been deleted');
 
-        section.state = INACTIVE_STATE;
-        em_section.update(section);
-        return section;
-    }
+    //     section.state = INACTIVE_STATE;
+    //     em_section.update(section);
+    //     return section;
+    // }
 
-    @ProxyMethod
-    public def deleteSection(section) {
-        em_section.delete(section);
-        return section;
-    }
+    // @ProxyMethod
+    // public def deleteSection(section) {
+    //     em_section.delete(section);
+    //     return section;
+    // }
 
 
-    @ProxyMethod
-    public def getSectionResources(section) {
-        return vw_section_resource.find([parentid: section.objid]).orderBy('code').list();
-    }
+    // @ProxyMethod
+    // public def getSectionResources(section) {
+    //     return vw_section_resource.find([parentid: section.objid]).orderBy('code').list();
+    // }
 
-	@ProxyMethod
-    public def approveResource(resource) {
-        def old = vw_section_resource.find([objid: resource.objid]).first();
-        if (!old) 
-        throw new Exception('Resource does not exist or has already been deleted');
+	// @ProxyMethod
+    // public def approveResource(resource) {
+    //     def old = vw_section_resource.find([objid: resource.objid]).first();
+    //     if (!old) 
+    //     throw new Exception('Resource does not exist or has already been deleted');
 
-        if (INACTIVE_STATE.equalsIgnoreCase(old.state)) 
-        throw new Exception('Resource has already been deactivated');
+    //     if (INACTIVE_STATE.equalsIgnoreCase(old.state)) 
+    //     throw new Exception('Resource has already been deactivated');
         
-        if (DRAFT_STATE.equalsIgnoreCase(old.state)) {
-            resource.state = ACTIVE_STATE;
-            em_section_resource_info.find([objid: resource.currentinfoid]).update([state: resource.state])
-        }
-        return resource;
-    }
+    //     if (DRAFT_STATE.equalsIgnoreCase(old.state)) {
+    //         resource.state = ACTIVE_STATE;
+    //         em_section_resource_info.find([objid: resource.currentinfoid]).update([state: resource.state])
+    //     }
+    //     return resource;
+    // }
     
-	@ProxyMethod
-    public def deactivateResource(resource) {
-        def old = vw_section_resource.find([objid: resource.objid]).first();
-        if (!old) 
-        throw new Exception('Resource does not exist or has already been deleted');
+	// @ProxyMethod
+    // public def deactivateResource(resource) {
+    //     def old = vw_section_resource.find([objid: resource.objid]).first();
+    //     if (!old) 
+    //     throw new Exception('Resource does not exist or has already been deleted');
 
-        resource.state = INACTIVE_STATE;
-        em_section_resource_info.find([objid: resource.currentinfoid]).update([state: resource.state])
-        return resource;
-    }
+    //     resource.state = INACTIVE_STATE;
+    //     em_section_resource_info.find([objid: resource.currentinfoid]).update([state: resource.state])
+    //     return resource;
+    // }
 
-    @ProxyMethod
-    public def deleteSectionResource(resource) {
-        em_section_resource.delete(resource);
-        em_section_resource_info.find([objid: resource.currentinfoid]).delete();
-        return resource;
-    }
+    // @ProxyMethod
+    // public def deleteSectionResource(resource) {
+    //     em_section_resource.delete(resource);
+    //     em_section_resource_info.find([objid: resource.currentinfoid]).delete();
+    //     return resource;
+    // }
 
 }

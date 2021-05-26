@@ -23,6 +23,10 @@
         <field name="deceased_sex" caption="Sex" />
         <field name="deceased_age" caption="Age" />
         <field name="deceased_causeofdeath" caption="Cause of Death" />
-        <field name="cemeteryid" />
+        <field name="cemetery_objid" />
+        <field name="cemetery_code" caption="Cemetery Code"  />
+        <field name="cemetery_name" caption="Cemetery" searchable="true"  />
+        <field name="cemetery_location" caption="Location" />
+        <field name="cemetery_isnew" caption="New?"/>
     </element>
 </schema>

@@ -1,5 +1,5 @@
 <schema>
-    <element tablename="cemetery_section_resource_info">
+    <element tablename="cemetery_section_block_resource_info">
         <field name="objid" primary="true" prefix="CRSI" />
         <field name="parentid" required="true" />
         <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT"/>
@@ -13,7 +13,7 @@
         <complex name="resource" ref="resource" jointype="many-to-one" required="true">
             <key field="resource_objid" target="objid" />
         </complex>
-        <complex name="parent" ref="cemetery_section_resource" jointype="many-to-one" required="true">
+        <complex name="parent" ref="cemetery_resource" jointype="many-to-one" required="true">
             <key field="parentid" target="objid" />
         </complex>
     </element>
