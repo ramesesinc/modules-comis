@@ -4,7 +4,7 @@ import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
 import com.rameses.seti2.models.CrudListModel;
 
-class CemeterySectionListModel extends CrudListModel {
+class CemeteryBlockListModel extends CrudListModel {
     @Caller 
     def caller;
 
@@ -17,7 +17,15 @@ class CemeterySectionListModel extends CrudListModel {
 
     public void setSelectedItem(item) {
         super.setSelectedItem(item);
-        caller.setSection(item);
+        caller.setBlock(item);
+    }
+
+    public def fetchList(o) {
+        def list = super.fetchList(o);
+        if (!list) {
+            caller.setBlock(null);
+        }
+        return list;
     }
 
 }

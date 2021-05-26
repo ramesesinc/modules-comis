@@ -1,5 +1,5 @@
 <workunit extends="com/rameses/seti2/templates/CrudList.xml" 
-    schemaName="cemetery_section" 
+    schemaName="cemetery_block" 
     allowFilter="false"
     allowPrint="false"
     allowShowCols="false"
@@ -8,11 +8,11 @@
     orderBy="code"
 >
     <invokers>
-        <invoker type="cemetery_section:list" 
+        <invoker type="cemetery_block:list" 
             action="init"
             cols="code,name,state" 
-            caption="Sections" />
+            caption="Blocks" />
                
     </invokers>
-    <code class="comis.models.CemeterySectionListModel" />
+    <code class="comis.models.CemeteryBlockListModel" />
 </workunit>

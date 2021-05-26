@@ -4,14 +4,13 @@ import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
 import com.rameses.seti2.models.CrudListModel;
 
-class CemeterySectionResourceListModel extends CrudListModel {
+class CemeteryResourceListModel extends CrudListModel {
     
-    def section;
-    
+    def parent;
     boolean showClose = false;
     
     def getCustomFilter() {
-        return ["parentid = :objid", section ? section : [:]];
+        return ["parentid = :objid", parent ? parent : [:]];
     }    
     
 }
