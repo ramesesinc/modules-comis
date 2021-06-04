@@ -36,6 +36,7 @@ class ComisCemeteryInterceptor {
 		info.state = 'DRAFT';
 		info = em_cemetery_resource_info.create(info);
 		em_cemetery_resource.find([objid: resource.objid]).update([currentinfoid: info.objid]);
+		resource.currentinfoid = info.objid;
 	}	
 
 	@After(pattern="PersistenceService.update", eval="#{ args[0]._schemaname == 'cemetery_resource' }")
