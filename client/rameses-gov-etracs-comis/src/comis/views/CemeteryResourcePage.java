@@ -31,8 +31,8 @@ public class CemeteryResourcePage extends javax.swing.JPanel {
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
-        xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
         xDecimalField3 = new com.rameses.rcp.control.XDecimalField();
+        xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
         xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
 
         xLabel1.setCaption("State");
@@ -61,13 +61,13 @@ public class CemeteryResourcePage extends javax.swing.JPanel {
         xLookupField1.setRequired(true);
         xFormPanel1.add(xLookupField1);
 
-        xDecimalField2.setCaption("Length");
-        xDecimalField2.setName("entity.length"); // NOI18N
-        xFormPanel1.add(xDecimalField2);
-
         xDecimalField3.setCaption("Width");
         xDecimalField3.setName("entity.width"); // NOI18N
         xFormPanel1.add(xDecimalField3);
+
+        xDecimalField2.setCaption("Length");
+        xDecimalField2.setName("entity.length"); // NOI18N
+        xFormPanel1.add(xDecimalField2);
 
         xDecimalField1.setCaption("Area (sqm)");
         xDecimalField1.setDepends(new String[] {"entity.length", "entity.width"});

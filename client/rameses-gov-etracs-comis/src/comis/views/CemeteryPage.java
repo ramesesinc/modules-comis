@@ -5,9 +5,9 @@
 package comis.views;
 
 import com.rameses.rcp.ui.annotations.Template;
-import com.rameses.seti2.views.CrudListPage;
+import com.rameses.seti2.views.CrudFormPage;
 
-@Template(CrudListPage.class)
+@Template(CrudFormPage.class)
 public class CemeteryPage extends javax.swing.JPanel {
 
     /**
@@ -67,6 +67,7 @@ public class CemeteryPage extends javax.swing.JPanel {
         xTextField3.setRequired(true);
         xFormPanel1.add(xTextField3);
 
+        xCheckBox1.setName("entity.isnew"); // NOI18N
         xCheckBox1.setShowCaption(false);
         xCheckBox1.setText("Is new?");
         xFormPanel1.add(xCheckBox1);

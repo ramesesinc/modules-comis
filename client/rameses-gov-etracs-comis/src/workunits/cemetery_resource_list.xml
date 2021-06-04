@@ -10,7 +10,7 @@
     <invokers>
         <invoker type="cemetery_resource:list" 
             action="init"
-            cols="code,name,areasqm,resource.type,state,appno,apptype,applicant.name,deceased.name" 
+            cols="state,code,name,areasqm,resource.type,appno,apptype,applicant.name,deceased.name" 
             caption="Resources" />
                
     </invokers>
