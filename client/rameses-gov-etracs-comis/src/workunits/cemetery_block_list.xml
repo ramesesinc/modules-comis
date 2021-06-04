@@ -3,14 +3,13 @@
     allowFilter="false"
     allowPrint="false"
     allowShowCols="false"
-    allowDelete="#{entity &amp;&amp; entity.state == 'DRAFT'}"
     width="350"
     orderBy="code"
 >
     <invokers>
         <invoker type="cemetery_block:list" 
             action="init"
-            cols="code,name,state" 
+            cols="code,name" 
             caption="Blocks" />
                
     </invokers>

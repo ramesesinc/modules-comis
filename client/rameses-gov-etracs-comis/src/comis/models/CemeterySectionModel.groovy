@@ -11,26 +11,8 @@ class CemeterySectionModel extends CrudFormModel {
     @Service('ComisCemeteryService')
     def svc;
     
-    public void afterOpen(){
-        updateAllowCreate();
-    }
-    
-    public void afterCreate(){
-        updateAllowCreate();
-    }
-    
     public void afterSave(){
-        if (mode == 'create') {
-            caller.reload();
-        }
-        updateAllowCreate();
-    }
-    
-    void updateAllowCreate() {
-        entity.allowcreate = false;
-        if (caller.entityContext) {
-            entity.allowcreate = caller.entityContext.state != 'INACTIVE';
-        }
+        caller.reload();
     }
     
     boolean isShowConfirm() {
@@ -41,17 +23,4 @@ class CemeterySectionModel extends CrudFormModel {
         entity.parentid = caller.parent.objid;
     }
     
-    void approve() {
-        if (MsgBox.confirm('Approve section?')) {
-            entity.putAll(svc.approveSection(entity));
-            caller.reload();
-        }
-    }
-    
-    void deactivate() {
-        if (MsgBox.confirm('Deactivate section?')) {
-            entity.putAll(svc.deactivateSection(entity));
-            caller.reload();
-        }
-    }
 }

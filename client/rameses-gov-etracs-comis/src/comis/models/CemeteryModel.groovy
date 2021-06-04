@@ -26,14 +26,12 @@ class CemeteryModel extends CrudFormModel {
     void approve() {
         if (MsgBox.confirm('Approve cemtery?')) {
             entity.putAll(svc.approve(entity));
-            refresh();
         }
     }
     
     void deactivate() {
         if (MsgBox.confirm('Deactivate cemetery?')) {
             entity.putAll(svc.deactivate(entity));
-            refresh();
         }
     }    
 

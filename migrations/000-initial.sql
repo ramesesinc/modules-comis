@@ -63,11 +63,11 @@ CREATE TABLE `application` (
   KEY `ix_apptype` (`apptype`) USING BTREE,
   KEY `fk_application_permit` (`permitid`),
   KEY `fk_application_prevapplication` (`prevappid`),
-  CONSTRAINT `fk_application_prevapplication` FOREIGN KEY (`prevappid`) REFERENCES `application` (`objid`),
   CONSTRAINT `fk_application_deceassed` FOREIGN KEY (`deceased_objid`) REFERENCES `deceased` (`objid`),
   CONSTRAINT `fk_application_permit` FOREIGN KEY (`permitid`) REFERENCES `permit` (`objid`),
+  CONSTRAINT `fk_application_prevapplication` FOREIGN KEY (`prevappid`) REFERENCES `application` (`objid`),
   CONSTRAINT `fk_application_relation` FOREIGN KEY (`relation_objid`) REFERENCES `relation` (`objid`),
-  CONSTRAINT `fk_appplication_resourceinfo` FOREIGN KEY (`resourceinfo_objid`) REFERENCES `cemetery_section_resource_info` (`objid`)
+  CONSTRAINT `fk_appplication_resourceinfo` FOREIGN KEY (`resourceinfo_objid`) REFERENCES `cemetery_section_block_resource_info` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -77,7 +77,6 @@ CREATE TABLE `application` (
 
 LOCK TABLES `application` WRITE;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` VALUES ('-2066edb5:178a07da6d9:-7ff9','FORPAYMENT','OLD-L1-T68-B',1,'NEW','202100009','2021-04-05','2021-04-08',2021,'IND-6d75e260:1785cc33da2:-7ebf','DELA CRUZ, MARK VALLE','GUADALUPE, CEBU CITY ','D6186676:178a0ab6ca6:-7e69','BROTHER',NULL,NULL,NULL,NULL,NULL,1,7,3000.00,0.00,'[:]','[:]',NULL,NULL,NULL),('62924a83:1788cb76769:-7ffb','FORPAYMENT','OLD-L1-T68-B',1,'NEW','202100005','2021-04-01','2021-04-05',2021,'IND28edf2e5:1700ea33b05:-797d','ALBEZA, ANNA MAE SENTINAR','VILLA BEACH \nPOBLACION 0001, CADIZ CITY ','D697de194:1788ccedf6a:-7efd','MOTHER',NULL,NULL,'2028-04-05',NULL,NULL,1,7,3000.00,0.00,'[:]','[:]',NULL,NULL,NULL),('APP-308e005d:178bf2fb2fa:-7f07','EXPIRED','OLD-L1-T68-B',1,'RENEWAL','202100013','2021-04-11','2021-04-11',2021,'IND28edf2e5:1700ea33b05:-7b2a','ALBEZA, ANGELITO BATUIGAS','VILLA BEACH POBLACION 0001, CADIZ CITY ','D5e040724:178af801079:-7ae0','BROTHER',NULL,NULL,'2021-04-11',NULL,'P3364c48c:178bf2fefc3:-7ffb',1,7,3000.00,3000.00,'[name:\"MAYOR NAME\",title:\"MAYOR TITLE\",ctcplaceissued:\"LIGAO\",ctcno:\"13312\",ctcdtissued:\"2021-04-11\"]','[ctcplaceissued:\"LIGAO\",ctcno:\"939393\",ctcdtissued:\"2021-04-11\"]',NULL,NULL,'APP5e040724:178af801079:-7b26'),('APP-6260b073:178bf6a71cf:-7f07','ACTIVE','CSRf0b5b13:1788ae4c2e9:-7e6f',1,'NEW','202100014','2021-04-11','2021-04-11',2021,'IND-37e8944f:157f477fd76:-7aa5','TORRES, MAY ALBA','CABAHUG ST. ANDREA VILLAGE POBLACION 0001, CADIZ CITY ','D-6260b073:178bf6a71cf:-7e7d','BROTHER',NULL,NULL,'2028-04-11',NULL,'P41c71e0d:178bf6dc13c:-7ffc',1,7,3000.00,3000.00,'[name:\"MAYOR NAME\",title:\"MAYOR TITLE\",ctcplaceissued:\"LIGAO\",ctcno:\"2342342\",ctcdtissued:\"2021-04-11\"]','[ctcplaceissued:\"LIGAO\",ctcno:\"9849494\",ctcdtissued:\"2021-04-11\"]',NULL,NULL,NULL),('APP2fcb17cb:178ba5bf82a:-7e6c','FORPAYMENT','CSR444f92c4:178b55b4079:-7e65',1,'NEW','202100012','2021-04-10','2021-04-10',2021,'IND28edf2e5:1700ea33b05:-7b2a','ALBEZA, ANGELITO BATUIGAS','VILLA BEACH \nPOBLACION 0001, CADIZ CITY ','D2fcb17cb:178ba5bf82a:-7deb','BROTHER',NULL,NULL,'2028-04-10',NULL,NULL,1,7,3000.00,0.00,'[name:\"MAYOR NAME\",title:\"CITY MAYOR\",ctcno:\"9292929\",ctcplaceissued:\"LIGAO CITY\",ctcdtissued:\"2021-04-10\"]','[ctcplaceissued:\"LIGAO CITY\",ctcno:\"939393\",ctcdtissued:\"2021-01-05\"]','JUAN DELA CRUZ','MARIA SANTOS',NULL),('APP3d84c3c:178b54b8160:-7f07','ACTIVE','OLD-L1-T68-B',0,'NEW','C-001','2021-04-09','2021-01-05',2021,'IND-6d75e260:1785cc33da2:-7cd0','SANTOS, JOAN YAP','GUADALUPE, CEBU CITY ','D3d84c3c:178b54b8160:-7ecf','BROTHER',NULL,NULL,'2028-01-05',NULL,NULL,1,7,0.00,0.00,'[:]','[:]',NULL,NULL,NULL),('APP5e040724:178af801079:-7b26','RENEWED','OLD-L1-T68-B',1,'NEW','202100011','2021-04-08','2021-04-08',2021,'IND-6d75e260:1785cc33da2:-7ebf','DELA CRUZ, MARK VALLE','GUADALUPE, CEBU CITY ','D5e040724:178af801079:-7ae0','BROTHER',NULL,NULL,'2028-04-08',NULL,'P-3cd32cab:178b53ec895:-7ff9',1,7,3000.00,3000.00,'[:]','[:]',NULL,NULL,NULL),('APP710314c8:178bf9018a2:-7ec7','EXPIRED','CSR6020185:178a06ffea4:-7726',0,'RENEWAL','121111','2021-04-11','2021-04-11',2021,'IND28edf2e5:1700ea33b05:-797d','ALBEZA, ANNA MAE SENTINAR','VILLA BEACH POBLACION 0001, CADIZ CITY ','D710314c8:178bf9018a2:-7e41','BROTHER',NULL,NULL,'2021-04-11',NULL,NULL,0,0,0.00,0.00,'[name:\"MAYOR NAME\",title:\"MAYOR TITLE\",ctcplaceissued:\"-\"]','[ctcplaceissued:\"-\"]',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +109,6 @@ CREATE TABLE `application_fee` (
 
 LOCK TABLES `application_fee` WRITE;
 /*!40000 ALTER TABLE `application_fee` DISABLE KEYS */;
-INSERT INTO `application_fee` VALUES ('AI-1b121729:178ba68bbf4:-8000','APP2fcb17cb:178ba5bf82a:-7e6c','BPA',3000.00,0.00,NULL),('AI-466f271f:178a22788b1:-8000','62924a83:1788cb76769:-7ffb','BPF',3000.00,0.00,NULL),('AI-6acff388:178af8d5bc5:-7ff9','APP5e040724:178af801079:-7b26','BPA',3000.00,3000.00,NULL),('AI-6acff388:178af8d5bc5:-7fff','-2066edb5:178a07da6d9:-7ff9','BPF',3000.00,0.00,NULL),('AI3364c48c:178bf2fefc3:-7fff','APP-308e005d:178bf2fb2fa:-7f07','BPA',3000.00,3000.00,NULL),('AI41c71e0d:178bf6dc13c:-8000','APP-6260b073:178bf6a71cf:-7f07','BPA',3000.00,3000.00,NULL);
 /*!40000 ALTER TABLE `application_fee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +161,7 @@ CREATE TABLE `causeofdeath` (
 
 LOCK TABLES `causeofdeath` WRITE;
 /*!40000 ALTER TABLE `causeofdeath` DISABLE KEYS */;
-INSERT INTO `causeofdeath` VALUES ('ACCIDENT','ACTIVE','ACCIDENT'),('COVID19','ACTIVE','COVID 19'),('NATURAL','ACTIVE','NATURAL');
+INSERT INTO `causeofdeath` VALUES ('ACCIDENT','ACTIVE','ACCIDENT'),('COVID19','ACTIVE','COVID 19'),('HYPERTENSION','ACTIVE','HYPER-TENSION'),('NATURAL','ACTIVE','NATURAL');
 /*!40000 ALTER TABLE `causeofdeath` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +192,7 @@ CREATE TABLE `cemetery` (
 
 LOCK TABLES `cemetery` WRITE;
 /*!40000 ALTER TABLE `cemetery` DISABLE KEYS */;
-INSERT INTO `cemetery` VALUES ('C168ffcd2:1788b04e986:-7d0d','DRAFT','TEST','TEST','TEST',NULL),('NEW','ACTIVE','NEW','NEW CEMETERY','POBLACION, LIGAO CITY',1),('OLD','ACTIVE','OLD','OLD CEMETERY','MAIN, LIGAO CITY',0);
+INSERT INTO `cemetery` VALUES ('CEM-NEW','ACTIVE','NEW','NEW CEMETERY','NEW LOCATION',1),('CEM-OLD','DRAFT','OLD','OLD CEMETERY','OLD LOCATION',0);
 /*!40000 ALTER TABLE `cemetery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,18 +225,51 @@ CREATE TABLE `cemetery_section` (
 
 LOCK TABLES `cemetery_section` WRITE;
 /*!40000 ALTER TABLE `cemetery_section` DISABLE KEYS */;
-INSERT INTO `cemetery_section` VALUES ('-ab2404b:1788644c3c8:-7ffe','INACTIVE','NEW','L3','LAYER 3',NULL),('CS165f6423:1788794effd:-7f01','INACTIVE','NEW','L4','LAYER 4',NULL),('CSf0b5b13:1788ae4c2e9:-7e9f','ACTIVE','OLD','L3','LAYER 3',NULL),('CSf6ba189:1776644f9b0:-7ef9','ACTIVE','OLD','L2','LAYER 2',NULL),('NEW-L1','ACTIVE','NEW','L1','LAYER 1',NULL),('NEW-L2','ACTIVE','NEW','L2','LAYER 2',NULL),('OLD-L1','ACTIVE','OLD','L1','LAYER 1',NULL);
+INSERT INTO `cemetery_section` VALUES ('CEM-NEW-S01','ACTIVE','CEM-NEW','S-01','SECTION 01',NULL),('CEM-OLD-S02','DRAFT','CEM-OLD','S-01','SECTION 01',NULL);
 /*!40000 ALTER TABLE `cemetery_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cemetery_section_resource`
+-- Table structure for table `cemetery_section_block`
 --
 
-DROP TABLE IF EXISTS `cemetery_section_resource`;
+DROP TABLE IF EXISTS `cemetery_section_block`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cemetery_section_resource` (
+CREATE TABLE `cemetery_section_block` (
+  `objid` varchar(50) NOT NULL,
+  `state` varchar(25) NOT NULL,
+  `parentid` varchar(50) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `ui` text,
+  PRIMARY KEY (`objid`),
+  UNIQUE KEY `ux_parentid_name` (`parentid`,`name`) USING BTREE,
+  UNIQUE KEY `ux_parentid_code` (`parentid`,`code`) USING BTREE,
+  KEY `ix_state` (`state`) USING BTREE,
+  KEY `ix_parentid` (`parentid`) USING BTREE,
+  CONSTRAINT `fk_cemetery_section_block_cemetery_section` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section` (`objid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cemetery_section_block`
+--
+
+LOCK TABLES `cemetery_section_block` WRITE;
+/*!40000 ALTER TABLE `cemetery_section_block` DISABLE KEYS */;
+INSERT INTO `cemetery_section_block` VALUES ('CEM-NEW-S01-B01','DRAFT','CEM-NEW-S01','B-1','BLOCK 1',NULL);
+/*!40000 ALTER TABLE `cemetery_section_block` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cemetery_section_block_resource`
+--
+
+DROP TABLE IF EXISTS `cemetery_section_block_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cemetery_section_block_resource` (
   `objid` varchar(50) NOT NULL,
   `parentid` varchar(50) NOT NULL,
   `code` varchar(10) NOT NULL,
@@ -252,30 +283,30 @@ CREATE TABLE `cemetery_section_resource` (
   UNIQUE KEY `ux_parentid_resourcetypeid_code` (`parentid`,`currentappid`) USING BTREE,
   KEY `ix_parentid` (`parentid`) USING BTREE,
   KEY `ix_currentappid` (`currentappid`),
-  CONSTRAINT `fk_cemetery_section_resource_application` FOREIGN KEY (`currentappid`) REFERENCES `application` (`objid`),
-  CONSTRAINT `fk_cemetery_section_resource_cemetery_section` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section` (`objid`),
-  CONSTRAINT `fk_cemetery_section_resource_cemetery_section_resource_info` FOREIGN KEY (`currentinfoid`) REFERENCES `cemetery_section_resource_info` (`objid`)
+  CONSTRAINT `fk_cemetery_section_block_resource_currentinfoid` FOREIGN KEY (`currentinfoid`) REFERENCES `cemetery_section_block_resource_info` (`objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_currentappid` FOREIGN KEY (`currentappid`) REFERENCES `application` (`objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_parentid` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_block` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cemetery_section_resource`
+-- Dumping data for table `cemetery_section_block_resource`
 --
 
-LOCK TABLES `cemetery_section_resource` WRITE;
-/*!40000 ALTER TABLE `cemetery_section_resource` DISABLE KEYS */;
-INSERT INTO `cemetery_section_resource` VALUES ('CSR-ac24a4b:17890a8641b:-7dcd','OLD-L1','SS','SS','CSR-ac24a4b:17890a8641b:-7dcd',NULL),('CSR444f92c4:178b55b4079:-7e65','CSf0b5b13:1788ae4c2e9:-7e9f','L3-T002','TOMB 002 (LAYER 3)','CSR444f92c4:178b55b4079:-7e65','APP2fcb17cb:178ba5bf82a:-7e6c'),('CSR6020185:178a06ffea4:-7726','NEW-L1','L1-OSS01','OSSUARY 1 (LAYER 1)','CSR6020185:178a06ffea4:-7726','APP710314c8:178bf9018a2:-7ec7'),('CSRf0b5b13:1788ae4c2e9:-7e6f','CSf0b5b13:1788ae4c2e9:-7e9f','L3-T01','L3 TOMB 01','CSRf0b5b13:1788ae4c2e9:-7e6f','APP-6260b073:178bf6a71cf:-7f07'),('OLD-L1-T68','OLD-L1','T68','T68','OLD-L1-T68-B','APP-308e005d:178bf2fb2fa:-7f07');
-/*!40000 ALTER TABLE `cemetery_section_resource` ENABLE KEYS */;
+LOCK TABLES `cemetery_section_block_resource` WRITE;
+/*!40000 ALTER TABLE `cemetery_section_block_resource` DISABLE KEYS */;
+INSERT INTO `cemetery_section_block_resource` VALUES ('CEM-NEW-S01-B01-N01','CEM-NEW-S01-B01','N-01','NICHE 01','CEM-NEW-S01-B01-N01',NULL),('CEM-NEW-S01-B01-N02','CEM-NEW-S01-B01','N-02','NICHE-02','CEM-NEW-S01-B01-N02',NULL);
+/*!40000 ALTER TABLE `cemetery_section_block_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cemetery_section_resource_info`
+-- Table structure for table `cemetery_section_block_resource_info`
 --
 
-DROP TABLE IF EXISTS `cemetery_section_resource_info`;
+DROP TABLE IF EXISTS `cemetery_section_block_resource_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cemetery_section_resource_info` (
+CREATE TABLE `cemetery_section_block_resource_info` (
   `objid` varchar(50) NOT NULL,
   `parentid` varchar(50) NOT NULL,
   `state` varchar(25) NOT NULL,
@@ -290,20 +321,20 @@ CREATE TABLE `cemetery_section_resource_info` (
   KEY `ix_parentid` (`parentid`) USING BTREE,
   KEY `ix_code` (`code`) USING BTREE,
   KEY `ix_name` (`name`) USING BTREE,
-  KEY `fk_cemetery_section_resource_info_resource` (`resource_objid`),
-  CONSTRAINT `fk_cemetery_section_resource_info_cemetery_section_resource` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_resource` (`objid`),
-  CONSTRAINT `fk_cemetery_section_resource_info_resource` FOREIGN KEY (`resource_objid`) REFERENCES `resource` (`objid`)
+  KEY `fk_cemetery_section_block_resource_info_resourceid` (`resource_objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_info_resourceid` FOREIGN KEY (`resource_objid`) REFERENCES `resource` (`objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_info_parentid` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_block_resource` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cemetery_section_resource_info`
+-- Dumping data for table `cemetery_section_block_resource_info`
 --
 
-LOCK TABLES `cemetery_section_resource_info` WRITE;
-/*!40000 ALTER TABLE `cemetery_section_resource_info` DISABLE KEYS */;
-INSERT INTO `cemetery_section_resource_info` VALUES ('CSR-ac24a4b:17890a8641b:-7dcd','CSR-ac24a4b:17890a8641b:-7dcd','ACTIVE','TOMB','SS','SS',3.78,NULL,2.70,1.40),('CSR444f92c4:178b55b4079:-7e65','CSR444f92c4:178b55b4079:-7e65','ACTIVE','TOMB','L3-T002','TOMB 002 (LAYER 3)',3.78,NULL,2.70,1.40),('CSR6020185:178a06ffea4:-7726','CSR6020185:178a06ffea4:-7726','ACTIVE','OSSUARY','L1-OSS01','OSSUARY 1 (LAYER 1)',3.78,NULL,2.70,1.40),('CSRf0b5b13:1788ae4c2e9:-7e6f','CSRf0b5b13:1788ae4c2e9:-7e6f','ACTIVE','TOMB','L3-T01','L3 TOMB 01',3.78,NULL,2.70,1.40),('OLD-L1-T68-A','OLD-L1-T68','ACTIVE','TOMB','T68','T68',3.78,NULL,2.70,1.40),('OLD-L1-T68-B','OLD-L1-T68','ACTIVE','TOMB','T68','T68',3.78,'',2.70,1.40);
-/*!40000 ALTER TABLE `cemetery_section_resource_info` ENABLE KEYS */;
+LOCK TABLES `cemetery_section_block_resource_info` WRITE;
+/*!40000 ALTER TABLE `cemetery_section_block_resource_info` DISABLE KEYS */;
+INSERT INTO `cemetery_section_block_resource_info` VALUES ('CEM-NEW-S01-B01-N01','CEM-NEW-S01-B01-N01','DRAFT','NICHE','N01','NICHE 01',7.00,NULL,NULL,NULL),('CEM-NEW-S01-B01-N02','CEM-NEW-S01-B01-N02','DRAFT','NICHE','N02','NICHE 02',7.00,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `cemetery_section_block_resource_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -341,7 +372,6 @@ CREATE TABLE `deceased` (
 
 LOCK TABLES `deceased` WRITE;
 /*!40000 ALTER TABLE `deceased` DISABLE KEYS */;
-INSERT INTO `deceased` VALUES ('D-1adfad1b:178bf683836:-7e85','DRAFT','TONY YAP','FILIPINO','25','MALE','2021-04-11','ACCIDENT','INTER',NULL,NULL,NULL),('D-308e005d:178bf2fb2fa:-77d3','DRAFT','MARITES TORRES','FILIPINO','30','FEMALE','2021-04-11','ACCIDENT','INTER',NULL,NULL,NULL),('D-3a432045:178b970563b:-7ebd','DRAFT','MARK PARCON','FILIPINO','50','MALE','2021-04-10','NATURAL','INTER',NULL,NULL,NULL),('D-6260b073:178bf6a71cf:-7e7d','ACTIVE','TONY TORRES','FILIPINO','56','MALE','2021-04-11','ACCIDENT','INTER',NULL,NULL,NULL),('D1037609d:178b97b5115:-7ec1','DRAFT','MARK PARCON','FILIPINO','50','MALE','2021-04-10','NATURAL','INTER',NULL,NULL,NULL),('D2fcb17cb:178ba5bf82a:-7deb','ACTIVE','MARIA ALBEZA','FILIPINO','50','FEMALE','2021-04-10','NATURAL','INTER',NULL,NULL,NULL),('D3d84c3c:178b54b8160:-7ecf','ACTIVE','MARITES SANTOS','FILIPINO','56','FEMALE','2021-04-09','NATURAL','INTER',NULL,NULL,NULL),('D51615b6:178b5400ec0:-7ecd','DRAFT','MARITES SANTOS','FILIPINO','45','FEMALE','2021-01-05','ACCIDENT','INTER',NULL,NULL,NULL),('D5e040724:178af801079:-7ae0','ACTIVE','MARK SANTOS','FILIPINO','7','MALE','2021-04-08','ACCIDENT','INTER',NULL,NULL,NULL),('D6186676:178a0ab6ca6:-7e69','ACTIVE','DONALD DELA CRUZ','FILIPINO','70','MALE','2021-04-05','NATURAL','INTER',NULL,NULL,NULL),('D697de194:1788ccedf6a:-7efd','ACTIVE','JUAN DELA CRUZ','FILIPINO','3 MONTHS','MALE','2021-04-01','ACCIDENT',NULL,NULL,NULL,NULL),('D710314c8:178bf9018a2:-7e41','ACTIVE','ALEXI ALBEZA','FILIPINO','20','FEMALE','2021-04-11','ACCIDENT','INTER',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `deceased` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,7 +401,7 @@ CREATE TABLE `itemaccount` (
 
 LOCK TABLES `itemaccount` WRITE;
 /*!40000 ALTER TABLE `itemaccount` DISABLE KEYS */;
-INSERT INTO `itemaccount` VALUES ('BPA','BURIAL PERMIT APPLICATION','ITMACCT4ef44f04:178af8b8c78:-7bbf','BPA','BURIAL PERMIT APPLICATION','GENERAL','GENERAL-PROPER',1),('BPF','BURIAL PERMIT FEE','ITMACCT-5314e199:178a0cdd2eb:-7ed6','BFE','BURIAL PERMIT FEE','GENERAL','GENERAL-PROPER',1);
+INSERT INTO `itemaccount` VALUES ('BPA','BURIAL PERMIT APPLICATION','ITMACCT4ef44f04:178af8b8c78:-7bbf','BPA','BURIAL PERMIT APPLICATION','GENERAL','GENERAL-PROPER',1),('BPAINT','BURIAL PERMIT APPLICATION - INTEREST',NULL,NULL,NULL,NULL,NULL,3),('BPASUR','BURIAL PERMIT APPLICATION - SURCHARGE',NULL,NULL,NULL,NULL,NULL,2),('BPF','BURIAL PERMIT FEE','ITMACCT-5314e199:178a0cdd2eb:-7ed6','BFE','BURIAL PERMIT FEE','GENERAL','GENERAL-PROPER',1);
 /*!40000 ALTER TABLE `itemaccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +490,6 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES ('PMT-3cd32cab:178b53ec895:-7ffd','APP5e040724:178af801079:-7b26','RCT212a68e5:178b4ae51e3:-7e49','9001006','RECEIPT','2021-04-09',0.00,3000.00,0,'ONLINE',NULL,'2021-04-09 14:55:58'),('PMT-6acff388:178af8d5bc5:-7fe8','APP5e040724:178af801079:-7b26','RCT-778b0958:178af6805f0:-7f3b','9001005','RECEIPT','2021-04-08',0.00,3000.00,1,'ONLINE',NULL,'2021-04-08 12:10:46'),('PMT3364c48c:178bf2fefc3:-7ffd','APP-308e005d:178bf2fb2fa:-7f07','RCT212a68e5:178b4ae51e3:-729c','9001007','RECEIPT','2021-04-11',0.00,3000.00,0,'ONLINE',NULL,'2021-04-11 13:22:23'),('PMT41c71e0d:178bf6dc13c:-7ffe','APP-6260b073:178bf6a71cf:-7f07','RCT212a68e5:178b4ae51e3:-727d','9001008','RECEIPT','2021-04-11',0.00,3000.00,0,'ONLINE',NULL,'2021-04-11 13:36:15');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +520,6 @@ CREATE TABLE `payment_item` (
 
 LOCK TABLES `payment_item` WRITE;
 /*!40000 ALTER TABLE `payment_item` DISABLE KEYS */;
-INSERT INTO `payment_item` VALUES ('PI-3cd32cab:178b53ec895:-7ffc','PMT-3cd32cab:178b53ec895:-7ffd','AI-6acff388:178af8d5bc5:-7ff9','FEE',3000.00,0.00,NULL),('PI-6acff388:178af8d5bc5:-7fe7','PMT-6acff388:178af8d5bc5:-7fe8','AI-6acff388:178af8d5bc5:-7ff9','FEE',3000.00,0.00,NULL),('PI3364c48c:178bf2fefc3:-7ffc','PMT3364c48c:178bf2fefc3:-7ffd','AI3364c48c:178bf2fefc3:-7fff','FEE',3000.00,0.00,NULL),('PI41c71e0d:178bf6dc13c:-7ffd','PMT41c71e0d:178bf6dc13c:-7ffe','AI41c71e0d:178bf6dc13c:-8000','FEE',3000.00,0.00,NULL);
 /*!40000 ALTER TABLE `payment_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -512,8 +540,8 @@ CREATE TABLE `permit` (
   PRIMARY KEY (`objid`),
   KEY `fk_permit_application` (`appid`),
   KEY `fk_permit_payment` (`paymentid`),
-  CONSTRAINT `fk_permit_payment` FOREIGN KEY (`paymentid`) REFERENCES `payment` (`objid`),
-  CONSTRAINT `fk_permit_application` FOREIGN KEY (`appid`) REFERENCES `application` (`objid`)
+  CONSTRAINT `fk_permit_application` FOREIGN KEY (`appid`) REFERENCES `application` (`objid`),
+  CONSTRAINT `fk_permit_payment` FOREIGN KEY (`paymentid`) REFERENCES `payment` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -523,7 +551,6 @@ CREATE TABLE `permit` (
 
 LOCK TABLES `permit` WRITE;
 /*!40000 ALTER TABLE `permit` DISABLE KEYS */;
-INSERT INTO `permit` VALUES ('P-3cd32cab:178b53ec895:-7ff9','APP5e040724:178af801079:-7b26','PMT-3cd32cab:178b53ec895:-7ffd','202100001','2021-04-09','NEW'),('P3364c48c:178bf2fefc3:-7ffb','APP-308e005d:178bf2fb2fa:-7f07','PMT3364c48c:178bf2fefc3:-7ffd','202100002','2021-04-11','RENEWAL'),('P41c71e0d:178bf6dc13c:-7ffc','APP-6260b073:178bf6a71cf:-7f07','PMT41c71e0d:178bf6dc13c:-7ffe','202100003','2021-04-11','NEW');
 /*!40000 ALTER TABLE `permit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -577,7 +604,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-INSERT INTO `resource` VALUES ('CHAPEL','ACTIVE','CHA','CHAPEL'),('CREMATORIUM','ACTIVE','CRE','CREMATORIUM'),('MAUSOLEUM','ACTIVE','MAU','MAUSOLEUM'),('NICHE','ACTIVE','NIC','NICHE'),('OSSUARY','ACTIVE','OSS','OSSUARY'),('TOMB','ACTIVE','TOM','TOMB');
+INSERT INTO `resource` VALUES ('MAUSOLEUM','ACTIVE','MAU','MAUSOLEUM'),('NICHE','ACTIVE','NIC','NICHE'),('OSSUARY','ACTIVE','OSS','OSSUARY'),('TOMB','ACTIVE','TOM','TOMB');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1359,7 +1386,7 @@ CREATE TABLE `sys_sequence` (
 
 LOCK TABLES `sys_sequence` WRITE;
 /*!40000 ALTER TABLE `sys_sequence` DISABLE KEYS */;
-INSERT INTO `sys_sequence` VALUES ('BURIAL-PERMIT-2021',4),('BURIAL-PERMIT-APP-2021',15);
+INSERT INTO `sys_sequence` VALUES ('BURIAL-PERMIT-2021',5),('BURIAL-PERMIT-APP-2021',16);
 /*!40000 ALTER TABLE `sys_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1614,45 +1641,9 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `vw_application`;
-/*!50001 DROP VIEW IF EXISTS `vw_application`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `vw_application` (
-  `objid` tinyint NOT NULL,
-  `state` tinyint NOT NULL,
-  `online` tinyint NOT NULL,
-  `apptype` tinyint NOT NULL,
-  `appno` tinyint NOT NULL,
-  `dtapplied` tinyint NOT NULL,
-  `dtapproved` tinyint NOT NULL,
-  `appyear` tinyint NOT NULL,
-  `applicant_name` tinyint NOT NULL,
-  `applicant_address` tinyint NOT NULL,
-  `dtexpiry` tinyint NOT NULL,
-  `amount` tinyint NOT NULL,
-  `deceased_name` tinyint NOT NULL,
-  `deceased_nationality` tinyint NOT NULL,
-  `deceased_age` tinyint NOT NULL,
-  `deceased_sex` tinyint NOT NULL,
-  `deceased_dtdied` tinyint NOT NULL,
-  `deceased_permissiontype` tinyint NOT NULL,
-  `deceased_causeofdeath` tinyint NOT NULL,
-  `resourceinfo_objid` tinyint NOT NULL,
-  `resourceinfo_code` tinyint NOT NULL,
-  `resourceinfo_name` tinyint NOT NULL,
-  `resource_areasqm` tinyint NOT NULL,
-  `resource_length` tinyint NOT NULL,
-  `resource_width` tinyint NOT NULL,
-  `resource_objid` tinyint NOT NULL,
-  `resource_type` tinyint NOT NULL,
-  `section_objid` tinyint NOT NULL,
-  `section_code` tinyint NOT NULL,
-  `section_name` tinyint NOT NULL,
-  `cemetery_objid` tinyint NOT NULL,
-  `cemetery_code` tinyint NOT NULL,
-  `cemetery_name` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+
+-- failed on view `vw_application`: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_application` AS select `a`.`objid` AS `objid`,`a`.`state` AS `state`,`a`.`online` AS `online`,`a`.`apptype` AS `apptype`,`a`.`appno` AS `appno`,`a`.`dtapplied` AS `dtapplied`,`a`.`dtapproved` AS `dtapproved`,`a`.`appyear` AS `appyear`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`a`.`dtexpiry` AS `dtexpiry`,`a`.`amount` AS `amount`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`age` AS `deceased_age`,`d`.`sex` AS `deceased_sex`,`d`.`dtdied` AS `deceased_dtdied`,`d`.`permissiontype` AS `deceased_permissiontype`,`cd`.`title` AS `deceased_causeofdeath`,`ri`.`objid` AS `resourceinfo_objid`,`ri`.`code` AS `resourceinfo_code`,`ri`.`name` AS `resourceinfo_name`,`ri`.`areasqm` AS `resource_areasqm`,`ri`.`length` AS `resource_length`,`ri`.`width` AS `resource_width`,`r`.`objid` AS `resource_objid`,`r`.`name` AS `resource_type`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name` from (((((((`application` `a` join `cemetery_section_resource` `sr` on((`a`.`objid` = `sr`.`currentappid`))) join `cemetery_section` `s` on((`sr`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) join `cemetery_section_resource_info` `ri` on((`sr`.`currentinfoid` = `ri`.`objid`))) join `resource` `r` on((`ri`.`resource_objid` = `r`.`objid`))) join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`)))
+
 
 --
 -- Temporary table structure for view `vw_cemetery_resource`
@@ -1669,11 +1660,14 @@ SET character_set_client = utf8;
   `name` tinyint NOT NULL,
   `currentinfoid` tinyint NOT NULL,
   `currentappid` tinyint NOT NULL,
-  `areasqm` tinyint NOT NULL,
   `state` tinyint NOT NULL,
-  `ui` tinyint NOT NULL,
+  `areasqm` tinyint NOT NULL,
   `resource_objid` tinyint NOT NULL,
   `resource_name` tinyint NOT NULL,
+  `block_objid` tinyint NOT NULL,
+  `block_code` tinyint NOT NULL,
+  `block_name` tinyint NOT NULL,
+  `section_objid` tinyint NOT NULL,
   `section_code` tinyint NOT NULL,
   `section_name` tinyint NOT NULL,
   `appno` tinyint NOT NULL,
@@ -1685,40 +1679,11 @@ SET character_set_client = utf8;
   `deceased_sex` tinyint NOT NULL,
   `deceased_age` tinyint NOT NULL,
   `deceased_causeofdeath` tinyint NOT NULL,
-  `cemeteryid` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary table structure for view `vw_cemetery_section_resource`
---
-
-DROP TABLE IF EXISTS `vw_cemetery_section_resource`;
-/*!50001 DROP VIEW IF EXISTS `vw_cemetery_section_resource`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `vw_cemetery_section_resource` (
-  `objid` tinyint NOT NULL,
-  `parentid` tinyint NOT NULL,
-  `code` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `currentinfoid` tinyint NOT NULL,
-  `currentappid` tinyint NOT NULL,
-  `state` tinyint NOT NULL,
-  `areasqm` tinyint NOT NULL,
-  `resource_objid` tinyint NOT NULL,
-  `resource_name` tinyint NOT NULL,
-  `section_code` tinyint NOT NULL,
-  `section_name` tinyint NOT NULL,
-  `appno` tinyint NOT NULL,
-  `apptype` tinyint NOT NULL,
-  `applicant_name` tinyint NOT NULL,
-  `applicant_address` tinyint NOT NULL,
-  `deceased_name` tinyint NOT NULL,
-  `deceased_nationality` tinyint NOT NULL,
-  `deceased_sex` tinyint NOT NULL,
-  `deceased_age` tinyint NOT NULL,
-  `deceased_causeofdeath` tinyint NOT NULL
+  `cemetery_objid` tinyint NOT NULL,
+  `cemetery_code` tinyint NOT NULL,
+  `cemetery_name` tinyint NOT NULL,
+  `cemetery_location` tinyint NOT NULL,
+  `cemetery_isnew` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1755,26 +1720,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_cemetery_resource` AS select `sri`.`objid` AS `objid`,`sr`.`parentid` AS `parentid`,`sr`.`code` AS `code`,`sr`.`name` AS `name`,`sr`.`currentinfoid` AS `currentinfoid`,`sr`.`currentappid` AS `currentappid`,`sri`.`areasqm` AS `areasqm`,`sri`.`state` AS `state`,`sri`.`ui` AS `ui`,`sri`.`resource_objid` AS `resource_objid`,`r`.`name` AS `resource_name`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`a`.`appno` AS `appno`,`a`.`apptype` AS `apptype`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`sex` AS `deceased_sex`,`d`.`age` AS `deceased_age`,`cd`.`title` AS `deceased_causeofdeath`,`s`.`parentid` AS `cemeteryid` from ((((((`cemetery_section_resource` `sr` join `cemetery_section_resource_info` `sri` on((`sr`.`currentinfoid` = `sri`.`objid`))) join `resource` `r` on((`sri`.`resource_objid` = `r`.`objid`))) join `cemetery_section` `s` on((`sr`.`parentid` = `s`.`objid`))) left join `application` `a` on((`sr`.`currentappid` = `a`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) where isnull(`sr`.`currentappid`) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `vw_cemetery_section_resource`
---
-
-/*!50001 DROP TABLE IF EXISTS `vw_cemetery_section_resource`*/;
-/*!50001 DROP VIEW IF EXISTS `vw_cemetery_section_resource`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_cemetery_section_resource` AS select `sr`.`objid` AS `objid`,`sr`.`parentid` AS `parentid`,`sr`.`code` AS `code`,`sr`.`name` AS `name`,`sr`.`currentinfoid` AS `currentinfoid`,`sr`.`currentappid` AS `currentappid`,`sri`.`state` AS `state`,`sri`.`areasqm` AS `areasqm`,`sri`.`resource_objid` AS `resource_objid`,`r`.`name` AS `resource_name`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`a`.`appno` AS `appno`,`a`.`apptype` AS `apptype`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`sex` AS `deceased_sex`,`d`.`age` AS `deceased_age`,`cd`.`title` AS `deceased_causeofdeath` from ((((((`cemetery_section_resource` `sr` join `cemetery_section_resource_info` `sri` on((`sr`.`currentinfoid` = `sri`.`objid`))) join `resource` `r` on((`sri`.`resource_objid` = `r`.`objid`))) join `cemetery_section` `s` on((`sr`.`parentid` = `s`.`objid`))) left join `application` `a` on((`sr`.`currentappid` = `a`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) */;
+/*!50001 VIEW `vw_cemetery_resource` AS select `sr`.`objid` AS `objid`,`sr`.`parentid` AS `parentid`,`sr`.`code` AS `code`,`sr`.`name` AS `name`,`sr`.`currentinfoid` AS `currentinfoid`,`sr`.`currentappid` AS `currentappid`,`sri`.`state` AS `state`,`sri`.`areasqm` AS `areasqm`,`sri`.`resource_objid` AS `resource_objid`,`r`.`name` AS `resource_name`,`b`.`objid` AS `block_objid`,`b`.`code` AS `block_code`,`b`.`name` AS `block_name`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`a`.`appno` AS `appno`,`a`.`apptype` AS `apptype`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`sex` AS `deceased_sex`,`d`.`age` AS `deceased_age`,`cd`.`title` AS `deceased_causeofdeath`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name`,`c`.`location` AS `cemetery_location`,`c`.`isnew` AS `cemetery_isnew` from ((((((((`cemetery_section_block_resource` `sr` join `cemetery_section_block_resource_info` `sri` on((`sr`.`currentinfoid` = `sri`.`objid`))) join `resource` `r` on((`sri`.`resource_objid` = `r`.`objid`))) join `cemetery_section_block` `b` on((`sr`.`parentid` = `b`.`objid`))) join `cemetery_section` `s` on((`b`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) left join `application` `a` on((`sr`.`currentappid` = `a`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1788,4 +1734,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-11 21:01:47
+-- Dump completed on 2021-05-26 16:43:52
