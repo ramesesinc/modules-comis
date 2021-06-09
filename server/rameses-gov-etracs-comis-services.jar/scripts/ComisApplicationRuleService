@@ -15,7 +15,7 @@ public class ComisApplicationRuleService  {
 		facts << resource;
 
 		def cemetery = new Cemetery();
-		cemetery.objid = app.resourceinfo.cemeteryid ? app.resourceinfo.cemeteryid : app.resourceinfo.parent.parent.parentid;
+		cemetery.objid = app.resourceinfo.cemetery.objid;
 		facts << cemetery;
 
 		def bpa = new BurialPermitApplication(app);

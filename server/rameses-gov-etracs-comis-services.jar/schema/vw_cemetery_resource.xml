@@ -2,17 +2,21 @@
     <element tablename="vw_cemetery_resource">
         <field name="objid" primary="true" />
         <field name="parentid" />
-        <field name="currentinfoid" />
-        <field name="currentappid" />
         <field name="code" caption="Code" searchable="true" />
         <field name="name" caption="Name" searchable="true" />
+        <field name="currentinfoid" />
+        <field name="currentappid" />
         <field name="areasqm" caption="Area (sqm)" />
         <!-- DRAFT, ACTIVE, INACTIVE -->
         <field name="state" caption="State" searchable="true" />
         <field name="resource_objid" />
         <field name="resource_name" caption="Type" searchable="true" />
+        <field name="section_objid" />
         <field name="section_code" caption="Section Code" searchable="true" />
         <field name="section_name" caption="Section" searchable="true" />
+        <field name="block_objid" />
+        <field name="block_code" caption="Block Code" searchable="true" />
+        <field name="block_name" caption="Block" searchable="true" />
         <field name="ui" />
         <field name="appno" caption="App No." searchable="true" />
         <field name="apptype" caption="App Type" />
