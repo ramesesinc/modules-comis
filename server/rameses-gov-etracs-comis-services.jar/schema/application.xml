@@ -14,6 +14,7 @@
         <field name="applicant_objid" required="true" />
         <field name="applicant_name" required="true" caption="Applicant" searchable="true" />
         <field name="applicant_address" required="true" caption="Address" />
+        <field name="relation_objid" required="true" />
         <field name="deceased_objid" required="true" />
         <field name="dtexpiry" caption="Expiry Date" searchable="true" />
         <field name="renewable" type="boolean" required="true" caption="Renewable?" indexed="true" defaultValue="false"/>
@@ -35,7 +36,7 @@
         <complex name="relation" ref="relation" jointype="many-to-one" required="true">
             <key field="relation_objid" target="objid" />
         </complex>
-        <complex name="resourceinfo" ref="cemetery_section_block_resource_info" jointype="many-to-one" required="true">
+        <complex name="resourceinfo" ref="cemetery_resource_info" jointype="many-to-one" required="true">
             <key field="resourceinfo_objid" target="objid" />
         </complex>
         <complex name="fees" ref="application_fee" jointype="one-to-many" required="false">

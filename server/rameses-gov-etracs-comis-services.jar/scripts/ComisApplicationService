@@ -20,8 +20,8 @@ class ComisApplicationService {
     @DataContext('deceased')
     def em_deceased;
 
-    @DataContext('cemetery_section_resource')
-    def em_cemetery_resource;
+    @DataContext('cemetery_resource')
+    def em_cem_resource;
 
     @DataContext('payment')
     def em_payment;
@@ -79,7 +79,7 @@ class ComisApplicationService {
         }
         em_application.update(entity);
         em_deceased.find([objid: entity.deceased.objid]).update([state: 'ACTIVE']);
-        em_cemetery_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
+        em_cem_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
         return entity;
     }
 
@@ -112,7 +112,7 @@ class ComisApplicationService {
 
         if (entity.apptype == 'RENEWAL') {
             em_application.find([objid: entity.prevappid]).update([state: STATE_RENEWED]);
-            em_cemetery_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
+            em_cem_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
         }
         return entity;
     }

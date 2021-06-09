@@ -7,9 +7,9 @@ class ComisResourceListInterceptor {
 	@After(pattern="QueryService.getNodeList", eval="#{args[0]._schemaname=='resource'}") 
 	public void getNodeList( evt ) {
 		def result = evt.result
-		result << [id: "ACTIVE", title: "ACTIVE", count: 5]
-		result << [id: "INACTIVE", title: "INACTIVE"]
-		result << [id: "DRAFT", title: "DRAFT"]
+		result << [id: "ACTIVE", title: "Active", count: 5]
+		result << [id: "INACTIVE", title: "Inactive"]
+		result << [id: "DRAFT", title: "Draft"]
 	}
 
 }
