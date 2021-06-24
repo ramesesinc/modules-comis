@@ -2,18 +2,18 @@
     <element tablename="deceased">
         <field name="objid" primary="true" prefix="D" />
         <!-- DRAFT, APPROVED -->
-        <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT" />
-        <field name="name" required="true" caption="Deceased" searchable="true" />
-        <field name="nationality" required="true" caption="Nationality" />
-        <field name="age" required="true" caption="Age" />
-        <field name="sex" required="true" caption="Sex" />
-        <field name="dtdied" required="true" caption="Date of Death" type="date" />
+        <field name="state" caption="State" searchable="true" defaultValue="DRAFT" />
+        <field name="name" caption="Deceased" searchable="true" />
+        <field name="nationality" caption="Nationality" />
+        <field name="age" caption="Age" />
+        <field name="sex" caption="Sex" />
+        <field name="dtdied" caption="Date of Death" type="date" />
         <!-- INTER, DISINTER, REMOVE -->
-        <field name="permissiontype" required="true" caption="Permission" />
+        <field name="permissiontype" caption="Permission" />
         <field name="infectious"  />
         <field name="embalmed"  />
         <field name="disposition" />
-        <complex name="causeofdeath" ref="causeofdeath" jointype="many-to-one">
+        <complex name="causeofdeath" ref="causeofdeath" jointype="many-to-one" required="false">
             <key field="causeofdeath_objid" target="objid" />
         </complex>
     </element>

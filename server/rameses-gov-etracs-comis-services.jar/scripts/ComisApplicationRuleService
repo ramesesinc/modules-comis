@@ -8,14 +8,19 @@ public class ComisApplicationRuleService  {
 	@Service("RuleExecutorService")
 	def ruleSvc;
 
+	@DataContext('vw_cemetery_resource')
+	def em_view_resource;
+
 	@ProxyMethod
 	public def execute( app ) {
+		def vwresource = em_view_resource.find([objid: app.resourceinfo.objid]).first();
+
 		def facts = [];
-		def resource = new CemeteryResource(app.resourceinfo);
+		def resource = new CemeteryResource(vwresource);
 		facts << resource;
 
 		def cemetery = new Cemetery();
-		cemetery.objid = app.resourceinfo.cemetery.objid;
+		cemetery.objid = vwresource.cemetery.objid;
 		facts << cemetery;
 
 		def bpa = new BurialPermitApplication(app);

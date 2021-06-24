@@ -2,6 +2,9 @@ import com.rameses.annotations.*
 import com.rameses.services.extended.*
 
 class ComisApplicationService {
+    @Env 
+    def env;
+    
     @Service('DateService')
     def dtSvc;
 
@@ -10,6 +13,9 @@ class ComisApplicationService {
 
     @Service('ComisApplicationRuleService')
     def ruleSvc;
+
+    @Service("WorkflowTaskService")
+	def wfSvc;
 
     @DataContext('application')
     def em_application;
@@ -31,7 +37,6 @@ class ComisApplicationService {
 
     
     def STATE_DRAFT = 'DRAFT';
-    def STATE_FORAPPROVAL = 'FORAPPROVAL';
     def STATE_FORPAYMENT = 'FORPAYMENT';
     def STATE_FORRELEASE = 'FORRELEASE';
     def STATE_ACTIVE = 'ACTIVE';
@@ -44,33 +49,35 @@ class ComisApplicationService {
     }
 
     @ProxyMethod
-    public void renewApplication(app) {
-        if (!app.renewable) throw new Exception('Application is not renewable.');
-        def prevapp = em_application.read([objid: app.prevapp.objid]);
-        app.deceased = prevapp.deceased;
-        app.resourceinfo = prevapp.resourceinfo;
-    }
-
-    @ProxyMethod
-    public def submitForApproval(entity) {
-        def old = em_application.read(entity);
-
-        if (old.state != STATE_DRAFT) 
-        throw new Exception('Unable to submit application. Only draft record is allowed.');
-
-        entity.state = STATE_FORAPPROVAL;
-        em_application.find([objid: entity.objid]).update([state: entity.state]);
-        return entity;
+    public def create() {
+        def pdate = dtSvc.parseCurrentDate();
+        def app = [:];
+        app.state = 'DRAFT';
+        app.online = true;
+        app.apptype = 'NEW';
+        app.dtapplied = pdate.date;
+        app.appyear = pdate.year;
+        app.renewable = true;
+        app.leaseduration = 0;
+        app.amount = 0;
+        app.amtpaid = 0;
+        app.balance = 0;
+        app.lessor = [:];
+        app.lessee = [:];
+        app.deceased = createDeceased(app);
+        app = em_application.create(app);
+        startWorkflow(app);
+        return app;
     }
 
     @ProxyMethod
     public def approve(entity) {
         def old = em_application.read(entity);
 
-        if (old.state != STATE_FORAPPROVAL) 
-        throw new Exception('Unable to approve application. Only for approval record is allowed.');
+        if (old.state != STATE_DRAFT) 
+        throw new Exception('Unable to approve application. Only draft application is allowed.');
 
-        if (entity.online == 1 || entity.online == true) {
+        if (old.online == 1 || app.online == true) {
             entity.appno = getNextSeries('BURIAL-PERMIT-APP')
             entity.dtapproved = dtSvc.serverDate;
             entity.state = STATE_FORPAYMENT;
@@ -78,8 +85,7 @@ class ComisApplicationService {
             entity.state = STATE_ACTIVE;
         }
         em_application.update(entity);
-        em_deceased.find([objid: entity.deceased.objid]).update([state: 'ACTIVE']);
-        em_cem_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
+        em_cem_resource.find([objid: old.resourceinfo.parentid]).update([currentappid: entity.objid]);
         return entity;
     }
 
@@ -88,33 +94,33 @@ class ComisApplicationService {
         def old = em_application.read(entity);
 
         if (old.state != STATE_FORRELEASE) 
-        throw new Exception('Unable to release application. The application has not yet been fully paid.');
-
-        def pmt = em_payment.find([appid: entity.objid]).where('voided <> 1').first();
-        if (!pmt) throw new Exception('Payment does not exist or has already been voided.')
-
-        def permit = [:];
-        permit.appid = entity.objid;
-        permit.paymentid = pmt.objid;
-        permit.permitno = getNextSeries('BURIAL-PERMIT')
-        permit.permitdate = dtSvc.serverDate;
-        permit.permittype = entity.apptype;
-        permit.application = entity;
-        permit.payment = pmt;
-        permit = em_permit.create(permit);
-
-        entity.permit = permit;
-        entity.permitid = permit.objid;
+        throw new Exception('Unable to release application. Only for release application is allowed.');
 
         entity.state = STATE_ACTIVE;
-        em_application.find([objid: entity.objid])
-                      .update([state: entity.state, permitid: permit.objid]);
-
-        if (entity.apptype == 'RENEWAL') {
-            em_application.find([objid: entity.prevappid]).update([state: STATE_RENEWED]);
-            em_cem_resource.find([objid: entity.resourceinfo.parentid]).update([currentappid: entity.objid]);
-        }
+        em_application.find([objid: entity.objid]).update([state: entity.state]);
         return entity;
+    }
+
+    @ProxyMethod
+    public def postPayment(receipt) {
+        em_application.find([objid: receipt.refid]).update([state: STATE_FORRELEASE, amtpaid: receipt.amount]);
+
+        def wf = [:];
+		wf.processname = 'application';
+		wf.action = "post-payment";
+		wf.refid = receipt.refid;
+		wfSvc.signal(wf);
+        return receipt;
+    }
+
+    void startWorkflow(app) {
+        def task = [:];
+        task.processname = 'application';
+        task.refid = app.objid;
+        task.startdate = dtSvc.getServerDate();
+        task.info = app;
+        task.assignee = [objid:env.USERID, name:env.FULLNAME];		
+        wfSvc.start(task);			
     }
 
     def getNextSeries(prefix) {
@@ -122,6 +128,13 @@ class ComisApplicationService {
         def keyid = prefix + '-' + cy;
         def series = seqSvc.getNextFormattedSeries(keyid);
         return cy + '' + series;
+    }
+
+    def createDeceased(app) {
+        def deceased = [:];
+        deceased.state = 'DRAFT';
+        deceased.nationality = 'FILIPINO';
+        return em_deceased.create(deceased);
     }
 
 }

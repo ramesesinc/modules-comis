@@ -1,6 +1,6 @@
 <schema>
     <element tablename="cemetery_section_block_resource_info">
-        <field name="objid" primary="true" prefix="CRSI" />
+        <field name="objid" primary="true" prefix="CSBRI" />
         <field name="parentid" required="true" />
         <field name="state" required="true" caption="State" searchable="true" defaultValue="DRAFT"/>
         <field name="resource_objid" required="true" />
