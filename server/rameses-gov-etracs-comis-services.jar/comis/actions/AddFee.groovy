@@ -9,6 +9,9 @@ public class AddFee implements RuleActionHandler {
 		def app = params.application;
 		def itemaccount = params.itemaccount;
 
+		println 'itemaccount => ' + itemaccount;
+		println 'app.fees => ' + app.fees;
+
 		def fee = app.fees.find{it.item.objid == itemaccount.objid};
 		if (!fee) {
 			fee = [:];

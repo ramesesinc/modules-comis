@@ -6,9 +6,9 @@ package comis.views;
 
 import com.rameses.rcp.ui.annotations.StyleSheet;
 import com.rameses.rcp.ui.annotations.Template;
-import com.rameses.seti2.views.CrudFormPage;
+import com.rameses.seti2.views.WorkflowTaskFormPage;
 
-@Template(CrudFormPage.class)
+@Template(WorkflowTaskFormPage.class)
 @StyleSheet()
 public class ApplicationPage extends javax.swing.JPanel {
 
@@ -32,12 +32,15 @@ public class ApplicationPage extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
-        xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xTextField1 = new com.rameses.rcp.control.XTextField();
-        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
-        xDateField1 = new com.rameses.rcp.control.XDateField();
-        xDateField2 = new com.rameses.rcp.control.XDateField();
-        xDateField3 = new com.rameses.rcp.control.XDateField();
+        xFormPanel6 = new com.rameses.rcp.control.XFormPanel();
+        xFormPanel5 = new com.rameses.rcp.control.XFormPanel();
+        xLabel16 = new com.rameses.rcp.control.XLabel();
+        xTextField6 = new com.rameses.rcp.control.XTextField();
+        xIntegerField3 = new com.rameses.rcp.control.XIntegerField();
+        xFormPanel7 = new com.rameses.rcp.control.XFormPanel();
+        xDateField6 = new com.rameses.rcp.control.XDateField();
+        xDateField7 = new com.rameses.rcp.control.XDateField();
+        xDateField8 = new com.rameses.rcp.control.XDateField();
         xLookupField2 = new com.rameses.rcp.control.XLookupField();
         xLabel10 = new com.rameses.rcp.control.XLabel();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
@@ -90,37 +93,57 @@ public class ApplicationPage extends javax.swing.JPanel {
         xLabel1.setPreferredSize(new java.awt.Dimension(0, 19));
         xFormPanel1.add(xLabel1);
 
-        xComboBox1.setCaption("App Type");
-        xComboBox1.setItems("apptypes");
-        xComboBox1.setName("entity.apptype"); // NOI18N
-        xComboBox1.setPreferredSize(new java.awt.Dimension(100, 20));
-        xComboBox1.setRequired(true);
-        xFormPanel1.add(xComboBox1);
+        xFormPanel6.setOrientation(com.rameses.rcp.constant.UIConstants.HORIZONTAL);
+        xFormPanel6.setPadding(new java.awt.Insets(0, 0, 0, 0));
+        xFormPanel6.setPreferredSize(new java.awt.Dimension(0, 75));
+        xFormPanel6.setShowCaption(false);
 
-        xTextField1.setCaption("App No.");
-        xTextField1.setName("entity.appno"); // NOI18N
-        xFormPanel1.add(xTextField1);
+        xFormPanel5.setCaptionWidth(120);
+        xFormPanel5.setPadding(new java.awt.Insets(0, 0, 5, 5));
+        xFormPanel5.setPreferredSize(new java.awt.Dimension(250, 100));
+        xFormPanel5.setShowCaption(false);
 
-        xIntegerField1.setCaption("App Year");
-        xIntegerField1.setName("entity.appyear"); // NOI18N
-        xIntegerField1.setRequired(true);
-        xFormPanel1.add(xIntegerField1);
+        xLabel16.setCaption("App Type:");
+        xLabel16.setExpression("#{entity.apptype}");
+        xLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        xLabel16.setPreferredSize(new java.awt.Dimension(120, 19));
+        xFormPanel5.add(xLabel16);
 
-        xDateField1.setCaption("Date Applied");
-        xDateField1.setName("entity.dtapplied"); // NOI18N
-        xDateField1.setRequired(true);
-        xFormPanel1.add(xDateField1);
+        xTextField6.setCaption("App No.");
+        xTextField6.setName("entity.appno"); // NOI18N
+        xTextField6.setPreferredSize(new java.awt.Dimension(120, 20));
+        xFormPanel5.add(xTextField6);
 
-        xDateField2.setCaption("Date Approved");
-        xDateField2.setName("entity.dtapproved"); // NOI18N
-        xDateField2.setRequired(true);
-        xFormPanel1.add(xDateField2);
+        xIntegerField3.setCaption("App Year");
+        xIntegerField3.setName("entity.appyear"); // NOI18N
+        xIntegerField3.setPreferredSize(new java.awt.Dimension(120, 20));
+        xIntegerField3.setRequired(true);
+        xFormPanel5.add(xIntegerField3);
 
-        xDateField3.setCaption("Expiry Date");
-        xDateField3.setName("entity.dtexpiry"); // NOI18N
-        xDateField3.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
-        xDateField3.setRequired(true);
-        xFormPanel1.add(xDateField3);
+        xFormPanel6.add(xFormPanel5);
+
+        xFormPanel7.setCaptionWidth(120);
+        xFormPanel7.setShowCaption(false);
+
+        xDateField6.setCaption("Date Applied");
+        xDateField6.setName("entity.dtapplied"); // NOI18N
+        xDateField6.setRequired(true);
+        xFormPanel7.add(xDateField6);
+
+        xDateField7.setCaption("Date Approved");
+        xDateField7.setName("entity.dtapproved"); // NOI18N
+        xDateField7.setRequired(true);
+        xFormPanel7.add(xDateField7);
+
+        xDateField8.setCaption("Expiry Date");
+        xDateField8.setName("entity.dtexpiry"); // NOI18N
+        xDateField8.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
+        xDateField8.setRequired(true);
+        xFormPanel7.add(xDateField8);
+
+        xFormPanel6.add(xFormPanel7);
+
+        xFormPanel1.add(xFormPanel6);
 
         xLookupField2.setCaption("Applicant");
         xLookupField2.setExpression("#{item.name}");
@@ -248,7 +271,7 @@ public class ApplicationPage extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -379,7 +402,7 @@ public class ApplicationPage extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(xFormPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Signatories", jPanel3);
@@ -461,7 +484,7 @@ public class ApplicationPage extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xDataTable1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addComponent(xDataTable1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(xFormPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -476,14 +499,14 @@ public class ApplicationPage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -493,22 +516,24 @@ public class ApplicationPage extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XCheckBox xCheckBox1;
-    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
-    private com.rameses.rcp.control.XDateField xDateField1;
-    private com.rameses.rcp.control.XDateField xDateField2;
-    private com.rameses.rcp.control.XDateField xDateField3;
     private com.rameses.rcp.control.XDateField xDateField4;
     private com.rameses.rcp.control.XDateField xDateField5;
+    private com.rameses.rcp.control.XDateField xDateField6;
+    private com.rameses.rcp.control.XDateField xDateField7;
+    private com.rameses.rcp.control.XDateField xDateField8;
     private com.rameses.rcp.control.XDecimalField xDecimalField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XFormPanel xFormPanel3;
     private com.rameses.rcp.control.XFormPanel xFormPanel4;
-    private com.rameses.rcp.control.XIntegerField xIntegerField1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel5;
+    private com.rameses.rcp.control.XFormPanel xFormPanel6;
+    private com.rameses.rcp.control.XFormPanel xFormPanel7;
     private com.rameses.rcp.control.XIntegerField xIntegerField2;
+    private com.rameses.rcp.control.XIntegerField xIntegerField3;
     private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLabel xLabel10;
     private com.rameses.rcp.control.XLabel xLabel11;
@@ -516,6 +541,7 @@ public class ApplicationPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLabel xLabel13;
     private com.rameses.rcp.control.XLabel xLabel14;
     private com.rameses.rcp.control.XLabel xLabel15;
+    private com.rameses.rcp.control.XLabel xLabel16;
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XLabel xLabel3;
     private com.rameses.rcp.control.XLabel xLabel4;
@@ -526,12 +552,12 @@ public class ApplicationPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XLabel xLabel9;
     private com.rameses.rcp.control.XLookupField xLookupField1;
     private com.rameses.rcp.control.XLookupField xLookupField2;
-    private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField10;
     private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     private com.rameses.rcp.control.XTextField xTextField5;
+    private com.rameses.rcp.control.XTextField xTextField6;
     private com.rameses.rcp.control.XTextField xTextField7;
     private com.rameses.rcp.control.XTextField xTextField8;
     private com.rameses.rcp.control.XTextField xTextField9;

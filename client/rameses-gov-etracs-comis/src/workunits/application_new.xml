@@ -1,0 +1,14 @@
+<workunit>
+    <invokers>
+        <invoker folderid="/menucategory/comis/burial"  
+            caption="New Application" 
+            action="create"  
+            index="1"
+            role="RECEIVER"
+        />
+
+        <invoker type="formActions" caption="Close" action="_close" immediate="true" />
+        <invoker type="formActions" caption="Next" action="next" />
+    </invokers>
+    <code class="comis.models.ApplicationNewModel" />
+</workunit>

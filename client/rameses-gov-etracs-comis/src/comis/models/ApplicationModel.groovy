@@ -4,52 +4,20 @@ import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
 import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
-import com.rameses.seti2.models.CrudFormModel;
+import com.rameses.seti2.models.*;
 
-class ApplicationModel extends CrudFormModel {
-    @Service('ComisApplicationService')
-    def svc;
-    
-    @Service(value='ReportParameterService', connection="etracs")
-    def reportSvc;
+class ApplicationModel extends AbstractApplicationModel {
+
     
     @Service('DateService')
     def dtSvc;
-    
-    def apptypes = ['NEW', 'RENEWAL'];
-    def online = true;
-    
-    def initCapture() {
-        online = false;
-        return super.create();
-    }
-    
+
     boolean isShowConfirm() {
         return false;
     }
     
     def getRelations() {
-        svc.getRelations();
-    }
-    
-    void afterCreate() {
-        def pdate = dtSvc.parseCurrentDate();
-        entity.appyear = pdate.year;
-        entity.dtapplied = pdate.date;
-        entity.applicant = [:];
-        entity.deceased = [:];
-        entity.lessee = [:];
-        entity.renewable = false;
-        entity.online = online;
-        entity.amount = 0;
-        entity.amtpaid = 0;
-        
-        def params = reportSvc.getStandardParameter();
-        entity.lessor = [:];
-        entity.lessor.name = params.MAYORNAME;
-        entity.lessor.title = params.MAYORTITLE;
-        entity.lessor.ctcplaceissued = params.LGUADDRESS;
-        entity.lessee.ctcplaceissued = params.LGUADDRESS;
+        appSvc.getRelations();
     }
     
     void beforeSave(mode) {
@@ -72,19 +40,19 @@ class ApplicationModel extends CrudFormModel {
     
     void submitForApproval() {
         if (MsgBox.confirm('Submit for approval?')) {
-            entity.putAll(svc.submitForApproval(entity));
+            entity.putAll(appSvc.submitForApproval(entity));
         }
     }
     
     void approve() {
         if (MsgBox.confirm('Approve application?')) {
-            entity.putAll(svc.approve(entity));
+            entity.putAll(appSvc.approve(entity));
         }
     }
     
     def release() {
         if (MsgBox.confirm('Issue permit and release application?')) {
-            entity.putAll(svc.release(entity));
+            entity.putAll(appSvc.release(entity));
         }
     }
     
