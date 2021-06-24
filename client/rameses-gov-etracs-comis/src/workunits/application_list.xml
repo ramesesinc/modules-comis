@@ -1,14 +1,18 @@
-<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
-          schemaName="application" 
-          allowDelete="#{entity &amp;&amp; entity.state == 'DRAFT'}">
+<workunit extends="com/rameses/seti2/templates/WorkflowTaskList.xml" 
+    processName="application" 
+    entitySchemaName="application"
+    schemaName="vw_application"
+    allowCreate="false" 
+    domain="COMIS"
+>
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  
-            action="init"  
-            caption="View Applications" 
+            action="init"
+            caption="View Building Application List"
             cols="apptype,appno,dtapplied,resourceinfo.name,applicant.name,deceased.name,deceased.relation.title,deceased.sex,dtapproved,leaseduration,dtexpiry" 
-            hiddenCols="state"
-            role="LCR"
+            hiddenCols="state,task.state"
+            role="SHARED"
             index="100"
-        />
+            notificationid="comis_application" />
     </invokers>
 </workunit>

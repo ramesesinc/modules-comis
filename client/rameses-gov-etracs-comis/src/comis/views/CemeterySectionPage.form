@@ -36,21 +36,6 @@
   <SubComponents>
     <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel1">
       <SubComponents>
-        <Component class="com.rameses.rcp.control.XLabel" name="xLabel1">
-          <Properties>
-            <Property name="caption" type="java.lang.String" value="State"/>
-            <Property name="expression" type="java.lang.String" value="#{entity.state}"/>
-            <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[0, 0, 10, 0]"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="ff" type="rgb"/>
-            </Property>
-          </Properties>
-        </Component>
         <Component class="com.rameses.rcp.control.XTextField" name="xTextField1">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Code"/>

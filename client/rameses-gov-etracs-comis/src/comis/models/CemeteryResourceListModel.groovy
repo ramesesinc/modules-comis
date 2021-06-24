@@ -8,6 +8,10 @@ class CemeteryResourceListModel extends CrudListModel {
     
     def parent;
     boolean showClose = false;
+
+    String getTitle() {
+        return 'Blocks (Section ' + parent.code + ')';
+    }
     
     def getCustomFilter() {
         return ["parentid = :objid", parent ? parent : [:]];

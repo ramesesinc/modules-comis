@@ -1,58 +1,17 @@
 <workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
           schemaName="application" 
+          processName="application" 
+          notificationid="comis_application" 
           allowEdit="#{entity &amp;&amp; entity.state.matches('DRAFT|FORAPPROVAL')}"
 >
     <invokers>
-        <invoker folderid="/menucategory/comis/burial"  
-            caption="New Application" 
-            action="create"  
-            index="1"
-            role="LCR"
-        />
-        
-        <invoker folderid="/menucategory/comis/support"  
-            caption="Capture Application" 
-            action="initCapture"  
-            role="ENCODER"
-        />
-        
-        <invoker type="application:create" caption="Burial Permit Application (New)" 
-            action="create"  
-            role="LCR"
-        />
-        
         <invoker type="application:open" caption="Burial Permit Application" 
             action="open"  
-            role="LCR"
-        />
-        
-        <invoker type="formActions" 
-            action="submitForApproval"
-            caption="Submit for Approval"
-            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
-            role="LCR"
+            role="SHARED"
         />
 
-        <invoker type="formActions" 
-            action="approve"
-            caption="Approve"
-            visibleWhen="#{entity.online == 1 &amp;&amp; entity.state == 'FORAPPROVAL' &amp;&amp; mode == 'read'}"
-            role="LCR_APPROVER"
-        />
-        
-        <invoker type="formActions" 
-            action="approve"
-            caption="Approve"
-            visibleWhen="#{entity.online == 0 &amp;&amp; entity.state == 'FORAPPROVAL' &amp;&amp; mode == 'read'}"
-            role="ENCODER_APPROVER"
-        />
-        
-        <invoker type="formActions" 
-            action="release"
-            caption="Issue Permit"
-            visibleWhen="#{entity.state == 'FORRELEASE' &amp;&amp; mode == 'read'}"
-            role="LICENSING"
-        />
+        <invoker type="formActions" caption="Edit" action="edit" visibleWhen="#{mode == 'read' &amp;&amp; entity &amp;&amp; entity.state.matches('DRAFT')}" />
+        <invoker type="formActions" caption="Save" action="save" visibleWhen="#{mode == 'edit'}" />
     </invokers>
     <code class="comis.models.ApplicationModel" />
     <pages>

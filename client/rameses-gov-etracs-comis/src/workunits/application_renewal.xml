@@ -7,41 +7,14 @@
             caption="Renew Application" 
             action="create"
             index="2"  
-            role="LCR"
+            role="RECEIVER"
         />
         
         <invoker type="application:open" caption="Burial Permit Application" 
             action="open"  
-            role="LCR"
+            role="SHARED"
         />
         
-        <invoker type="formActions" 
-            action="submitForApproval"
-            caption="Submit for Approval"
-            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
-            role="LCR"
-        />
-
-        <invoker type="formActions" 
-            action="approve"
-            caption="Approve"
-            visibleWhen="#{entity.online == 1 &amp;&amp; entity.state == 'FORAPPROVAL' &amp;&amp; mode == 'read'}"
-            role="LCR_APPROVER"
-        />
-        
-        <invoker type="formActions" 
-            action="approve"
-            caption="Approve"
-            visibleWhen="#{entity.online == 0 &amp;&amp; entity.state == 'FORAPPROVAL' &amp;&amp; mode == 'read'}"
-            role="ENCODER_APPROVER"
-        />
-        
-        <invoker type="formActions" 
-            action="release"
-            caption="Issue Permit"
-            visibleWhen="#{entity.state == 'FORRELEASE' &amp;&amp; mode == 'read'}"
-            role="LICENSING"
-        />
     </invokers>
     <code class="comis.models.ApplicationRenewalModel" />
     <pages>
