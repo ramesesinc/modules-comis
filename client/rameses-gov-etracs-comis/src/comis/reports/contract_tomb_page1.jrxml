@@ -3,7 +3,8 @@
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
 		 name="contract_tomb_page1"
-		 columnCount="1"
+
+		 language="groovy"		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Landscape"
 		 pageWidth="612"
@@ -68,6 +69,10 @@
 	<field name="resourceinfo.type" class="java.lang.String"/>
 	<field name="resourceinfo.areasqm" class="java.lang.Number"/>
 	<field name="expirydate" class="java.lang.String"/>
+	<field name="cemetery.name" class="java.lang.String"/>
+	<field name="cemetery.location" class="java.lang.String"/>
+	<field name="cemetery.isnew" class="java.lang.Boolean"/>
+	<field name="resourceinfo.title" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -84,7 +89,7 @@
 						key="staticText-1"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="16" isBold="true"/>
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
 					</textElement>
 				<text><![CDATA[CONTRACT OF LEASE FOR INDIVIDUAL TOMB 
 AND MAUSOLEUM BURIAL PLOT]]></text>
@@ -128,7 +133,7 @@ AND MAUSOLEUM BURIAL PLOT]]></text>
 					<textElement textAlignment="Justified" isStyledText="true">
 						<font fontName="Times New Roman" size="11"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSOR is the owner and the operator of the Old and New City Cemetery situated at Tomolin, Ligao City;"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSOR is the owner and the operator of the " + ($F{cemetery.isnew} ? "New" : "Old") +  " Cemetery situated at " + $F{cemetery.location} + ";"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -170,7 +175,7 @@ AND MAUSOLEUM BURIAL PLOT]]></text>
 					<textElement textAlignment="Justified" isStyledText="true">
 						<font fontName="Times New Roman" size="11"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["1. That the LESSOR agrees to lease to the LESSEE a burial plot <style isBold=\"true\" isUnderline=\"true\">" + $F{resourceinfo.name} + "</style> for use as interment of departed family member/s."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["1. That the LESSOR agrees to lease to the LESSEE a burial plot <style isBold=\"true\" isUnderline=\"true\">" + $F{resourceinfo.title} + "</style> for use as interment of departed family member/s."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -256,6 +261,17 @@ AND MAUSOLEUM BURIAL PLOT]]></text>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["7. That the LESSOR shall keep the cemetery in a clean and orderly manner and shall at all times keep the security and integrity of the cemetery in accordance with the culture, customs and traditions.\nThat the efficacy of this contract by the parties and until <style isBold=\"true\" isUnderlined=\"true\">" + $F{expirydate} + "</style>;"]]></textFieldExpression>
 				</textField>
+				<image  onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="4"
+						width="50"
+						height="50"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["classpath://images/lgu-logo.png"]]></imageExpression>
+				</image>
 			</band>
 		</title>
 		<pageHeader>

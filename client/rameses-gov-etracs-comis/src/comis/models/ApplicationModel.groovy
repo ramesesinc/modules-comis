@@ -85,7 +85,7 @@ class ApplicationModel extends AbstractApplicationModel {
     
 
     def getAmount() {
-        return entity.fees.amount.sum();
+        return entity.fees.total.sum();
     }
     
     def getAmtpaid() {

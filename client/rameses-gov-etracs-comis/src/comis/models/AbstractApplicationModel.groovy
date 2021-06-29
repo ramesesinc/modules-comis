@@ -43,4 +43,14 @@ class AbstractApplicationModel extends WorkflowTaskModel {
         return true;
     }
 
+    public boolean getCanEdit() {
+        println 'task =>' + task;
+        println 'entitys.state => ' + entity.state;
+        if (mode != 'read') return false;
+        if (!entity.state?.matches('DRAFT')) return false;
+        if (!task.assignee?.objid) return false;
+        if (task.state.matches('.*assign.*')) return false;
+        return true;
+    }
+
 }

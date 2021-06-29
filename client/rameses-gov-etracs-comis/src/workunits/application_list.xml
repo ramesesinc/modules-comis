@@ -3,6 +3,7 @@
     entitySchemaName="application"
     schemaName="vw_application"
     allowCreate="false" 
+    allowDelete="#{entity.state == 'DRAFT'}" 
     domain="COMIS"
 >
     <invokers>

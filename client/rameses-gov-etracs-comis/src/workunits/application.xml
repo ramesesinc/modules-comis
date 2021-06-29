@@ -2,7 +2,6 @@
           schemaName="application" 
           processName="application" 
           notificationid="comis_application" 
-          allowEdit="#{entity &amp;&amp; entity.state.matches('DRAFT|FORAPPROVAL')}"
 >
     <invokers>
         <invoker type="application:open" caption="Burial Permit Application" 
@@ -10,8 +9,15 @@
             role="SHARED"
         />
 
-        <invoker type="formActions" caption="Edit" action="edit" visibleWhen="#{mode == 'read' &amp;&amp; entity &amp;&amp; entity.state.matches('DRAFT')}" />
+        <invoker type="formActions" caption="Edit" action="edit" visibleWhen="#{canEdit}" />
         <invoker type="formActions" caption="Save" action="save" visibleWhen="#{mode == 'edit'}" />
+        
+        <invoker type="formActions" 
+            caption="Reports" 
+            action="viewReport" 
+            icon="images/toolbars/printer.png"
+        />
+
     </invokers>
     <code class="comis.models.ApplicationModel" />
     <pages>
