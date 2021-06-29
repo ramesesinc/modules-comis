@@ -27,7 +27,6 @@ public class DeceasedPage extends javax.swing.JPanel {
     private void initComponents() {
 
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLabel1 = new com.rameses.rcp.control.XLabel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
         xTextField2 = new com.rameses.rcp.control.XTextField();
@@ -41,13 +40,6 @@ public class DeceasedPage extends javax.swing.JPanel {
         xTextField5 = new com.rameses.rcp.control.XTextField();
 
         xFormPanel1.setCaptionWidth(130);
-
-        xLabel1.setCaption("State");
-        xLabel1.setExpression("#{entity.state}");
-        xLabel1.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
-        xLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        xLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        xFormPanel1.add(xLabel1);
 
         xTextField1.setCaption("Name");
         xTextField1.setName("entity.name"); // NOI18N
@@ -151,7 +143,6 @@ public class DeceasedPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XComboBox xComboBox4;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
-    private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XTextField xTextField1;
     private com.rameses.rcp.control.XTextField xTextField2;

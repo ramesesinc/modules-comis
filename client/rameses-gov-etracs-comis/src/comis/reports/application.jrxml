@@ -546,7 +546,7 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="45"
+						x="21"
 						y="281"
 						width="185"
 						height="12"
@@ -1192,10 +1192,10 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="24"
-						y="281"
+						x="0"
+						y="280"
 						width="16"
-						height="12"
+						height="14"
 						key="textField-33"/>
 					<box>					<pen lineWidth="0.25" lineStyle="Solid"/>
 					<topPen lineWidth="0.25" lineStyle="Solid"/>
