@@ -5,5 +5,8 @@
         <field name="code" caption="Code" required="true" searchable="true" />
         <field name="name" caption="Section" required="true" searchable="true" />
         <field name="ui" />
+        <complex name="parent" ref="cemetery_section" jointype="many-to-one" required="true">
+            <key field="parentid" target="objid" />
+        </complex>
     </element>
 </schema>

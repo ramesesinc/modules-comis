@@ -17,6 +17,9 @@ public class ComisApplicationReceiptService  {
     @DataContext('payment_item')
     def em_payment_item;
 
+    @Service("WorkflowTaskService")
+	def wfSvc;
+
     
 
     
@@ -25,13 +28,27 @@ public class ComisApplicationReceiptService  {
         def fees = em_app_fee.find([parentid: application.objid])
                         .where("amtpaid < amount")
                         .list();
+        def rctitems = [];
 
         fees.each{ 
-            it.feeid = it.objid;
-            it.objid = null;
-            it.item = it.item.item;
+            rctitems << [
+                item: it.item.item,
+                amount: it.amount
+            ]
+            if (it.surcharge > 0) {
+                rctitems << [
+                    item: it.surchargeacct.item,
+                    amount: it.surcharge,
+                ]
+            }
+            if (it.penalty > 0) {
+                rctitems << [
+                    item: it.penaltyacct.item,
+                    amount: it.penalty,
+                ]
+            }
         }
-        return fees;
+        return rctitems;
     }
 
     @ProxyMethod
@@ -46,10 +63,8 @@ public class ComisApplicationReceiptService  {
     @ProxyMethod
     public def postPayment(receipt) {
         def app = receipt.application;
-        def fees = receipt.items;
 
-        em_app.find([objid: app.objid])
-              .update([state: 'FORRELEASE', amtpaid: '{amtpaid + :amount}'], [amount: receipt.amount]);
+        em_app.find([objid: app.objid]).update([state: 'FORRELEASE', amtpaid: receipt.amount]);
         
         def pmt = [:]
         pmt.appid = app.objid;
@@ -64,17 +79,21 @@ public class ComisApplicationReceiptService  {
         pmt.txndate = dtSvc.serverDate;
         pmt = em_payment.create(pmt);
 
+        def fees = em_app_fee.find([parentid: app.objid]).list();
         fees.each{ fee -> 
-            em_app_fee.find([objid: fee.feeid]).update([amtpaid: fee.amount]);
+            em_app_fee.find([objid: fee.objid]).update([amtpaid: '{amount}', surchargepaid: '{surcharge}', penaltypaid: '{penalty}']);
 
             def pmtitem = [:];
             pmtitem.parentid = pmt.objid;
-            pmtitem.refid = fee.feeid;
+            pmtitem.refid = fee.objid;
             pmtitem.reftype = 'FEE';
-            pmtitem.amount = fee.amount;
+            pmtitem.amount = receipt.amount;
             pmtitem.discount = fee.discount ? fee.discount : 0.0;
             em_payment_item.create(pmtitem);
         }
+
+        signalWf(app, 'post-payment');
+        return receipt;
     }
 
     @ProxyMethod
@@ -82,15 +101,21 @@ public class ComisApplicationReceiptService  {
         def receipt = voidreceipt.receipt;
         def pmt = em_payment.find([refid: receipt.objid]).first();
         if (pmt) {
-            em_app.find([objid: pmt.appid])
-              .update([state: 'FORPAYMENT', amtpaid: '{amtpaid - :amount}'], [amount: receipt.amount]);
-        
+            em_app.find([objid: pmt.appid]).update([state: 'FORPAYMENT', amtpaid: 0]);
+            em_app_fee.find([parentid: pmt.appid]).update([amtpaid: 0, surchargepaid: 0, penaltypaid: 0]);
             em_payment.find([objid: pmt.objid]).update([voided: 1]);
-            em_payment_item.find([parentid: pmt.objid]).list().each{pmtitem ->
-                em_app_fee.debug = true;
-                em_app_fee.find([objid: pmtitem.refid])
-                          .update([amtpaid: '{amtpaid - :amount}'], [amount: pmtitem.amount]);
-            }
+
+            signalWf([objid: pmt.appid], 'void-payment');
         }
+    }
+
+    void signalWf(app, action) {
+        def taskid = em_app.select('taskid').find([objid: app.objid]).val();
+        def wf = [:];
+        wf.taskid = taskid;
+        wf.processname = 'application';
+		wf.action = action;
+		wf.refid = app.objid;
+		wfSvc.signal(wf);
     }
 }

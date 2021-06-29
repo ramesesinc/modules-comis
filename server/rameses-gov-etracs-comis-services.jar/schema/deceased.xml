@@ -1,8 +1,7 @@
 <schema>
     <element tablename="deceased">
         <field name="objid" primary="true" prefix="D" />
-        <!-- DRAFT, APPROVED -->
-        <field name="state" caption="State" searchable="true" defaultValue="DRAFT" />
+        <field name="state" caption="State" required="true" searchable="true" />
         <field name="name" caption="Deceased" searchable="true" />
         <field name="nationality" caption="Nationality" />
         <field name="age" caption="Age" />

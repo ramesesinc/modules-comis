@@ -14,11 +14,11 @@ class ComisApplicationService {
     @Service('ComisApplicationRuleService')
     def ruleSvc;
 
-    @Service("WorkflowTaskService")
-	def wfSvc;
-
     @DataContext('application')
     def em_application;
+
+    @DataContext('application_task')
+    def em_task;
 
     @DataContext('relation')
     def em_relation;
@@ -42,6 +42,7 @@ class ComisApplicationService {
     def STATE_ACTIVE = 'ACTIVE';
     def STATE_EXPIRED = 'EXPIRED';
     def STATE_RENEWED = 'RENEWED';
+    def STATE_APPROVED = 'APPROVED';
 
     @ProxyMethod
     public def getRelations() {
@@ -71,6 +72,15 @@ class ComisApplicationService {
     }
 
     @ProxyMethod
+    public void beforeDelete(app) {
+        app = em_application.select('objid,deceased.objid').find([objid: app.objid]).first()
+        em_cem_resource.find([currentappid: app.objid]).update([currentappid: '{NULL}']);
+        em_task.find([refid: app.objid]).delete();
+        em_application.find([objid: app.objid]).update([deceased_objid: '{NULL}'])
+        em_deceased.find([objid: app.deceased.objid]).delete();
+    }
+
+    @ProxyMethod
     public def approve(entity) {
         def old = em_application.read(entity);
 
@@ -86,6 +96,7 @@ class ComisApplicationService {
         }
         em_application.update(entity);
         em_cem_resource.find([objid: old.resourceinfo.parentid]).update([currentappid: entity.objid]);
+        em_deceased.find([objid: old.deceased.objid]).update([state: STATE_APPROVED]);
         return entity;
     }
 
@@ -101,17 +112,6 @@ class ComisApplicationService {
         return entity;
     }
 
-    @ProxyMethod
-    public def postPayment(receipt) {
-        em_application.find([objid: receipt.refid]).update([state: STATE_FORRELEASE, amtpaid: receipt.amount]);
-
-        def wf = [:];
-		wf.processname = 'application';
-		wf.action = "post-payment";
-		wf.refid = receipt.refid;
-		wfSvc.signal(wf);
-        return receipt;
-    }
 
     void startWorkflow(app) {
         def task = [:];
