@@ -1,0 +1,14 @@
+<workunit>
+    <invokers>
+        <invoker type="application_fee:create" 
+            action="create"
+            caption="Application Fee (New)" 
+            role="ENCODER"
+            target="popup" 
+        />
+    </invokers>
+    <code class="comis.models.ApplicationCaptureFeeModel" />
+    <pages>
+        <page template="comis.views.ApplicationCaptureFeePage" />
+    </pages>
+</workunit>

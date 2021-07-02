@@ -15,6 +15,8 @@ class ApplicationRenewalModel extends ApplicationModel {
         entity.appyear = pdate.year;
         entity.dtapplied = pdate.date;
         entity.apptype = 'RENEWAL';
+        entity.amount = 0;
+        entity.amtpaid = 0;
         entity.applicant = [:];
         entity.lessor = [:];
         entity.lessor.name = params.MAYORNAME;
