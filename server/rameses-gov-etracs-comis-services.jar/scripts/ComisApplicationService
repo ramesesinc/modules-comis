@@ -11,11 +11,17 @@ class ComisApplicationService {
     @Service('SequenceService')
     def seqSvc;
 
+    @Service('ReportParameterService')
+    def reportSvc;
+
     @Service('ComisApplicationRuleService')
     def ruleSvc;
 
+    @Service("WorkflowTaskService")
+	def wfSvc;
+
     @DataContext('application')
-    def em_application;
+    def em_app;
 
     @DataContext('application_task')
     def em_task;
@@ -65,51 +71,69 @@ class ComisApplicationService {
         app.balance = 0;
         app.lessor = [:];
         app.lessee = [:];
+
+        def params = reportSvc.getStandardParameter();
+        app.lessor = [:];
+        app.lessor.name = params.MAYORNAME;
+        app.lessor.title = params.MAYORTITLE;
+        app.lessor.ctcplaceissued = params.LGUADDRESS;
+        app.lessee.ctcplaceissued = params.LGUADDRESS;
+
         app.deceased = createDeceased(app);
-        app = em_application.create(app);
+        app = em_app.create(app);
         startWorkflow(app);
         return app;
     }
 
     @ProxyMethod
     public void beforeDelete(app) {
-        app = em_application.select('objid,deceased.objid').find([objid: app.objid]).first()
+        app = em_app.select('objid,deceased.objid').find([objid: app.objid]).first()
         em_cem_resource.find([currentappid: app.objid]).update([currentappid: '{NULL}']);
         em_task.find([refid: app.objid]).delete();
-        em_application.find([objid: app.objid]).update([deceased_objid: '{NULL}'])
+        em_app.find([objid: app.objid]).update([deceased_objid: '{NULL}'])
         em_deceased.find([objid: app.deceased.objid]).delete();
     }
 
     @ProxyMethod
     public def approve(entity) {
-        def old = em_application.read(entity);
+        def app = em_app.read(entity);
 
-        if (old.state != STATE_DRAFT) 
+        if (app.state != STATE_DRAFT) 
         throw new Exception('Unable to approve application. Only draft application is allowed.');
 
-        if (old.online == 1 || app.online == true) {
+        if (app.online == 1 || app.online) {
             entity.appno = getNextSeries('BURIAL-PERMIT-APP')
             entity.dtapproved = dtSvc.serverDate;
             entity.state = STATE_FORPAYMENT;
         } else {
             entity.state = STATE_ACTIVE;
+            def task = signalWf(app, 'release');
+            entity.taskid = task.taskid;
         }
-        em_application.update(entity);
-        em_cem_resource.find([objid: old.resourceinfo.parentid]).update([currentappid: entity.objid]);
-        em_deceased.find([objid: old.deceased.objid]).update([state: STATE_APPROVED]);
+        em_app.update(entity);
+        em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: entity.objid]);
+        em_deceased.find([objid: app.deceased.objid]).update([state: STATE_APPROVED]);
         return entity;
     }
 
     @ProxyMethod
     public def release(entity) {
-        def old = em_application.read(entity);
+        def old = em_app.read(entity);
 
         if (old.state != STATE_FORRELEASE) 
         throw new Exception('Unable to release application. Only for release application is allowed.');
 
         entity.state = STATE_ACTIVE;
-        em_application.find([objid: entity.objid]).update([state: entity.state]);
+        em_app.find([objid: entity.objid]).update([state: entity.state]);
         return entity;
+    }
+
+    @ProxyMethod
+    public def  postCapturePayment(payment) {
+        payment.txndate = dtSvc.serverDate;
+        payment = em_payment.create(payment);
+        em_app.find([objid: payment.appid]).update([amtpaid: payment.amount]);
+        return payment;
     }
 
 
@@ -135,6 +159,14 @@ class ComisApplicationService {
         deceased.state = 'DRAFT';
         deceased.nationality = 'FILIPINO';
         return em_deceased.create(deceased);
+    }
+
+    def signalWf(app, action) {
+        def task = [:];
+        task.refid = app.objid;
+        task.state = action;
+        task.dtcreated = app.dtapproved;
+        return em_task.create(task);
     }
 
 }

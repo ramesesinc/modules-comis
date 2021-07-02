@@ -21,6 +21,7 @@
         <field name="leaseduration" type="integer" caption="Lease Duration" defaultValue="0" />
         <field name="amount" type="decimal" caption="Amount" required="true" />
         <field name="amtpaid" type="decimal" caption="Amount Paid" required="true" />
+        <field name="balance" expr="amount - amtpaid" caption="Balance" />
         <field name="permitid" />
         <field name="reportid" />
         <field name="balance" type="decimal" expr="amount - amtpaid" caption="Balance" />
@@ -42,6 +43,9 @@
         </complex>
         <complex name="fees" ref="application_fee" jointype="one-to-many" required="false">
             <key field="objid" target="parentid" />
+        </complex>
+        <complex name="payments" ref="payment" jointype="one-to-many" required="false">
+            <key field="objid" target="appid" />
         </complex>
     </element>
 </schema>

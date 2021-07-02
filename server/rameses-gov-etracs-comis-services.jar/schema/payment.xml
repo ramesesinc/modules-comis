@@ -2,7 +2,7 @@
     <element tablename="payment">
         <field name="objid" primary="true" prefix="PMT" />
         <field name="appid" required="true" />
-        <field name="refid" required="true" />
+        <field name="refid" />
         <field name="refno" required="true" caption="Ref No." />
         <field name="reftype" required="true" caption="Ref Type" />
         <field name="refdate" required="true" caption="Ref Date" />
