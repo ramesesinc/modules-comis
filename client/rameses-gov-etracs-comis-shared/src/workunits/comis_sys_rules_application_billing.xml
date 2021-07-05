@@ -1,0 +1,10 @@
+<workunit extends="wtemplates/RuleMgmtController.xml" serviceName="RuleMgmtService">
+    <invokers>
+        <invoker folderid="/explorer/rulemgmt/comis" 
+                 caption="Burial Permit Billing Rules"
+                 action="init" 
+                 index="1" 
+                 role="RULE_AUTHOR" 
+                 tag="burialpermitapplicationbilling" />
+    </invokers>
+</workunit>
