@@ -27,8 +27,6 @@ public class ComisApplicationRuleService  {
 				objid: fee.objid,
 				parentid: app.objid,
 				item: [objid: fee.acctid],
-				surchargeacct: [objid: fee.surchargeacctid],
-				penaltyacct: [objid: fee.penaltyacctid],
 				amount: fee.amount,
 				surcharge: fee.surcharge,
 				penalty: fee.penalty,
