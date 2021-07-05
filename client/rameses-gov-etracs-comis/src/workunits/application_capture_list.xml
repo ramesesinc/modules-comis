@@ -1,0 +1,17 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          entitySchemaName="application_capture" 
+          schemaName="vw_application" 
+          allowCreate="false" 
+          allowDelete="#{entity.state == 'DRAFT'}"
+          cols="state,apptype,appno,dtapplied,resourceinfo.name,applicant.name,deceased.name,deceased.relation.title,deceased.sex,dtapproved,leaseduration,dtexpiry" 
+          hiddenCols="online"
+>
+    <invokers>
+        <invoker folderid="/menucategory/comis/support" 
+            caption="View Captured Application List" 
+            action="init"  
+            role="ENCODER"
+        />
+    </invokers>
+    <code class="comis.models.ApplicationCaptureListModel" />
+</workunit>

@@ -1,17 +1,26 @@
 package comis.models;
 
-import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
+import com.rameses.rcp.common.*;
+import com.rameses.seti2.models.*;
 import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
-import com.rameses.seti2.models.*;
 
-class ApplicationModel extends AbstractApplicationModel {
-
+class ApplicationCaptureModel extends CrudFormModel {
+    @Service('ComisApplicationService')
+    def appSvc;
     
-    @Service('DateService')
+    @Service("DateService")
     def dtSvc;
 
+    @Service("ReportParameterService")
+    def reportSvc;
+    
+    @FormTitle
+    public String getTitle() {
+        return "Capture Application";
+    }
+    
     def apptypes = ['NEW', 'RENEWAL'];
     
     boolean isShowConfirm() {
@@ -20,6 +29,26 @@ class ApplicationModel extends AbstractApplicationModel {
     
     def getRelations() {
         appSvc.getRelations();
+    }
+
+    void afterCreate() {
+        def pdate = dtSvc.parseCurrentDate();
+        entity.appyear = pdate.year;
+        entity.dtapplied = pdate.date;
+        entity.applicant = [:];
+        entity.deceased = [:];
+        entity.lessee = [:];
+        entity.renewable = false;
+        entity.online = false;
+        entity.amount = 0;
+        entity.amtpaid = 0;
+        
+        def params = reportSvc.getStandardParameter();
+        entity.lessor = [:];
+        entity.lessor.name = params.MAYORNAME;
+        entity.lessor.title = params.MAYORTITLE;
+        entity.lessor.ctcplaceissued = params.LGUADDRESS;
+        entity.lessee.ctcplaceissued = params.LGUADDRESS;
     }
     
     void beforeSave(mode) {
@@ -85,5 +114,39 @@ class ApplicationModel extends AbstractApplicationModel {
     
     void required(caption, value) {
         if (!value) throw new Exception(caption + ' is required.');
+    }
+    
+    void approve() {
+        if (MsgBox.confirm('Approve?')) {
+            entity.putAll(appSvc.approve(entity));
+        }
+    }
+    
+    
+    public boolean beforeRemoveItem(String name, def item ) {
+        return MsgBox.confirm("Remove selected item?");
+    }
+    
+    def addFee() {
+        def onadd = {fee ->
+            fee.parentid = entity.objid;
+            addItem("fees", fee);
+            entity.amount = entity.fees.sum{ it.amount + it.surcharge + it.penalty }
+            binding.refresh("selectedFee|amount");
+        }
+        return Inv.lookupOpener('application_fee:create', [onadd: onadd]);
+    }
+    
+    
+    def addPayment() {
+        def onadd = {payment ->
+            payment.appid = entity.objid;
+            appSvc.postCapturePayment(payment);
+            addItem("payments", payment);
+            entity.amtpaid += payment.amount;
+            entity.balance = entity.amount - entity.amtpaid;
+            itemHandlers.payments.handler.reload();
+        }
+        return Inv.lookupOpener('payment_capture:create', [onadd: onadd]);
     }
 }

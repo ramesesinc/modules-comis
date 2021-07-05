@@ -1,0 +1,29 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+    schemaName="application" 
+    allowCreate="false"
+    allowEdit="#{entity.state == 'DRAFT'}"
+>
+    <invokers>
+        <invoker folderid="/menucategory/comis/support" 
+            caption="Capture Burial Permit Application" 
+            action="create"  
+            role="ENCODER"
+        />
+        <invoker type="application_capture:open" 
+            caption="Capture Burial Permit Application" 
+            action="open"  
+            role="ENCODER"
+        />
+        
+        <invoker type="formActions" 
+            caption="Approve" 
+            action="approve"  
+            role="ENCODER_APPROVER"
+            visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read' }"
+        />
+    </invokers>
+    <code class="comis.models.ApplicationCaptureModel" />
+    <pages>
+        <page template="comis.views.ApplicationCapturePage" />
+    </pages>
+</workunit>

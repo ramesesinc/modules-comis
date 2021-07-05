@@ -9,7 +9,7 @@
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  
             action="init"
-            caption="View Building Application List"
+            caption="View Application List"
             cols="apptype,appno,dtapplied,resourceinfo.name,applicant.name,deceased.name,deceased.relation.title,deceased.sex,dtapproved,leaseduration,dtexpiry" 
             hiddenCols="state,task.state"
             role="SHARED"

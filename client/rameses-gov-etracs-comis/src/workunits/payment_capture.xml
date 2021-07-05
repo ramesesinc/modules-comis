@@ -1,0 +1,14 @@
+<workunit>
+    <invokers>
+        <invoker type="payment_capture:create" 
+            action="create"
+            caption="Capture Payment (New)" 
+            role="ENCODER"
+            target="popup" 
+        />
+    </invokers>
+    <code class="comis.models.PaymentCaptureModel" />
+    <pages>
+        <page template="comis.views.PaymentCapturePage" />
+    </pages>
+</workunit>

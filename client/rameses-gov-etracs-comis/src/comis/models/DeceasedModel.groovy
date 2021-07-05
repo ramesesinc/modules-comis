@@ -18,6 +18,7 @@ class DeceasedModel extends CrudFormModel {
     }
     
     void afterCreate() {
+        entity.state = 'DRAFT';
         entity.permissiontype = 'INTER';
         entity.nationality = 'FILIPINO';
         entity.sex = 'MALE';
