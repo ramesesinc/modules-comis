@@ -18,6 +18,9 @@ class ComisApplicationInterceptor {
 	@Service("WorkflowTaskService")
 	def wfSvc;
 
+	@DataContext('application')
+	def em_app;
+
 	@DataContext('application_fee')
 	def em_fee;
 
@@ -60,8 +63,13 @@ class ComisApplicationInterceptor {
 			app.dtexpiry = null;
 
 		if (app.online || app.online == 1) {
+			def prevapp = em_app.select('dtexpiry').find([objid: app.prevappid]).first();
 			def interval = app.leaseduration+"y";
-			app.dtexpiry = dtSvc.add(app.dtapproved, interval);
+			if (prevapp) {
+				app.dtexpiry = dtSvc.add(prevapp.dtexpiry, interval);
+			} else {
+				app.dtexpiry = dtSvc.add(app.dtapproved, interval);
+			}
 		}
     }
 
