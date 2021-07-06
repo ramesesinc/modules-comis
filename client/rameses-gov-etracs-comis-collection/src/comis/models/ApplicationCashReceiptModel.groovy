@@ -12,8 +12,8 @@ class ApplicationCashReceiptModel extends com.rameses.enterprise.treasury.cashre
     @Binding
     def binding;
     
-    @Service(value='ComisApplicationReceiptService', connection="comis")
-    def svc;
+    @Service(value='ComisApplicationBillingRuleService', connection="comis")
+    def billSvc;
     
     @Service('DateService')
     def dtSvc 
@@ -60,7 +60,8 @@ class ApplicationCashReceiptModel extends com.rameses.enterprise.treasury.cashre
                 entity.payer = it.applicant;
                 entity.paidby = it.applicant.name;
                 entity.paidbyaddress = it.applicant.address;
-                entity.items = svc.getFees([objid: it.objid]);
+                entity.bill = billSvc.getBilling(it);
+                entity.items = buildItems(entity.bill);
                 entity.amount = entity.items.amount.sum();
                 listHandler.reload();
                 updateBalances();
@@ -73,6 +74,30 @@ class ApplicationCashReceiptModel extends com.rameses.enterprise.treasury.cashre
             }
         ])
     }    
+    
+    def buildItems(bill) {
+        def rctitems = [];
+
+        bill.items.each{ 
+            rctitems << [
+                item: it.item.item,
+                amount: it.amount
+            ]
+            if (it.surcharge > 0) {
+                rctitems << [
+                    item: it.surchargeacct.item,
+                    amount: it.surcharge,
+                ]
+            }
+            if (it.penalty > 0) {
+                rctitems << [
+                    item: it.penaltyacct.item,
+                    amount: it.penalty,
+                ]
+            }
+        }
+        return rctitems;
+    }
     
     def listHandler = [
         fetchList: { entity.items }
