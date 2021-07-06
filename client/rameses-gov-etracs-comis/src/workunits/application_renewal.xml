@@ -5,20 +5,24 @@
     <invokers>
         <invoker folderid="/menucategory/comis/burial"  
             caption="Renew Application" 
-            action="create"
             index="2"  
             role="RECEIVER"
         />
         
-        <invoker type="application:open" caption="Burial Permit Application" 
-            action="open"  
-            role="SHARED"
+        <invoker type="formActions" 
+            action="_close"
+            caption="Close"
+            immediate="true"
+        />
+        
+        <invoker type="formActions" 
+            action="create"
+            caption="Save"
         />
         
     </invokers>
     <code class="comis.models.ApplicationRenewalModel" />
     <pages>
-        <page name="create" template="comis.views.ApplicationRenewalInitPage" />
-        <page template="comis.views.ApplicationPage" />
+        <page template="comis.views.ApplicationRenewalInitPage" />
     </pages>
 </workunit>

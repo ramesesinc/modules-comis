@@ -23,6 +23,7 @@ class ApplicationModel extends AbstractApplicationModel {
     }
     
     void beforeSave(mode) {
+        if (mode == 'create') return;
         required('Lessor Name', entity.lessor.name);
         required('Lessor Title', entity.lessor.title);
         required('Lessor CTC No.', entity.lessor.ctcno);

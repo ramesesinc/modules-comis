@@ -14,7 +14,7 @@ class PaymentCaptureModel  {
             reftype: 'RECEIPT',
             txnmode: 'CAPTURE',
             discount: 0,
-            amount: 0,
+            amount: entity.amount,
             voided: 0,
         ];
     }

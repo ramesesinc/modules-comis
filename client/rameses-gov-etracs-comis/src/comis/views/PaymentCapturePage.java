@@ -49,6 +49,7 @@ public class PaymentCapturePage extends javax.swing.JPanel {
 
         xDecimalField1.setCaption("Amount");
         xDecimalField1.setName("entity.amount"); // NOI18N
+        xDecimalField1.setEnabled(false);
         xDecimalField1.setRequired(true);
         xFormPanel1.add(xDecimalField1);
 

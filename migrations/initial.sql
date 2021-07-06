@@ -25,32 +25,33 @@ DROP TABLE IF EXISTS `application`;
 CREATE TABLE `application` (
   `objid` varchar(50) NOT NULL,
   `state` varchar(25) NOT NULL,
-  `resourceinfo_objid` varchar(50) NOT NULL,
-  `online` int(10) NOT NULL,
-  `apptype` varchar(25) NOT NULL,
+  `resourceinfo_objid` varchar(50) DEFAULT NULL,
+  `online` int(10) DEFAULT NULL,
+  `apptype` varchar(25) DEFAULT NULL,
   `appno` varchar(25) DEFAULT NULL,
-  `dtapplied` date NOT NULL,
+  `dtapplied` date DEFAULT NULL,
   `dtapproved` date DEFAULT NULL,
-  `appyear` int(255) NOT NULL,
-  `applicant_objid` varchar(50) NOT NULL,
-  `applicant_name` varchar(255) NOT NULL,
-  `applicant_address` varchar(255) NOT NULL,
-  `deceased_objid` varchar(50) NOT NULL,
-  `relation_objid` varchar(50) NOT NULL,
+  `appyear` int(255) DEFAULT NULL,
+  `applicant_objid` varchar(50) DEFAULT NULL,
+  `applicant_name` varchar(255) DEFAULT NULL,
+  `applicant_address` varchar(255) DEFAULT NULL,
+  `deceased_objid` varchar(50) DEFAULT NULL,
+  `relation_objid` varchar(50) DEFAULT NULL,
   `createdby` varchar(255) DEFAULT NULL,
   `dtcreated` datetime DEFAULT NULL,
   `dtexpiry` date DEFAULT NULL,
   `reportid` varchar(50) DEFAULT NULL,
   `permitid` varchar(50) DEFAULT NULL,
-  `renewable` int(255) NOT NULL DEFAULT '0',
+  `renewable` int(255) DEFAULT '0',
   `leaseduration` int(255) DEFAULT NULL,
-  `amount` decimal(16,2) NOT NULL DEFAULT '0.00',
-  `amtpaid` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `amount` decimal(16,2) DEFAULT '0.00',
+  `amtpaid` decimal(16,2) DEFAULT '0.00',
   `lessor` text,
   `lessee` text,
   `witness1` varchar(255) DEFAULT NULL,
   `witness2` varchar(255) DEFAULT NULL,
   `prevappid` varchar(50) DEFAULT NULL,
+  `taskid` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`objid`),
   UNIQUE KEY `ux_appno` (`appno`) USING BTREE,
   KEY `ix_state` (`state`) USING BTREE,
@@ -63,6 +64,7 @@ CREATE TABLE `application` (
   KEY `ix_apptype` (`apptype`) USING BTREE,
   KEY `fk_application_permit` (`permitid`),
   KEY `fk_application_prevapplication` (`prevappid`),
+  KEY `ix_taskid` (`taskid`),
   CONSTRAINT `fk_application_deceassed` FOREIGN KEY (`deceased_objid`) REFERENCES `deceased` (`objid`),
   CONSTRAINT `fk_application_permit` FOREIGN KEY (`permitid`) REFERENCES `permit` (`objid`),
   CONSTRAINT `fk_application_prevapplication` FOREIGN KEY (`prevappid`) REFERENCES `application` (`objid`),
@@ -77,6 +79,7 @@ CREATE TABLE `application` (
 
 LOCK TABLES `application` WRITE;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
+INSERT INTO `application` VALUES ('APP-510a4e3d:17a75719352:-7fff','ACTIVE','CSBR72cbefee:17a3bef8ccd:-76ec',1,'NEW','202100026','2021-07-05','2021-07-05',2021,'IND28edf2e5:1700ea33b05:-7b2a','ALBEZA, ANGELITO BATUIGAS','VILLA BEACH POBLACION 0001, CADIZ CITY ','D-510a4e3d:17a75719352:-8000','BROTHER',NULL,NULL,'2028-07-05',NULL,NULL,1,7,3150.00,3150.00,'[name:\"CITY MAYOR\",title:\"CITY MAYOR\",ctcplaceissued:\"LIGAO\",ctcno:\"11111\",ctcdtissued:\"2021-07-05\"]','[ctcplaceissued:\"LIGAO\",ctcno:\"22222\",ctcdtissued:\"2021-07-05\"]','WITNESS 1','WITNESS 2',NULL,'BP-485d99e5:17a75d23398:-7fe4'),('APP-73c82827:17a75cf8ad1:-7385','ACTIVE','CSBR72cbefee:17a3bef8ccd:-7684',0,'NEW','111001','2020-01-05','2020-01-05',2020,'IND28edf2e5:1700ea33b05:-797d','ALBEZA, ANNA MAE SENTINAR','VILLA BEACH POBLACION 0001, CADIZ CITY ','D-73c82827:17a75cf8ad1:-72fa','SISTER',NULL,NULL,'2027-01-05',NULL,NULL,1,7,3400.00,3450.00,'[name:\"CITY MAYOR\",title:\"CITY MAYOR\",ctcplaceissued:\"LIGAO\",ctcno:\"11111\",ctcdtissued:\"2021-07-05\"]','[ctcplaceissued:\"LIGAO\",ctcno:\"22222\",ctcdtissued:\"2021-07-05\"]','WITNESS 1','WITNESS 2',NULL,'BP-485d99e5:17a75d23398:-7fe1');
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,15 +94,17 @@ CREATE TABLE `application_fee` (
   `objid` varchar(50) NOT NULL,
   `parentid` varchar(50) NOT NULL,
   `item_objid` varchar(50) NOT NULL,
-  `amount` decimal(16,2) NOT NULL,
-  `amtpaid` decimal(16,2) NOT NULL,
+  `amount` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `amtpaid` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `surcharge` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `penalty` decimal(16,2) NOT NULL DEFAULT '0.00',
   `remarks` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`objid`),
-  UNIQUE KEY `ux_parentid_itemid` (`parentid`,`item_objid`),
+  UNIQUE KEY `ux_parentid_itemid` (`parentid`),
   KEY `ix_parentid` (`parentid`) USING BTREE,
-  KEY `ix_itemid` (`item_objid`) USING BTREE,
-  CONSTRAINT `fk_application_fee_application` FOREIGN KEY (`parentid`) REFERENCES `application` (`objid`),
-  CONSTRAINT `fk_application_fee_itemaccount` FOREIGN KEY (`item_objid`) REFERENCES `itemaccount` (`objid`)
+  KEY `fk_application_fee_itemaccount` (`item_objid`),
+  CONSTRAINT `fk_application_fee_itemaccount` FOREIGN KEY (`item_objid`) REFERENCES `itemaccount` (`objid`),
+  CONSTRAINT `fk_application_fee_application` FOREIGN KEY (`parentid`) REFERENCES `application` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,7 +114,50 @@ CREATE TABLE `application_fee` (
 
 LOCK TABLES `application_fee` WRITE;
 /*!40000 ALTER TABLE `application_fee` DISABLE KEYS */;
+INSERT INTO `application_fee` VALUES ('AF-485d99e5:17a75d23398:-7fe2','APP-73c82827:17a75cf8ad1:-7385','BPA',3000.00,0.00,300.00,100.00,NULL),('CF-510a4e3d:17a75719352:-7ff8','APP-510a4e3d:17a75719352:-7fff','BPA',2500.00,2500.00,500.00,150.00,NULL);
 /*!40000 ALTER TABLE `application_fee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `application_task`
+--
+
+DROP TABLE IF EXISTS `application_task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `application_task` (
+  `taskid` varchar(50) NOT NULL DEFAULT '',
+  `refid` varchar(50) DEFAULT NULL,
+  `parentprocessid` varchar(50) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `startdate` datetime DEFAULT NULL,
+  `enddate` datetime DEFAULT NULL,
+  `assignee_objid` varchar(50) DEFAULT NULL,
+  `assignee_name` varchar(100) DEFAULT NULL,
+  `assignee_title` varchar(80) DEFAULT NULL,
+  `actor_objid` varchar(50) DEFAULT NULL,
+  `actor_name` varchar(100) DEFAULT NULL,
+  `actor_title` varchar(80) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `signature` longtext,
+  `returnedby` varchar(100) DEFAULT NULL,
+  `dtcreated` datetime DEFAULT NULL,
+  `prevtaskid` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`taskid`),
+  KEY `ix_refid` (`refid`),
+  KEY `ix_assignee_objid` (`assignee_objid`),
+  CONSTRAINT `application_task_application` FOREIGN KEY (`refid`) REFERENCES `application` (`objid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `application_task`
+--
+
+LOCK TABLES `application_task` WRITE;
+/*!40000 ALTER TABLE `application_task` DISABLE KEYS */;
+INSERT INTO `application_task` VALUES ('BP-485d99e5:17a75d23398:-7fe1','APP-73c82827:17a75cf8ad1:-7385',NULL,'release',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-01-05 00:00:00',NULL),('BP-485d99e5:17a75d23398:-7fe4','APP-510a4e3d:17a75719352:-7fff',NULL,'active',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-05 16:54:37','BP-485d99e5:17a75d23398:-7fe6'),('BP-485d99e5:17a75d23398:-7fe6','APP-510a4e3d:17a75719352:-7fff',NULL,'releaser','2021-07-05 16:54:35','2021-07-05 16:54:37','USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:54:03','BP-485d99e5:17a75d23398:-7feb'),('BP-485d99e5:17a75d23398:-7feb','APP-510a4e3d:17a75719352:-7fff',NULL,'for-payment',NULL,'2021-07-05 16:54:03',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:53:39','BP-485d99e5:17a75d23398:-7fec'),('BP-485d99e5:17a75d23398:-7fec','APP-510a4e3d:17a75719352:-7fff',NULL,'releaser',NULL,'2021-07-05 16:53:39',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:53:12','BP-485d99e5:17a75d23398:-7ff1'),('BP-485d99e5:17a75d23398:-7ff1','APP-510a4e3d:17a75719352:-7fff',NULL,'for-payment',NULL,'2021-07-05 16:53:12',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:51:16','BP-485d99e5:17a75d23398:-7ff2'),('BP-485d99e5:17a75d23398:-7ff2','APP-510a4e3d:17a75719352:-7fff',NULL,'releaser',NULL,'2021-07-05 16:51:16',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:47:16','BP-485d99e5:17a75d23398:-7ff7'),('BP-485d99e5:17a75d23398:-7ff7','APP-510a4e3d:17a75719352:-7fff',NULL,'for-payment',NULL,'2021-07-05 16:47:16',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:46:41','BP-485d99e5:17a75d23398:-7ff8'),('BP-485d99e5:17a75d23398:-7ff8','APP-510a4e3d:17a75719352:-7fff',NULL,'releaser',NULL,'2021-07-05 16:46:41',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 16:45:18','BP-510a4e3d:17a75719352:-7ff7'),('BP-510a4e3d:17a75719352:-7ff7','APP-510a4e3d:17a75719352:-7fff',NULL,'for-payment',NULL,'2021-07-05 16:45:18',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 14:55:53','BP-510a4e3d:17a75719352:-7ffb'),('BP-510a4e3d:17a75719352:-7ffb','APP-510a4e3d:17a75719352:-7fff',NULL,'approver','2021-07-05 14:55:40','2021-07-05 14:55:53','USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 14:54:58','BP-510a4e3d:17a75719352:-7ffd'),('BP-510a4e3d:17a75719352:-7ffd','APP-510a4e3d:17a75719352:-7fff',NULL,'receiver','2021-07-05 14:53:36','2021-07-05 14:54:58','USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 14:53:36','BP-510a4e3d:17a75719352:-7ffe'),('BP-510a4e3d:17a75719352:-7ffe','APP-510a4e3d:17a75719352:-7fff',NULL,'start','2021-07-05 14:53:36','2021-07-05 14:53:36',NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac','ADMIN A. ADMIN',NULL,NULL,NULL,NULL,'2021-07-05 14:53:36',NULL);
+/*!40000 ALTER TABLE `application_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -192,7 +240,7 @@ CREATE TABLE `cemetery` (
 
 LOCK TABLES `cemetery` WRITE;
 /*!40000 ALTER TABLE `cemetery` DISABLE KEYS */;
-INSERT INTO `cemetery` VALUES ('CEM-NEW','ACTIVE','NEW','NEW CEMETERY','NEW LOCATION',1),('CEM-OLD','DRAFT','OLD','OLD CEMETERY','OLD LOCATION',0);
+INSERT INTO `cemetery` VALUES ('C72cbefee:17a3bef8ccd:-7838','ACTIVE','NEW','NEW CEMETERY','LIGAO',1);
 /*!40000 ALTER TABLE `cemetery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +253,6 @@ DROP TABLE IF EXISTS `cemetery_section`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cemetery_section` (
   `objid` varchar(50) NOT NULL,
-  `state` varchar(25) NOT NULL,
   `parentid` varchar(50) NOT NULL,
   `code` varchar(10) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -213,7 +260,6 @@ CREATE TABLE `cemetery_section` (
   PRIMARY KEY (`objid`),
   UNIQUE KEY `ux_parentid_name` (`parentid`,`name`) USING BTREE,
   UNIQUE KEY `ux_parentid_code` (`parentid`,`code`) USING BTREE,
-  KEY `ix_state` (`state`) USING BTREE,
   KEY `ix_parentid` (`parentid`) USING BTREE,
   CONSTRAINT `fk_cemetery_section_cemetery` FOREIGN KEY (`parentid`) REFERENCES `cemetery` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -225,7 +271,7 @@ CREATE TABLE `cemetery_section` (
 
 LOCK TABLES `cemetery_section` WRITE;
 /*!40000 ALTER TABLE `cemetery_section` DISABLE KEYS */;
-INSERT INTO `cemetery_section` VALUES ('CEM-NEW-S01','ACTIVE','CEM-NEW','S-01','SECTION 01',NULL),('CEM-OLD-S02','DRAFT','CEM-OLD','S-01','SECTION 01',NULL);
+INSERT INTO `cemetery_section` VALUES ('CS72cbefee:17a3bef8ccd:-77ee','C72cbefee:17a3bef8ccd:-7838','S2','SECTION 2',NULL),('CS72cbefee:17a3bef8ccd:-7816','C72cbefee:17a3bef8ccd:-7838','S1','SECTION 1',NULL);
 /*!40000 ALTER TABLE `cemetery_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +284,6 @@ DROP TABLE IF EXISTS `cemetery_section_block`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cemetery_section_block` (
   `objid` varchar(50) NOT NULL,
-  `state` varchar(25) NOT NULL,
   `parentid` varchar(50) NOT NULL,
   `code` varchar(10) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -246,7 +291,6 @@ CREATE TABLE `cemetery_section_block` (
   PRIMARY KEY (`objid`),
   UNIQUE KEY `ux_parentid_name` (`parentid`,`name`) USING BTREE,
   UNIQUE KEY `ux_parentid_code` (`parentid`,`code`) USING BTREE,
-  KEY `ix_state` (`state`) USING BTREE,
   KEY `ix_parentid` (`parentid`) USING BTREE,
   CONSTRAINT `fk_cemetery_section_block_cemetery_section` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -258,7 +302,7 @@ CREATE TABLE `cemetery_section_block` (
 
 LOCK TABLES `cemetery_section_block` WRITE;
 /*!40000 ALTER TABLE `cemetery_section_block` DISABLE KEYS */;
-INSERT INTO `cemetery_section_block` VALUES ('CEM-NEW-S01-B01','DRAFT','CEM-NEW-S01','B-1','BLOCK 1',NULL);
+INSERT INTO `cemetery_section_block` VALUES ('CSB72cbefee:17a3bef8ccd:-773d','CS72cbefee:17a3bef8ccd:-77ee','B21','BLOCK 1',NULL),('CSB72cbefee:17a3bef8ccd:-7784','CS72cbefee:17a3bef8ccd:-7816','B11','BLOCK 1',NULL);
 /*!40000 ALTER TABLE `cemetery_section_block` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,8 +327,8 @@ CREATE TABLE `cemetery_section_block_resource` (
   UNIQUE KEY `ux_parentid_resourcetypeid_code` (`parentid`,`currentappid`) USING BTREE,
   KEY `ix_parentid` (`parentid`) USING BTREE,
   KEY `ix_currentappid` (`currentappid`),
-  CONSTRAINT `fk_cemetery_section_block_resource_currentinfoid` FOREIGN KEY (`currentinfoid`) REFERENCES `cemetery_section_block_resource_info` (`objid`),
   CONSTRAINT `fk_cemetery_section_block_resource_currentappid` FOREIGN KEY (`currentappid`) REFERENCES `application` (`objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_currentinfoid` FOREIGN KEY (`currentinfoid`) REFERENCES `cemetery_section_block_resource_info` (`objid`),
   CONSTRAINT `fk_cemetery_section_block_resource_parentid` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_block` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -295,7 +339,7 @@ CREATE TABLE `cemetery_section_block_resource` (
 
 LOCK TABLES `cemetery_section_block_resource` WRITE;
 /*!40000 ALTER TABLE `cemetery_section_block_resource` DISABLE KEYS */;
-INSERT INTO `cemetery_section_block_resource` VALUES ('CEM-NEW-S01-B01-N01','CEM-NEW-S01-B01','N-01','NICHE 01','CEM-NEW-S01-B01-N01',NULL),('CEM-NEW-S01-B01-N02','CEM-NEW-S01-B01','N-02','NICHE-02','CEM-NEW-S01-B01-N02',NULL);
+INSERT INTO `cemetery_section_block_resource` VALUES ('CSBR-3a317d5c:17a555cd2ea:-7cfa','CSB72cbefee:17a3bef8ccd:-773d','R211','TOMB 1','CSBR-3a317d5c:17a555cd2ea:-7cfa',NULL),('CSBR351f7c57:17a65019ac6:-773f','CSB72cbefee:17a3bef8ccd:-773d','R212','TOM 2','CSBR351f7c57:17a65019ac6:-773f',NULL),('CSBR72cbefee:17a3bef8ccd:-7684','CSB72cbefee:17a3bef8ccd:-7784','N112','NICHE 2','CSBR72cbefee:17a3bef8ccd:-7684','APP-73c82827:17a75cf8ad1:-7385'),('CSBR72cbefee:17a3bef8ccd:-76ec','CSB72cbefee:17a3bef8ccd:-7784','N111','NICHE 1','CSBR72cbefee:17a3bef8ccd:-76ec','APP-510a4e3d:17a75719352:-7fff');
 /*!40000 ALTER TABLE `cemetery_section_block_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,12 +362,14 @@ CREATE TABLE `cemetery_section_block_resource_info` (
   `length` decimal(16,2) DEFAULT NULL,
   `width` decimal(16,2) DEFAULT NULL,
   PRIMARY KEY (`objid`),
+  UNIQUE KEY `ux_parentid_code` (`parentid`,`code`),
+  UNIQUE KEY `ux_parentid_name` (`parentid`,`name`),
   KEY `ix_parentid` (`parentid`) USING BTREE,
   KEY `ix_code` (`code`) USING BTREE,
   KEY `ix_name` (`name`) USING BTREE,
   KEY `fk_cemetery_section_block_resource_info_resourceid` (`resource_objid`),
-  CONSTRAINT `fk_cemetery_section_block_resource_info_resourceid` FOREIGN KEY (`resource_objid`) REFERENCES `resource` (`objid`),
-  CONSTRAINT `fk_cemetery_section_block_resource_info_parentid` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_block_resource` (`objid`)
+  CONSTRAINT `fk_cemetery_section_block_resource_info_parentid` FOREIGN KEY (`parentid`) REFERENCES `cemetery_section_block_resource` (`objid`),
+  CONSTRAINT `fk_cemetery_section_block_resource_info_resourceid` FOREIGN KEY (`resource_objid`) REFERENCES `resource` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -333,7 +379,7 @@ CREATE TABLE `cemetery_section_block_resource_info` (
 
 LOCK TABLES `cemetery_section_block_resource_info` WRITE;
 /*!40000 ALTER TABLE `cemetery_section_block_resource_info` DISABLE KEYS */;
-INSERT INTO `cemetery_section_block_resource_info` VALUES ('CEM-NEW-S01-B01-N01','CEM-NEW-S01-B01-N01','DRAFT','NICHE','N01','NICHE 01',7.00,NULL,NULL,NULL),('CEM-NEW-S01-B01-N02','CEM-NEW-S01-B01-N02','DRAFT','NICHE','N02','NICHE 02',7.00,NULL,NULL,NULL);
+INSERT INTO `cemetery_section_block_resource_info` VALUES ('CSBR-3a317d5c:17a555cd2ea:-7cfa','CSBR-3a317d5c:17a555cd2ea:-7cfa','ACTIVE','TOMB','R211','TOMB 1',7.00,NULL,2.00,3.50),('CSBR351f7c57:17a65019ac6:-773f','CSBR351f7c57:17a65019ac6:-773f','ACTIVE','TOMB','R212','TOM 2',7.00,NULL,3.50,2.00),('CSBR72cbefee:17a3bef8ccd:-7684','CSBR72cbefee:17a3bef8ccd:-7684','ACTIVE','NICHE','N112','NICHE 2',7.00,NULL,3.50,2.00),('CSBR72cbefee:17a3bef8ccd:-76ec','CSBR72cbefee:17a3bef8ccd:-76ec','ACTIVE','NICHE','N111','NICHE 1',7.00,NULL,3.50,2.00);
 /*!40000 ALTER TABLE `cemetery_section_block_resource_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,8 +392,8 @@ DROP TABLE IF EXISTS `deceased`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deceased` (
   `objid` varchar(50) NOT NULL,
-  `state` varchar(50) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `state` varchar(25) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `nationality` varchar(50) DEFAULT NULL,
   `age` varchar(25) DEFAULT NULL,
   `sex` varchar(10) DEFAULT NULL,
@@ -360,7 +406,6 @@ CREATE TABLE `deceased` (
   PRIMARY KEY (`objid`),
   KEY `ix_name` (`name`),
   KEY `ix_dtdied` (`dtdied`),
-  KEY `ix_state` (`state`),
   KEY `fk_deceased_causeofdeath` (`causeofdeath_objid`),
   CONSTRAINT `fk_deceased_causeofdeath` FOREIGN KEY (`causeofdeath_objid`) REFERENCES `causeofdeath` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -372,6 +417,7 @@ CREATE TABLE `deceased` (
 
 LOCK TABLES `deceased` WRITE;
 /*!40000 ALTER TABLE `deceased` DISABLE KEYS */;
+INSERT INTO `deceased` VALUES ('D-510a4e3d:17a75719352:-8000','APPROVED','JUAN','FILIPINO','56','MALE','2021-07-05','NATURAL','INTER',NULL,NULL,NULL),('D-73c82827:17a75cf8ad1:-72fa','APPROVED','ROBERT','FILIPINO','56','MALE','2021-07-05','ACCIDENT','INTER',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `deceased` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,7 +447,7 @@ CREATE TABLE `itemaccount` (
 
 LOCK TABLES `itemaccount` WRITE;
 /*!40000 ALTER TABLE `itemaccount` DISABLE KEYS */;
-INSERT INTO `itemaccount` VALUES ('BPA','BURIAL PERMIT APPLICATION','ITMACCT4ef44f04:178af8b8c78:-7bbf','BPA','BURIAL PERMIT APPLICATION','GENERAL','GENERAL-PROPER',1),('BPAINT','BURIAL PERMIT APPLICATION - INTEREST',NULL,NULL,NULL,NULL,NULL,3),('BPASUR','BURIAL PERMIT APPLICATION - SURCHARGE',NULL,NULL,NULL,NULL,NULL,2),('BPF','BURIAL PERMIT FEE','ITMACCT-5314e199:178a0cdd2eb:-7ed6','BFE','BURIAL PERMIT FEE','GENERAL','GENERAL-PROPER',1);
+INSERT INTO `itemaccount` VALUES ('BPA','BURIAL PERMIT APPLICATION','ITMACCT4ef44f04:178af8b8c78:-7bbf','BPA','BURIAL PERMIT APPLICATION','GENERAL','GENERAL-PROPER',1),('BPAPEN','BURIAL PERMIT APPLICATION - PENALTY','ITMACCT4dbf017d:17a516af633:-7e9d','-','BURIAL PERMIT APPLICATION - PENALTY','GENERAL','GENERAL-PROPER',3),('BPASUR','BURIAL PERMIT APPLICATION - SURCHARGE','ITMACCT4dbf017d:17a516af633:-7d6f','-','BURIAL PERMIT APPLICATION - SURCHARGE','GENERAL','GENERAL-PROPER',2),('BPF','BURIAL PERMIT FEE','ITMACCT-5314e199:178a0cdd2eb:-7ed6','BFE','BURIAL PERMIT FEE','GENERAL','GENERAL-PROPER',1);
 /*!40000 ALTER TABLE `itemaccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,6 +536,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES ('PMT-485d99e5:17a75d23398:-7fe0','APP-73c82827:17a75cf8ad1:-7385',NULL,'939939','RECEIPT','2021-07-05',0.00,3450.00,0,'CAPTURE',NULL,'2021-07-05 16:57:21'),('PMT-485d99e5:17a75d23398:-7fea','APP-510a4e3d:17a75719352:-7fff','RCT-582ecf15:17a756ef79d:-7df5','9001020','RECEIPT','2021-07-05',0.00,3150.00,0,'ONLINE',NULL,'2021-07-05 16:54:03');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,14 +549,18 @@ DROP TABLE IF EXISTS `payment_item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `payment_item` (
   `objid` varchar(50) NOT NULL,
-  `parentid` varchar(50) DEFAULT NULL,
-  `refid` varchar(50) DEFAULT NULL,
-  `reftype` varchar(50) DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT NULL,
-  `discount` decimal(10,2) DEFAULT NULL,
+  `parentid` varchar(50) NOT NULL,
+  `refid` varchar(50) NOT NULL COMMENT 'links to application_fee',
+  `reftype` varchar(50) NOT NULL COMMENT 'application_fee',
+  `acct_objid` varchar(50) NOT NULL,
+  `acct_type` varchar(25) NOT NULL COMMENT 'FEE,SURCHARGE,PENALTY',
+  `amount` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL,
   `remarks` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`objid`),
   KEY `fk_payment_item_payment` (`parentid`),
+  KEY `fk_payment_item_itemaccount` (`acct_objid`),
+  CONSTRAINT `fk_payment_item_itemaccount` FOREIGN KEY (`acct_objid`) REFERENCES `itemaccount` (`objid`),
   CONSTRAINT `fk_payment_item_payment` FOREIGN KEY (`parentid`) REFERENCES `payment` (`objid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -520,6 +571,7 @@ CREATE TABLE `payment_item` (
 
 LOCK TABLES `payment_item` WRITE;
 /*!40000 ALTER TABLE `payment_item` DISABLE KEYS */;
+INSERT INTO `payment_item` VALUES ('PI-485d99e5:17a75d23398:-7fe7','PMT-485d99e5:17a75d23398:-7fea','CF-510a4e3d:17a75719352:-7ff8','application_fee','BPAPEN','PENALTY',150.00,0.00,NULL),('PI-485d99e5:17a75d23398:-7fe8','PMT-485d99e5:17a75d23398:-7fea','CF-510a4e3d:17a75719352:-7ff8','application_fee','BPASUR','SURCHARGE',500.00,0.00,NULL),('PI-485d99e5:17a75d23398:-7fe9','PMT-485d99e5:17a75d23398:-7fea','CF-510a4e3d:17a75719352:-7ff8','application_fee','BPA','FEE',2500.00,0.00,NULL);
 /*!40000 ALTER TABLE `payment_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -828,7 +880,7 @@ CREATE TABLE `sys_role` (
 
 LOCK TABLES `sys_role` WRITE;
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
-INSERT INTO `sys_role` VALUES ('ADMIN','ADMIN',1),('ENCODER','ENCODER',1),('ENCODER_APPROVER','ENCODER_APPROVER',1),('LCR','LCR',1),('LCR_APPROVER','LCR APPROVER',1),('LICENSING','LICENSING',1),('MASTER','MASTER',1),('REPORTS','REPORTS',1),('RULE_AUTHOR','RULE AUTHOR',1);
+INSERT INTO `sys_role` VALUES ('ADMIN','ADMIN',1),('APPROVER','APPROVER',1),('ENCODER','ENCODER',1),('ENCODER_APPROVER','ENCODER_APPROVER',1),('LICENSING','LICENSING',1),('MASTER','MASTER',1),('RECEIVER','RECEIVER',1),('RELEASER','RELEASER',1),('REPORTS','REPORTS',1),('RULE_AUTHOR','RULE AUTHOR',1),('SHARED','SHARED',1),('SYSTEM','SYSTEM',1);
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -896,7 +948,7 @@ CREATE TABLE `sys_rule` (
 
 LOCK TABLES `sys_rule` WRITE;
 /*!40000 ALTER TABLE `sys_rule` DISABLE KEYS */;
-INSERT INTO `sys_rule` VALUES ('RUL47c70270:178a108c963:-7d4d','DEPLOYED','FEE_TOMB','burialpermitapplication','feecomputation','Tomb Fee',NULL,50000,NULL,NULL,'2021-04-05 16:01:13','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL6020185:178a06ffea4:-79ff','DEPLOYED','DEFAULT_RENEWABLE_OPTION','burialpermitapplication','init','DEFAULT RENEWABLE OPTION',NULL,50000,NULL,NULL,'2021-04-05 13:24:53','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL6020185:178a06ffea4:-7b65','DEPLOYED','DEFAULT_LEASED_DURATION','burialpermitapplication','init','DEFAULT LEASED DURATION',NULL,50000,NULL,NULL,'2021-04-05 13:22:38','USR5b13925b:17066eb8fad:-7eac','ADMIN',1);
+INSERT INTO `sys_rule` VALUES ('RUL-18956a1e:17a75a2ce82:-7598','DEPLOYED','PENALTY','burialpermitapplicationbilling','penalty','PENALTY',NULL,50000,NULL,NULL,'2021-07-05 16:10:26','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL-18956a1e:17a75a2ce82:-76ed','DEPLOYED','SURCHARGE','burialpermitapplicationbilling','surcharge','SURCHARGE',NULL,50000,NULL,NULL,'2021-07-05 15:56:40','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL-39252f0c:17a55acb897:-6d41','DEPLOYED','PENALTY','burialpermitapplication','after-feecomputation','PENALTY',NULL,50000,NULL,NULL,'2021-06-29 15:16:55','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL47c70270:178a108c963:-7d4d','DEPLOYED','FEE_TOMB','burialpermitapplication','feecomputation','Tomb Fee',NULL,50000,NULL,NULL,'2021-04-05 16:01:13','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL4dbf017d:17a516af633:-7033','DEPLOYED','SURCHARGE','burialpermitapplication','after-feecomputation','SURCHARGE',NULL,50000,NULL,NULL,'2021-06-28 16:47:46','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL6020185:178a06ffea4:-79ff','DEPLOYED','DEFAULT_RENEWABLE_OPTION','burialpermitapplication','init','DEFAULT RENEWABLE OPTION',NULL,50000,NULL,NULL,'2021-04-05 13:24:53','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL6020185:178a06ffea4:-7b65','DEPLOYED','DEFAULT_LEASED_DURATION','burialpermitapplication','init','DEFAULT LEASED DURATION',NULL,50000,NULL,NULL,'2021-04-05 13:22:38','USR5b13925b:17066eb8fad:-7eac','ADMIN',1),('RUL72cbefee:17a3bef8ccd:-6fca','DEPLOYED','FEE_NICHE','burialpermitapplication','feecomputation','Niche Fee',NULL,50000,NULL,NULL,'2021-06-24 12:13:35','USR5b13925b:17066eb8fad:-7eac','ADMIN',1);
 /*!40000 ALTER TABLE `sys_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -927,7 +979,7 @@ CREATE TABLE `sys_rule_action` (
 
 LOCK TABLES `sys_rule_action` WRITE;
 /*!40000 ALTER TABLE `sys_rule_action` DISABLE KEYS */;
-INSERT INTO `sys_rule_action` VALUES ('RACT47c70270:178a108c963:-7bf8','RUL47c70270:178a108c963:-7d4d','comis.actions.AddFee','add-fee',0),('RACT6020185:178a06ffea4:-79b2','RUL6020185:178a06ffea4:-79ff','comis.actions.SetRenewable','setrenewable',0),('RACT6020185:178a06ffea4:-7a6b','RUL6020185:178a06ffea4:-7b65','comis.actions.ComputeLeaseDuration','compute-lease-duration',0);
+INSERT INTO `sys_rule_action` VALUES ('RA3d0a727c:17a3beb49e1:-7fef','RUL72cbefee:17a3bef8ccd:-6fca','comis.actions.AddFee','add-fee',0),('RACT-18956a1e:17a75a2ce82:-74d7','RUL-18956a1e:17a75a2ce82:-7598','comis.actions.CalcPenalty','calc-penalty',0),('RACT-18956a1e:17a75a2ce82:-7632','RUL-18956a1e:17a75a2ce82:-76ed','comis.actions.CalcSurcharge','calc-surcharge',0),('RACT-39252f0c:17a55acb897:-6cc8','RUL-39252f0c:17a55acb897:-6d41','comis.actions.CalcPenalty','calc-penalty',0),('RACT47c70270:178a108c963:-7bf8','RUL47c70270:178a108c963:-7d4d','comis.actions.AddFee','add-fee',0),('RACT4dbf017d:17a516af633:-6f6d','RUL4dbf017d:17a516af633:-7033','comis.actions.CalcSurcharge','calc-surcharge',0),('RACT6020185:178a06ffea4:-79b2','RUL6020185:178a06ffea4:-79ff','comis.actions.SetRenewable','setrenewable',0),('RACT6020185:178a06ffea4:-7a6b','RUL6020185:178a06ffea4:-7b65','comis.actions.ComputeLeaseDuration','compute-lease-duration',0);
 /*!40000 ALTER TABLE `sys_rule_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -972,7 +1024,7 @@ CREATE TABLE `sys_rule_action_param` (
 
 LOCK TABLES `sys_rule_action_param` WRITE;
 /*!40000 ALTER TABLE `sys_rule_action_param` DISABLE KEYS */;
-INSERT INTO `sys_rule_action_param` VALUES ('RULACT47c70270:178a108c963:-7ba8','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.expr',NULL,NULL,NULL,NULL,'3000','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT47c70270:178a108c963:-7bc9','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPA','BURIAL PERMIT APPLICATION',NULL,NULL,NULL),('RULACT47c70270:178a108c963:-7be4','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.application',NULL,NULL,'RCOND47c70270:178a108c963:-7c3a','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-798c','RACT6020185:178a06ffea4:-79b2','comis.actions.SetRenewable.renewable',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-79a2','RACT6020185:178a06ffea4:-79b2','comis.actions.SetRenewable.application',NULL,NULL,'RC-2066edb5:178a07da6d9:-7ffe','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-7a45','RACT6020185:178a06ffea4:-7a6b','comis.actions.ComputeLeaseDuration.expr',NULL,NULL,NULL,NULL,'7','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-7a5b','RACT6020185:178a06ffea4:-7a6b','comis.actions.ComputeLeaseDuration.application',NULL,NULL,'RCOND6020185:178a06ffea4:-7b30','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `sys_rule_action_param` VALUES ('RAP3d0a727c:17a3beb49e1:-7fec','RA3d0a727c:17a3beb49e1:-7fef','comis.actions.AddFee.application',NULL,NULL,'RC3d0a727c:17a3beb49e1:-7ff2','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RAP3d0a727c:17a3beb49e1:-7fed','RA3d0a727c:17a3beb49e1:-7fef','comis.actions.AddFee.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPA','BURIAL PERMIT APPLICATION',NULL,NULL,NULL),('RAP3d0a727c:17a3beb49e1:-7fee','RA3d0a727c:17a3beb49e1:-7fef','comis.actions.AddFee.expr',NULL,NULL,NULL,NULL,'2500','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-7487','RACT-18956a1e:17a75a2ce82:-74d7','comis.actions.CalcPenalty.expr',NULL,NULL,NULL,NULL,'AMOUNT * 0.02 * 3','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-74a8','RACT-18956a1e:17a75a2ce82:-74d7','comis.actions.CalcPenalty.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPAPEN','BURIAL PERMIT APPLICATION - PENALTY',NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-74c3','RACT-18956a1e:17a75a2ce82:-74d7','comis.actions.CalcPenalty.fee',NULL,NULL,'RCOND-18956a1e:17a75a2ce82:-7551','FEE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-75e2','RACT-18956a1e:17a75a2ce82:-7632','comis.actions.CalcSurcharge.expr',NULL,NULL,NULL,NULL,'AMOUNT * 0.20','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-7603','RACT-18956a1e:17a75a2ce82:-7632','comis.actions.CalcSurcharge.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPASUR','BURIAL PERMIT APPLICATION - SURCHARGE',NULL,NULL,NULL),('RULACT-18956a1e:17a75a2ce82:-761e','RACT-18956a1e:17a75a2ce82:-7632','comis.actions.CalcSurcharge.fee',NULL,NULL,'RCOND-18956a1e:17a75a2ce82:-76a6','FEE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-39252f0c:17a55acb897:-6c7c','RACT-39252f0c:17a55acb897:-6cc8','comis.actions.CalcPenalty.expr',NULL,NULL,NULL,NULL,'50','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT-39252f0c:17a55acb897:-6c9b','RACT-39252f0c:17a55acb897:-6cc8','comis.actions.CalcPenalty.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPAPEN','BURIAL PERMIT APPLICATION - PENALTY',NULL,NULL,NULL),('RULACT-39252f0c:17a55acb897:-6cb4','RACT-39252f0c:17a55acb897:-6cc8','comis.actions.CalcPenalty.fee',NULL,NULL,'RCOND-39252f0c:17a55acb897:-6d05','FEE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT47c70270:178a108c963:-7ba8','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.expr',NULL,NULL,NULL,NULL,'3000','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT47c70270:178a108c963:-7bc9','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPA','BURIAL PERMIT APPLICATION',NULL,NULL,NULL),('RULACT47c70270:178a108c963:-7be4','RACT47c70270:178a108c963:-7bf8','comis.actions.AddFee.application',NULL,NULL,'RCOND47c70270:178a108c963:-7c3a','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT4dbf017d:17a516af633:-6ee7','RACT4dbf017d:17a516af633:-6f6d','comis.actions.CalcSurcharge.expr',NULL,NULL,NULL,NULL,'200','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT4dbf017d:17a516af633:-6f11','RACT4dbf017d:17a516af633:-6f6d','comis.actions.CalcSurcharge.itemaccount',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'BPASUR','BURIAL PERMIT APPLICATION - SURCHARGE',NULL,NULL,NULL),('RULACT4dbf017d:17a516af633:-6f35','RACT4dbf017d:17a516af633:-6f6d','comis.actions.CalcSurcharge.fee',NULL,NULL,'RCOND4dbf017d:17a516af633:-6fc3','FEE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-798c','RACT6020185:178a06ffea4:-79b2','comis.actions.SetRenewable.renewable',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-79a2','RACT6020185:178a06ffea4:-79b2','comis.actions.SetRenewable.application',NULL,NULL,'RC-2066edb5:178a07da6d9:-7ffe','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-7a45','RACT6020185:178a06ffea4:-7a6b','comis.actions.ComputeLeaseDuration.expr',NULL,NULL,NULL,NULL,'7','expression',NULL,NULL,NULL,NULL,NULL,NULL),('RULACT6020185:178a06ffea4:-7a5b','RACT6020185:178a06ffea4:-7a6b','comis.actions.ComputeLeaseDuration.application',NULL,NULL,'RCOND6020185:178a06ffea4:-7b30','APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `sys_rule_action_param` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1001,7 +1053,7 @@ CREATE TABLE `sys_rule_actiondef` (
 
 LOCK TABLES `sys_rule_actiondef` WRITE;
 /*!40000 ALTER TABLE `sys_rule_actiondef` DISABLE KEYS */;
-INSERT INTO `sys_rule_actiondef` VALUES ('comis.actions.AddFee','add-fee','Add Fee',3,'add-fee','COMIS','comis.actions.AddFee'),('comis.actions.ComputeLeaseDuration','compute-lease-duration','Compute Lease Duration',1,'compute-lease-duration','COMIS','comis.actions.ComputeLeaseDuration'),('comis.actions.SetRenewable','setrenewable','Set Renewable Flag',2,'setrenewable','COMIS','comis.actions.SetRenewable');
+INSERT INTO `sys_rule_actiondef` VALUES ('comis.actions.AddFee','add-fee','Add Fee',3,'add-fee','COMIS','comis.actions.AddFee'),('comis.actions.CalcPenalty','calc-penalty','Calculate Penalty',5,'calc-penalty','COMIS','comis.actions.CalcPenalty'),('comis.actions.CalcSurcharge','calc-surcharge','Calculate Surcharge',4,'calc-surcharge','COMIS','comis.actions.CalcSurcharge'),('comis.actions.ComputeLeaseDuration','compute-lease-duration','Compute Lease Duration',1,'compute-lease-duration','COMIS','comis.actions.ComputeLeaseDuration'),('comis.actions.SetRenewable','setrenewable','Set Renewable Flag',2,'setrenewable','COMIS','comis.actions.SetRenewable');
 /*!40000 ALTER TABLE `sys_rule_actiondef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1037,7 +1089,7 @@ CREATE TABLE `sys_rule_actiondef_param` (
 
 LOCK TABLES `sys_rule_actiondef_param` WRITE;
 /*!40000 ALTER TABLE `sys_rule_actiondef_param` DISABLE KEYS */;
-INSERT INTO `sys_rule_actiondef_param` VALUES ('comis.actions.AddFee.application','comis.actions.AddFee','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.AddFee.expr','comis.actions.AddFee','expr',3,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.AddFee.itemaccount','comis.actions.AddFee','itemaccount',2,'Account',NULL,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL),('comis.actions.ComputeLeaseDuration.application','comis.actions.ComputeLeaseDuration','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.ComputeLeaseDuration.expr','comis.actions.ComputeLeaseDuration','expr',2,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.SetRenewable.application','comis.actions.SetRenewable','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.SetRenewable.renewable','comis.actions.SetRenewable','renewable',2,'Is Renewable?','boolean','boolean',NULL,NULL,NULL,'boolean',NULL);
+INSERT INTO `sys_rule_actiondef_param` VALUES ('comis.actions.AddFee.application','comis.actions.AddFee','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.AddFee.expr','comis.actions.AddFee','expr',3,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.AddFee.itemaccount','comis.actions.AddFee','itemaccount',2,'Account',NULL,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL),('comis.actions.CalcPenalty.expr','comis.actions.CalcPenalty','expr',3,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.CalcPenalty.fee','comis.actions.CalcPenalty','fee',1,'Fee',NULL,'var',NULL,NULL,NULL,'comis.facts.Fee',NULL),('comis.actions.CalcPenalty.itemaccount','comis.actions.CalcPenalty','itemaccount',2,'Penalty Acct',NULL,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL),('comis.actions.CalcSurcharge.expr','comis.actions.CalcSurcharge','expr',3,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.CalcSurcharge.fee','comis.actions.CalcSurcharge','fee',1,'Fee',NULL,'var',NULL,NULL,NULL,'comis.facts.Fee',NULL),('comis.actions.CalcSurcharge.itemaccount','comis.actions.CalcSurcharge','itemaccount',2,'Surcharge Acct',NULL,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL),('comis.actions.ComputeLeaseDuration.application','comis.actions.ComputeLeaseDuration','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.ComputeLeaseDuration.expr','comis.actions.ComputeLeaseDuration','expr',2,'Computation',NULL,'expression',NULL,NULL,NULL,NULL,NULL),('comis.actions.SetRenewable.application','comis.actions.SetRenewable','application',1,'Burial Permit Application',NULL,'var',NULL,NULL,NULL,'comis.facts.BurialPermitApplication',NULL),('comis.actions.SetRenewable.renewable','comis.actions.SetRenewable','renewable',2,'Is Renewable?','boolean','boolean',NULL,NULL,NULL,'boolean',NULL);
 /*!40000 ALTER TABLE `sys_rule_actiondef_param` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1076,7 +1128,7 @@ CREATE TABLE `sys_rule_condition` (
 
 LOCK TABLES `sys_rule_condition` WRITE;
 /*!40000 ALTER TABLE `sys_rule_condition` DISABLE KEYS */;
-INSERT INTO `sys_rule_condition` VALUES ('RC-2066edb5:178a07da6d9:-7ffe','RUL6020185:178a06ffea4:-79ff','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',0,NULL,NULL,NULL,NULL,NULL,0),('RC-2066edb5:178a07da6d9:-8000','RUL6020185:178a06ffea4:-79ff','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND47c70270:178a108c963:-7c3a','RUL47c70270:178a108c963:-7d4d','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND47c70270:178a108c963:-7d1a','RUL47c70270:178a108c963:-7d4d','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND6020185:178a06ffea4:-7ae6','RUL6020185:178a06ffea4:-7b65','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND6020185:178a06ffea4:-7b30','RUL6020185:178a06ffea4:-7b65','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',0,NULL,NULL,NULL,NULL,NULL,0);
+INSERT INTO `sys_rule_condition` VALUES ('RC-2066edb5:178a07da6d9:-7ffe','RUL6020185:178a06ffea4:-79ff','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',0,NULL,NULL,NULL,NULL,NULL,0),('RC-2066edb5:178a07da6d9:-8000','RUL6020185:178a06ffea4:-79ff','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',1,NULL,NULL,NULL,NULL,NULL,0),('RC3d0a727c:17a3beb49e1:-7ff2','RUL72cbefee:17a3bef8ccd:-6fca','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND-18956a1e:17a75a2ce82:-7551','RUL-18956a1e:17a75a2ce82:-7598','comis.facts.Fee','comis.facts.Fee','FEE',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND-18956a1e:17a75a2ce82:-76a6','RUL-18956a1e:17a75a2ce82:-76ed','comis.facts.Fee','comis.facts.Fee','FEE',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND-39252f0c:17a55acb897:-6d05','RUL-39252f0c:17a55acb897:-6d41','comis.facts.Fee','comis.facts.Fee','FEE',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND47c70270:178a108c963:-7c3a','RUL47c70270:178a108c963:-7d4d','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND47c70270:178a108c963:-7d1a','RUL47c70270:178a108c963:-7d4d','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND4dbf017d:17a516af633:-6fc3','RUL4dbf017d:17a516af633:-7033','comis.facts.Fee','comis.facts.Fee','FEE',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND6020185:178a06ffea4:-7ae6','RUL6020185:178a06ffea4:-7b65','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',1,NULL,NULL,NULL,NULL,NULL,0),('RCOND6020185:178a06ffea4:-7b30','RUL6020185:178a06ffea4:-7b65','comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','APP',0,NULL,NULL,NULL,NULL,NULL,0),('RCOND72cbefee:17a3bef8ccd:-6533','RUL72cbefee:17a3bef8ccd:-6fca','comis.facts.CemeteryResource','comis.facts.CemeteryResource','RES',1,NULL,NULL,NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `sys_rule_condition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1120,7 +1172,7 @@ CREATE TABLE `sys_rule_condition_constraint` (
 
 LOCK TABLES `sys_rule_condition_constraint` WRITE;
 /*!40000 ALTER TABLE `sys_rule_condition_constraint` DISABLE KEYS */;
-INSERT INTO `sys_rule_condition_constraint` VALUES ('RCC-2066edb5:178a07da6d9:-7fff','RC-2066edb5:178a07da6d9:-8000','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"MAUSOLEUM\",value:\"MAUSOLEUM\"],[key:\"NICHE\",value:\"NICHE\"],[key:\"TOMB\",value:\"TOMB\"]]',NULL,0),('RCONST47c70270:178a108c963:-7cfb','RCOND47c70270:178a108c963:-7d1a','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"TOMB\",value:\"TOMB\"]]',NULL,0),('RCONST6020185:178a06ffea4:-7ac7','RCOND6020185:178a06ffea4:-7ae6','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"MAUSOLEUM\",value:\"MAUSOLEUM\"],[key:\"NICHE\",value:\"NICHE\"],[key:\"TOMB\",value:\"TOMB\"]]',NULL,0);
+INSERT INTO `sys_rule_condition_constraint` VALUES ('RCC-2066edb5:178a07da6d9:-7fff','RC-2066edb5:178a07da6d9:-8000','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"MAUSOLEUM\",value:\"MAUSOLEUM\"],[key:\"NICHE\",value:\"NICHE\"],[key:\"TOMB\",value:\"TOMB\"]]',NULL,0),('RCONST-18956a1e:17a75a2ce82:-7517','RCOND-18956a1e:17a75a2ce82:-7551','comis.facts.Fee.amount','amount','AMOUNT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),('RCONST-18956a1e:17a75a2ce82:-766c','RCOND-18956a1e:17a75a2ce82:-76a6','comis.facts.Fee.amount','amount','AMOUNT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),('RCONST47c70270:178a108c963:-7cfb','RCOND47c70270:178a108c963:-7d1a','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"TOMB\",value:\"TOMB\"]]',NULL,0),('RCONST6020185:178a06ffea4:-7ac7','RCOND6020185:178a06ffea4:-7ae6','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"MAUSOLEUM\",value:\"MAUSOLEUM\"],[key:\"NICHE\",value:\"NICHE\"],[key:\"TOMB\",value:\"TOMB\"]]',NULL,0),('RCONST72cbefee:17a3bef8ccd:-6514','RCOND72cbefee:17a3bef8ccd:-6533','comis.facts.CemeteryResource.resourceid','resourceid',NULL,'is any of the ff.','matches',NULL,NULL,NULL,NULL,NULL,NULL,'[[key:\"NICHE\",value:\"NICHE\"]]',NULL,0);
 /*!40000 ALTER TABLE `sys_rule_condition_constraint` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1150,7 +1202,7 @@ CREATE TABLE `sys_rule_condition_var` (
 
 LOCK TABLES `sys_rule_condition_var` WRITE;
 /*!40000 ALTER TABLE `sys_rule_condition_var` DISABLE KEYS */;
-INSERT INTO `sys_rule_condition_var` VALUES ('RC-2066edb5:178a07da6d9:-7ffe','RC-2066edb5:178a07da6d9:-7ffe','RUL6020185:178a06ffea4:-79ff','APP','comis.facts.BurialPermitApplication',0),('RC-2066edb5:178a07da6d9:-8000','RC-2066edb5:178a07da6d9:-8000','RUL6020185:178a06ffea4:-79ff','RES','comis.facts.CemeteryResource',1),('RCOND47c70270:178a108c963:-7c3a','RCOND47c70270:178a108c963:-7c3a','RUL47c70270:178a108c963:-7d4d','APP','comis.facts.BurialPermitApplication',1),('RCOND47c70270:178a108c963:-7d1a','RCOND47c70270:178a108c963:-7d1a','RUL47c70270:178a108c963:-7d4d','RES','comis.facts.CemeteryResource',0),('RCOND6020185:178a06ffea4:-7ae6','RCOND6020185:178a06ffea4:-7ae6','RUL6020185:178a06ffea4:-7b65','RES','comis.facts.CemeteryResource',1),('RCOND6020185:178a06ffea4:-7b30','RCOND6020185:178a06ffea4:-7b30','RUL6020185:178a06ffea4:-7b65','APP','comis.facts.BurialPermitApplication',0);
+INSERT INTO `sys_rule_condition_var` VALUES ('RC-2066edb5:178a07da6d9:-7ffe','RC-2066edb5:178a07da6d9:-7ffe','RUL6020185:178a06ffea4:-79ff','APP','comis.facts.BurialPermitApplication',0),('RC-2066edb5:178a07da6d9:-8000','RC-2066edb5:178a07da6d9:-8000','RUL6020185:178a06ffea4:-79ff','RES','comis.facts.CemeteryResource',1),('RC3d0a727c:17a3beb49e1:-7ff2','RC3d0a727c:17a3beb49e1:-7ff2','RUL72cbefee:17a3bef8ccd:-6fca','APP','comis.facts.BurialPermitApplication',1),('RCOND-18956a1e:17a75a2ce82:-7551','RCOND-18956a1e:17a75a2ce82:-7551','RUL-18956a1e:17a75a2ce82:-7598','FEE','comis.facts.Fee',0),('RCOND-18956a1e:17a75a2ce82:-76a6','RCOND-18956a1e:17a75a2ce82:-76a6','RUL-18956a1e:17a75a2ce82:-76ed','FEE','comis.facts.Fee',0),('RCOND-39252f0c:17a55acb897:-6d05','RCOND-39252f0c:17a55acb897:-6d05','RUL-39252f0c:17a55acb897:-6d41','FEE','comis.facts.Fee',0),('RCOND47c70270:178a108c963:-7c3a','RCOND47c70270:178a108c963:-7c3a','RUL47c70270:178a108c963:-7d4d','APP','comis.facts.BurialPermitApplication',1),('RCOND47c70270:178a108c963:-7d1a','RCOND47c70270:178a108c963:-7d1a','RUL47c70270:178a108c963:-7d4d','RES','comis.facts.CemeteryResource',0),('RCOND4dbf017d:17a516af633:-6fc3','RCOND4dbf017d:17a516af633:-6fc3','RUL4dbf017d:17a516af633:-7033','FEE','comis.facts.Fee',1),('RCOND6020185:178a06ffea4:-7ae6','RCOND6020185:178a06ffea4:-7ae6','RUL6020185:178a06ffea4:-7b65','RES','comis.facts.CemeteryResource',1),('RCOND6020185:178a06ffea4:-7b30','RCOND6020185:178a06ffea4:-7b30','RUL6020185:178a06ffea4:-7b65','APP','comis.facts.BurialPermitApplication',0),('RCOND72cbefee:17a3bef8ccd:-6533','RCOND72cbefee:17a3bef8ccd:-6533','RUL72cbefee:17a3bef8ccd:-6fca','RES','comis.facts.CemeteryResource',1),('RCONST-18956a1e:17a75a2ce82:-7517','RCOND-18956a1e:17a75a2ce82:-7551','RUL-18956a1e:17a75a2ce82:-7598','AMOUNT','decimal',0),('RCONST-18956a1e:17a75a2ce82:-766c','RCOND-18956a1e:17a75a2ce82:-76a6','RUL-18956a1e:17a75a2ce82:-76ed','AMOUNT','decimal',0);
 /*!40000 ALTER TABLE `sys_rule_condition_var` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1175,7 +1227,7 @@ CREATE TABLE `sys_rule_deployed` (
 
 LOCK TABLES `sys_rule_deployed` WRITE;
 /*!40000 ALTER TABLE `sys_rule_deployed` DISABLE KEYS */;
-INSERT INTO `sys_rule_deployed` VALUES ('RUL47c70270:178a108c963:-7d4d','\npackage burialpermitapplication.FEE_TOMB;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"FEE_TOMB\"\n	agenda-group \"feecomputation\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"TOMB\" ) \n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"RES\", RES );\n		\n		bindings.put(\"APP\", APP );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"itemaccount\", new KeyValue(\"BPA\", \"BURIAL PERMIT APPLICATION\") );\n_p0.put( \"expr\", (new ActionExpression(\"3000\", bindings)) );\naction.execute( \"add-fee\",_p0,drools);\n\nend\n\n\n	'),('RUL6020185:178a06ffea4:-79ff','\npackage burialpermitapplication.DEFAULT_RENEWABLE_OPTION;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"DEFAULT_RENEWABLE_OPTION\"\n	agenda-group \"init\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"MAUSOLEUM|NICHE|TOMB\" ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"APP\", APP );\n		\n		bindings.put(\"RES\", RES );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"renewable\", true );\naction.execute( \"setrenewable\",_p0,drools);\n\nend\n\n\n	'),('RUL6020185:178a06ffea4:-7b65','\npackage burialpermitapplication.DEFAULT_LEASED_DURATION;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"DEFAULT_LEASED_DURATION\"\n	agenda-group \"init\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"MAUSOLEUM|NICHE|TOMB\" ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"APP\", APP );\n		\n		bindings.put(\"RES\", RES );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"expr\", (new ActionExpression(\"7\", bindings)) );\naction.execute( \"compute-lease-duration\",_p0,drools);\n\nend\n\n\n	');
+INSERT INTO `sys_rule_deployed` VALUES ('RUL-18956a1e:17a75a2ce82:-7598','\npackage burialpermitapplicationbilling.PENALTY;\nimport burialpermitapplicationbilling.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"PENALTY\"\n	agenda-group \"penalty\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		FEE: comis.facts.Fee (  AMOUNT:amount ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"FEE\", FEE );\n		\n		bindings.put(\"AMOUNT\", AMOUNT );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"fee\", FEE );\n_p0.put( \"itemaccount\", new KeyValue(\"BPAPEN\", \"BURIAL PERMIT APPLICATION - PENALTY\") );\n_p0.put( \"expr\", (new ActionExpression(\"AMOUNT * 0.02 * 3\", bindings)) );\naction.execute( \"calc-penalty\",_p0,drools);\n\nend\n\n\n	'),('RUL-18956a1e:17a75a2ce82:-76ed','\npackage burialpermitapplicationbilling.SURCHARGE;\nimport burialpermitapplicationbilling.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"SURCHARGE\"\n	agenda-group \"surcharge\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		FEE: comis.facts.Fee (  AMOUNT:amount ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"FEE\", FEE );\n		\n		bindings.put(\"AMOUNT\", AMOUNT );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"fee\", FEE );\n_p0.put( \"itemaccount\", new KeyValue(\"BPASUR\", \"BURIAL PERMIT APPLICATION - SURCHARGE\") );\n_p0.put( \"expr\", (new ActionExpression(\"AMOUNT * 0.20\", bindings)) );\naction.execute( \"calc-surcharge\",_p0,drools);\n\nend\n\n\n	'),('RUL-39252f0c:17a55acb897:-6d41','\npackage burialpermitapplication.PENALTY;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"PENALTY\"\n	agenda-group \"after-feecomputation\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		FEE: comis.facts.Fee (   ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"FEE\", FEE );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"fee\", FEE );\n_p0.put( \"itemaccount\", new KeyValue(\"BPAPEN\", \"BURIAL PERMIT APPLICATION - PENALTY\") );\n_p0.put( \"expr\", (new ActionExpression(\"50\", bindings)) );\naction.execute( \"calc-penalty\",_p0,drools);\n\nend\n\n\n	'),('RUL47c70270:178a108c963:-7d4d','\npackage burialpermitapplication.FEE_TOMB;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"FEE_TOMB\"\n	agenda-group \"feecomputation\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"TOMB\" ) \n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"RES\", RES );\n		\n		bindings.put(\"APP\", APP );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"itemaccount\", new KeyValue(\"BPA\", \"BURIAL PERMIT APPLICATION\") );\n_p0.put( \"expr\", (new ActionExpression(\"3000\", bindings)) );\naction.execute( \"add-fee\",_p0,drools);\n\nend\n\n\n	'),('RUL4dbf017d:17a516af633:-7033','\npackage burialpermitapplication.SURCHARGE;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"SURCHARGE\"\n	agenda-group \"after-feecomputation\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		FEE: comis.facts.Fee (   ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"FEE\", FEE );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"fee\", FEE );\n_p0.put( \"itemaccount\", new KeyValue(\"BPASUR\", \"BURIAL PERMIT APPLICATION - SURCHARGE\") );\n_p0.put( \"expr\", (new ActionExpression(\"200\", bindings)) );\naction.execute( \"calc-surcharge\",_p0,drools);\n\nend\n\n\n	'),('RUL6020185:178a06ffea4:-79ff','\npackage burialpermitapplication.DEFAULT_RENEWABLE_OPTION;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"DEFAULT_RENEWABLE_OPTION\"\n	agenda-group \"init\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"MAUSOLEUM|NICHE|TOMB\" ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"APP\", APP );\n		\n		bindings.put(\"RES\", RES );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"renewable\", true );\naction.execute( \"setrenewable\",_p0,drools);\n\nend\n\n\n	'),('RUL6020185:178a06ffea4:-7b65','\npackage burialpermitapplication.DEFAULT_LEASED_DURATION;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"DEFAULT_LEASED_DURATION\"\n	agenda-group \"init\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"MAUSOLEUM|NICHE|TOMB\" ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"APP\", APP );\n		\n		bindings.put(\"RES\", RES );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"expr\", (new ActionExpression(\"7\", bindings)) );\naction.execute( \"compute-lease-duration\",_p0,drools);\n\nend\n\n\n	'),('RUL72cbefee:17a3bef8ccd:-6fca','\npackage burialpermitapplication.FEE_NICHE;\nimport burialpermitapplication.*;\nimport java.util.*;\nimport com.rameses.rules.common.*;\n\nglobal RuleAction action;\n\nrule \"FEE_NICHE\"\n	agenda-group \"feecomputation\"\n	salience 50000\n	no-loop\n	when\n		\n		\n		APP: comis.facts.BurialPermitApplication (   ) \n		\n		RES: comis.facts.CemeteryResource (  resourceid matches \"NICHE\" ) \n		\n	then\n		Map bindings = new HashMap();\n		\n		bindings.put(\"APP\", APP );\n		\n		bindings.put(\"RES\", RES );\n		\n	Map _p0 = new HashMap();\n_p0.put( \"application\", APP );\n_p0.put( \"itemaccount\", new KeyValue(\"BPA\", \"BURIAL PERMIT APPLICATION\") );\n_p0.put( \"expr\", (new ActionExpression(\"2500\", bindings)) );\naction.execute( \"add-fee\",_p0,drools);\n\nend\n\n\n	');
 /*!40000 ALTER TABLE `sys_rule_deployed` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1213,7 +1265,7 @@ CREATE TABLE `sys_rule_fact` (
 
 LOCK TABLES `sys_rule_fact` WRITE;
 /*!40000 ALTER TABLE `sys_rule_fact` DISABLE KEYS */;
-INSERT INTO `sys_rule_fact` VALUES ('comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','Burial Permit Application','comis.facts.BurialPermitApplication',3,NULL,'APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL),('comis.facts.Cemetery','comis.facts.Cemetery','Cemetery','comis.facts.Cemetery',1,NULL,'CEM',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL),('comis.facts.CemeteryResource','comis.facts.CemeteryResource','Cemetery Resource','comis.facts.CemeteryResource',1,NULL,'RES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL);
+INSERT INTO `sys_rule_fact` VALUES ('com.rameses.rules.common.CurrentDate','com.rameses.rules.common.CurrentDate','Current Date','com.rameses.rules.common.CurrentDate',0,NULL,'CURRDATE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SYSTEM',NULL),('comis.facts.BurialPermitApplication','comis.facts.BurialPermitApplication','Burial Permit Application','comis.facts.BurialPermitApplication',3,NULL,'APP',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL),('comis.facts.Cemetery','comis.facts.Cemetery','Cemetery','comis.facts.Cemetery',1,NULL,'CEM',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL),('comis.facts.CemeteryResource','comis.facts.CemeteryResource','Cemetery Resource','comis.facts.CemeteryResource',1,NULL,'RES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL),('comis.facts.Fee','comis.facts.Fee','Fee','comis.facts.Fee',20,NULL,'FEE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'COMIS',NULL);
 /*!40000 ALTER TABLE `sys_rule_fact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1252,7 +1304,7 @@ CREATE TABLE `sys_rule_fact_field` (
 
 LOCK TABLES `sys_rule_fact_field` WRITE;
 /*!40000 ALTER TABLE `sys_rule_fact_field` DISABLE KEYS */;
-INSERT INTO `sys_rule_fact_field` VALUES ('comis.facts.BurialPermitApplication.applicantid','comis.facts.BurialPermitApplication','applicantid','Applicant','string',4,'lookup','entity:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.BurialPermitApplication.apptype','comis.facts.BurialPermitApplication','apptype','App Type','string',1,'string','burialpermitapplication:lookup','objid','appno',NULL,NULL,NULL,'string','BURIAL_PERMIT_APP_TYPE'),('comis.facts.BurialPermitApplication.deceasedid','comis.facts.BurialPermitApplication','deceasedid','Deceased','string',5,'lookup','deceased:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.BurialPermitApplication.dtapproved','comis.facts.BurialPermitApplication','dtapproved','Date Approved','date',2,'date',NULL,NULL,NULL,NULL,NULL,NULL,'date',NULL),('comis.facts.BurialPermitApplication.dtexpiry','comis.facts.BurialPermitApplication','dtexpiry','Expiry Date','date',3,'date',NULL,NULL,NULL,NULL,NULL,NULL,'date',NULL),('comis.facts.BurialPermitApplication.leaseduration','comis.facts.BurialPermitApplication','leaseduration','Lease Duration','integer',6,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('comis.facts.BurialPermitApplication.renewable','comis.facts.BurialPermitApplication','renewable','Is Renewable?','boolean',7,'boolean',NULL,NULL,NULL,NULL,NULL,NULL,'boolean',NULL),('comis.facts.Cemetery.objid','comis.facts.Cemetery','objid','CemeteryID','string',1,'lookup','cemetery:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.CemeteryResource.areasqm','comis.facts.CemeteryResource','areasqm','Area (sqm)','decimal',3,'decimal',NULL,NULL,NULL,NULL,NULL,NULL,'decimal',NULL),('comis.facts.CemeteryResource.objid','comis.facts.CemeteryResource','objid','Id','string',1,'lookup','cemetery_resource:lookup:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.CemeteryResource.resourceid','comis.facts.CemeteryResource','resourceid','Resource','string',2,'lookup','resource:lookup','objid','name',NULL,NULL,NULL,'string',NULL);
+INSERT INTO `sys_rule_fact_field` VALUES ('com.rameses.rules.common.CurrentDate.date','com.rameses.rules.common.CurrentDate','date','Date','date',5,'date',NULL,NULL,NULL,NULL,NULL,NULL,'date',NULL),('com.rameses.rules.common.CurrentDate.day','com.rameses.rules.common.CurrentDate','day','Day','integer',4,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('com.rameses.rules.common.CurrentDate.month','com.rameses.rules.common.CurrentDate','month','Month','integer',3,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('com.rameses.rules.common.CurrentDate.qtr','com.rameses.rules.common.CurrentDate','qtr','Qtr','integer',2,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('com.rameses.rules.common.CurrentDate.year','com.rameses.rules.common.CurrentDate','year','Year','integer',1,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('comis.facts.BurialPermitApplication.applicantid','comis.facts.BurialPermitApplication','applicantid','Applicant','string',4,'lookup','entity:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.BurialPermitApplication.apptype','comis.facts.BurialPermitApplication','apptype','App Type','string',1,'string','burialpermitapplication:lookup','objid','appno',NULL,NULL,NULL,'string','BURIAL_PERMIT_APP_TYPE'),('comis.facts.BurialPermitApplication.deceasedid','comis.facts.BurialPermitApplication','deceasedid','Deceased','string',5,'lookup','deceased:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.BurialPermitApplication.dtapproved','comis.facts.BurialPermitApplication','dtapproved','Date Approved','date',2,'date',NULL,NULL,NULL,NULL,NULL,NULL,'date',NULL),('comis.facts.BurialPermitApplication.dtexpiry','comis.facts.BurialPermitApplication','dtexpiry','Expiry Date','date',3,'date',NULL,NULL,NULL,NULL,NULL,NULL,'date',NULL),('comis.facts.BurialPermitApplication.leaseduration','comis.facts.BurialPermitApplication','leaseduration','Lease Duration','integer',6,'integer',NULL,NULL,NULL,NULL,NULL,NULL,'integer',NULL),('comis.facts.BurialPermitApplication.renewable','comis.facts.BurialPermitApplication','renewable','Is Renewable?','boolean',7,'boolean',NULL,NULL,NULL,NULL,NULL,NULL,'boolean',NULL),('comis.facts.Cemetery.objid','comis.facts.Cemetery','objid','CemeteryID','string',1,'lookup','cemetery:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.CemeteryResource.areasqm','comis.facts.CemeteryResource','areasqm','Area (sqm)','decimal',3,'decimal',NULL,NULL,NULL,NULL,NULL,NULL,'decimal',NULL),('comis.facts.CemeteryResource.objid','comis.facts.CemeteryResource','objid','Id','string',1,'lookup','cemetery_resource:lookup:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.CemeteryResource.resourceid','comis.facts.CemeteryResource','resourceid','Resource','string',2,'lookup','resource:lookup','objid','name',NULL,NULL,NULL,'string',NULL),('comis.facts.Fee.acctid','comis.facts.Fee','acctid','Account','string',1,'lookup','coms_itemaccount:lookup','objid','title',NULL,NULL,NULL,'string',NULL),('comis.facts.Fee.amount','comis.facts.Fee','amount','Amount','decimal',4,'decimal',NULL,NULL,NULL,NULL,NULL,NULL,'decimal',NULL),('comis.facts.Fee.penalty','comis.facts.Fee','penalty','Penalty','decimal',6,'decimal',NULL,NULL,NULL,NULL,NULL,NULL,'decimal',NULL),('comis.facts.Fee.penaltyacctid','comis.facts.Fee','penaltyacctid','Penalty Acct','string',3,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL,NULL,'string',NULL),('comis.facts.Fee.surcharge','comis.facts.Fee','surcharge','Surcharge','decimal',5,'decimal',NULL,NULL,NULL,NULL,NULL,NULL,'decimal',NULL),('comis.facts.Fee.surchargeacctid','comis.facts.Fee','surchargeacctid','Surcharge Acct','string',2,'lookup','comis_itemaccount:lookup','objid','title',NULL,NULL,NULL,'string',NULL);
 /*!40000 ALTER TABLE `sys_rule_fact_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1280,7 +1332,7 @@ CREATE TABLE `sys_rulegroup` (
 
 LOCK TABLES `sys_rulegroup` WRITE;
 /*!40000 ALTER TABLE `sys_rulegroup` DISABLE KEYS */;
-INSERT INTO `sys_rulegroup` VALUES ('after-feecomputation','burialpermitapplication','After Fee Computation',4),('appinfo','burialpermitapplication','Application Info',1),('before-feecomputation','burialpermitapplication','Before Fee Computation',2),('feecomputation','burialpermitapplication','Fee Computation',3),('init','burialpermitapplication','Initial',0);
+INSERT INTO `sys_rulegroup` VALUES ('after-feecomputation','burialpermitapplication','After Fee Computation',4),('after-penalty','burialpermitapplicationbilling','After Penalty Computation',7),('after-surcharge','burialpermitapplicationbilling','After Surcharge Computation',4),('appinfo','burialpermitapplication','Application Info',1),('before-feecomputation','burialpermitapplication','Before Fee Computation',2),('before-penalty','burialpermitapplicationbilling','Before Penalty Computation',5),('before-surcharge','burialpermitapplicationbilling','Before Surcharge Computation',2),('feecomputation','burialpermitapplication','Fee Computation',3),('init','burialpermitapplication','Init',1),('init','burialpermitapplicationbilling','Initial',1),('penalty','burialpermitapplicationbilling','Penalty Computation',6),('surcharge','burialpermitapplicationbilling','Surcharge Computation',3);
 /*!40000 ALTER TABLE `sys_rulegroup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1308,7 +1360,7 @@ CREATE TABLE `sys_ruleset` (
 
 LOCK TABLES `sys_ruleset` WRITE;
 /*!40000 ALTER TABLE `sys_ruleset` DISABLE KEYS */;
-INSERT INTO `sys_ruleset` VALUES ('burialpermitapplication','Burial Permit Application','burialpermitapplication','COMIS','RULE_AUTHOR',NULL);
+INSERT INTO `sys_ruleset` VALUES ('burialpermitapplication','Burial Permit Application','burialpermitapplication','COMIS','RULE_AUTHOR',NULL),('burialpermitapplicationbilling','Burial Permit Application Billing','burialpermitapplicationbillling','COMIS','RULE_AUTHOR',NULL);
 /*!40000 ALTER TABLE `sys_ruleset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1335,7 +1387,7 @@ CREATE TABLE `sys_ruleset_actiondef` (
 
 LOCK TABLES `sys_ruleset_actiondef` WRITE;
 /*!40000 ALTER TABLE `sys_ruleset_actiondef` DISABLE KEYS */;
-INSERT INTO `sys_ruleset_actiondef` VALUES ('burialpermitapplication','comis.actions.AddFee'),('burialpermitapplication','comis.actions.ComputeLeaseDuration'),('burialpermitapplication','comis.actions.SetRenewable');
+INSERT INTO `sys_ruleset_actiondef` VALUES ('burialpermitapplication','comis.actions.AddFee'),('burialpermitapplication','comis.actions.CalcPenalty'),('burialpermitapplicationbilling','comis.actions.CalcPenalty'),('burialpermitapplication','comis.actions.CalcSurcharge'),('burialpermitapplicationbilling','comis.actions.CalcSurcharge'),('burialpermitapplication','comis.actions.ComputeLeaseDuration'),('burialpermitapplication','comis.actions.SetRenewable');
 /*!40000 ALTER TABLE `sys_ruleset_actiondef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1362,7 +1414,7 @@ CREATE TABLE `sys_ruleset_fact` (
 
 LOCK TABLES `sys_ruleset_fact` WRITE;
 /*!40000 ALTER TABLE `sys_ruleset_fact` DISABLE KEYS */;
-INSERT INTO `sys_ruleset_fact` VALUES ('burialpermitapplication','comis.facts.BurialPermitApplication'),('burialpermitapplication','comis.facts.Cemetery'),('burialpermitapplication','comis.facts.CemeteryResource');
+INSERT INTO `sys_ruleset_fact` VALUES ('burialpermitapplicationbilling','com.rameses.rules.common.CurrentDate'),('burialpermitapplication','comis.facts.BurialPermitApplication'),('burialpermitapplicationbilling','comis.facts.BurialPermitApplication'),('burialpermitapplication','comis.facts.Cemetery'),('burialpermitapplicationbilling','comis.facts.Cemetery'),('burialpermitapplication','comis.facts.CemeteryResource'),('burialpermitapplicationbilling','comis.facts.CemeteryResource'),('burialpermitapplication','comis.facts.Fee'),('burialpermitapplicationbilling','comis.facts.Fee');
 /*!40000 ALTER TABLE `sys_ruleset_fact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1386,7 +1438,7 @@ CREATE TABLE `sys_sequence` (
 
 LOCK TABLES `sys_sequence` WRITE;
 /*!40000 ALTER TABLE `sys_sequence` DISABLE KEYS */;
-INSERT INTO `sys_sequence` VALUES ('BURIAL-PERMIT-2021',5),('BURIAL-PERMIT-APP-2021',16);
+INSERT INTO `sys_sequence` VALUES ('BURIAL-PERMIT-2021',5),('BURIAL-PERMIT-APP-2021',27);
 /*!40000 ALTER TABLE `sys_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1485,7 +1537,7 @@ CREATE TABLE `sys_user_role` (
 
 LOCK TABLES `sys_user_role` WRITE;
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
-INSERT INTO `sys_user_role` VALUES ('USRROL-3cd32cab:178b53ec895:-7ffb','LICENSING','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-LICENSING'),('USRROL-3cd32cab:178b53ec895:-7fff','ENCODER_APPROVER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-ENCODER_APPROVER'),('USRROL-3cd32cab:178b53ec895:-8000','ENCODER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-ENCODER'),('USRROL3e1637f8:178c07f8f03:-8000','REPORTS','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-REPORTS'),('USRROL4bdf3db1:17891b5a99d:-7ffc','RULE_AUTHOR','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_RULE_AUTHOR'),('USRROL4bdf3db1:17891b5a99d:-7ffd','MASTER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_MASTER'),('USRROL4bdf3db1:17891b5a99d:-7ffe','LCR_APPROVER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_LCR_APPROVER'),('USRROL4bdf3db1:17891b5a99d:-7fff','LCR','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_LCR'),('USRROL4bdf3db1:17891b5a99d:-8000','ADMIN','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_ADMIN');
+INSERT INTO `sys_user_role` VALUES ('USRROL-3cd32cab:178b53ec895:-7ffb','LICENSING','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-LICENSING'),('USRROL-3cd32cab:178b53ec895:-7fff','ENCODER_APPROVER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-ENCODER_APPROVER'),('USRROL-3cd32cab:178b53ec895:-8000','ENCODER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-ENCODER'),('USRROL3e1637f8:178c07f8f03:-8000','REPORTS','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-REPORTS'),('USRROL4561fa75:179f9c6e7e7:-7ffa','SHARED','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-SHARED'),('USRROL4561fa75:179f9c6e7e7:-7ffb','RELEASER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-RELEASER'),('USRROL4561fa75:179f9c6e7e7:-7ffc','RECEIVER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-RECEIVER'),('USRROL4561fa75:179f9c6e7e7:-7ffd','APPROVER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac-APPROVER'),('USRROL4bdf3db1:17891b5a99d:-7ffc','RULE_AUTHOR','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_RULE_AUTHOR'),('USRROL4bdf3db1:17891b5a99d:-7ffd','MASTER','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_MASTER'),('USRROL4bdf3db1:17891b5a99d:-8000','ADMIN','USR5b13925b:17066eb8fad:-7eac','ADMIN',NULL,NULL,NULL,NULL,'USR5b13925b:17066eb8fad:-7eac_ADMIN');
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1563,6 +1615,7 @@ CREATE TABLE `sys_wf` (
 
 LOCK TABLES `sys_wf` WRITE;
 /*!40000 ALTER TABLE `sys_wf` DISABLE KEYS */;
+INSERT INTO `sys_wf` VALUES ('application','Burial Permit Application','COMIS');
 /*!40000 ALTER TABLE `sys_wf` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1600,6 +1653,7 @@ CREATE TABLE `sys_wf_node` (
 
 LOCK TABLES `sys_wf_node` WRITE;
 /*!40000 ALTER TABLE `sys_wf_node` DISABLE KEYS */;
+INSERT INTO `sys_wf_node` VALUES ('active','application','Active','state',6,0,NULL,'SYSTEM','[type:\"state\",fillColor:\"#c0c0c0\",pos:[749,261],size:[98,43]]','[:]',0),('approver','application','Approval','state',3,1,'COMIS','APPROVER','[type:\"state\",fillColor:\"#c0c0c0\",pos:[301,104],size:[101,52]]','[:]',1),('end','application','Completed','end',9,0,NULL,NULL,'[type:\"end\",fillColor:\"#ff0000\",pos:[99,261],size:[32,32]]','[:]',0),('expired','application','Expired','state',7,NULL,NULL,'SYSTEM','[type:\"state\",fillColor:\"#c0c0c0\",pos:[510,264],size:[102,46]]','[:]',0),('for-payment','application','Payment','state',4,0,NULL,'SYSTEM','[type:\"state\",fillColor:\"#c0c0c0\",pos:[510,92],size:[85,67]]','[:]',0),('receiver','application','Receiving','state',2,1,'COMIS','RECEIVER','[type:\"state\",fillColor:\"#c0c0c0\",pos:[135,106],size:[83,46]]','[:]',1),('releaser','application','Releasing','state',5,1,'COMIS','RELEASER','[type:\"state\",fillColor:\"#c0c0c0\",pos:[740,89],size:[119,62]]','[:]',1),('renewed','application','Renewed','state',8,0,NULL,'SYSTEM','[type:\"state\",fillColor:\"#c0c0c0\",pos:[284,257],size:[107,49]]','[:]',0),('start','application','Start','start',1,0,NULL,NULL,'[type:\"start\",fillColor:\"#00ff00\",pos:[49,107],size:[32,32]]','[:]',0);
 /*!40000 ALTER TABLE `sys_wf_node` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1633,6 +1687,7 @@ CREATE TABLE `sys_wf_transition` (
 
 LOCK TABLES `sys_wf_transition` WRITE;
 /*!40000 ALTER TABLE `sys_wf_transition` DISABLE KEYS */;
+INSERT INTO `sys_wf_transition` VALUES ('active','application','expired','expired',7,NULL,'[:]',NULL,'Expired','[points:[749,281,612,285],type:\"arrow\",pos:[612,281],size:[137,4]]'),('approver','application','approve','for-payment',3,NULL,'[:]','APPROVER','Approve','[points:[400,127,510,128],type:\"arrow\",pos:[400,127],size:[110,1]]'),('expired','application','renewed','renewed',8,NULL,'[:]',NULL,'Renewed','[points:[510,284,391,281],type:\"arrow\",pos:[391,281],size:[119,3]]'),('for-payment','application','post-payment','releaser',4,NULL,'[:]',NULL,'For Release','[points:[595,132,658,92,737,122],type:\"arrow\",pos:[595,92],size:[142,40]]'),('receiver','application','submit','approver',2,NULL,'[:]',NULL,'Submit for Approval','[points:[218,129,301,130],type:\"arrow\",pos:[218,129],size:[83,1]]'),('releaser','application','release','active',5,NULL,'[:]',NULL,'Release','[points:[797,151,797,261],type:\"arrow\",pos:[797,151],size:[0,110]]'),('releaser','application','void-payment','for-payment',6,NULL,'[visibleWhen:\"#{false}\"]',NULL,'Void Payment','[points:[741,136,671,175,590,148],type:\"arrow\",pos:[590,136],size:[151,39]]'),('renewed','application','closed','end',9,NULL,'[:]',NULL,'Closed','[points:[284,280,131,277],type:\"arrow\",pos:[131,277],size:[153,3]]'),('start','application','init','receiver',1,NULL,'[:]',NULL,'Init','[points:[81,121,135,122],type:\"arrow\",pos:[81,121],size:[54,1]]');
 /*!40000 ALTER TABLE `sys_wf_transition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1641,9 +1696,55 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `vw_application`;
-
--- failed on view `vw_application`: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_application` AS select `a`.`objid` AS `objid`,`a`.`state` AS `state`,`a`.`online` AS `online`,`a`.`apptype` AS `apptype`,`a`.`appno` AS `appno`,`a`.`dtapplied` AS `dtapplied`,`a`.`dtapproved` AS `dtapproved`,`a`.`appyear` AS `appyear`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`a`.`dtexpiry` AS `dtexpiry`,`a`.`amount` AS `amount`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`age` AS `deceased_age`,`d`.`sex` AS `deceased_sex`,`d`.`dtdied` AS `deceased_dtdied`,`d`.`permissiontype` AS `deceased_permissiontype`,`cd`.`title` AS `deceased_causeofdeath`,`ri`.`objid` AS `resourceinfo_objid`,`ri`.`code` AS `resourceinfo_code`,`ri`.`name` AS `resourceinfo_name`,`ri`.`areasqm` AS `resource_areasqm`,`ri`.`length` AS `resource_length`,`ri`.`width` AS `resource_width`,`r`.`objid` AS `resource_objid`,`r`.`name` AS `resource_type`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name` from (((((((`application` `a` join `cemetery_section_resource` `sr` on((`a`.`objid` = `sr`.`currentappid`))) join `cemetery_section` `s` on((`sr`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) join `cemetery_section_resource_info` `ri` on((`sr`.`currentinfoid` = `ri`.`objid`))) join `resource` `r` on((`ri`.`resource_objid` = `r`.`objid`))) join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`)))
-
+/*!50001 DROP VIEW IF EXISTS `vw_application`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `vw_application` (
+  `objid` tinyint NOT NULL,
+  `state` tinyint NOT NULL,
+  `online` tinyint NOT NULL,
+  `apptype` tinyint NOT NULL,
+  `appno` tinyint NOT NULL,
+  `dtapplied` tinyint NOT NULL,
+  `dtapproved` tinyint NOT NULL,
+  `appyear` tinyint NOT NULL,
+  `applicant_name` tinyint NOT NULL,
+  `applicant_address` tinyint NOT NULL,
+  `dtexpiry` tinyint NOT NULL,
+  `amount` tinyint NOT NULL,
+  `amtpaid` tinyint NOT NULL,
+  `deceased_name` tinyint NOT NULL,
+  `deceased_nationality` tinyint NOT NULL,
+  `deceased_age` tinyint NOT NULL,
+  `deceased_sex` tinyint NOT NULL,
+  `deceased_dtdied` tinyint NOT NULL,
+  `deceased_permissiontype` tinyint NOT NULL,
+  `deceased_causeofdeath` tinyint NOT NULL,
+  `resourceinfo_objid` tinyint NOT NULL,
+  `resourceinfo_code` tinyint NOT NULL,
+  `resourceinfo_name` tinyint NOT NULL,
+  `resource_areasqm` tinyint NOT NULL,
+  `resource_length` tinyint NOT NULL,
+  `resource_width` tinyint NOT NULL,
+  `block_objid` tinyint NOT NULL,
+  `block_code` tinyint NOT NULL,
+  `block_name` tinyint NOT NULL,
+  `resource_objid` tinyint NOT NULL,
+  `resource_type` tinyint NOT NULL,
+  `section_objid` tinyint NOT NULL,
+  `section_code` tinyint NOT NULL,
+  `section_name` tinyint NOT NULL,
+  `cemetery_objid` tinyint NOT NULL,
+  `cemetery_code` tinyint NOT NULL,
+  `cemetery_name` tinyint NOT NULL,
+  `task_objid` tinyint NOT NULL,
+  `task_state` tinyint NOT NULL,
+  `task_enddate` tinyint NOT NULL,
+  `task_assignee_objid` tinyint NOT NULL,
+  `task_actor_objid` tinyint NOT NULL,
+  `task_prevtaskid` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary table structure for view `vw_cemetery_resource`
@@ -1663,6 +1764,7 @@ SET character_set_client = utf8;
   `state` tinyint NOT NULL,
   `areasqm` tinyint NOT NULL,
   `resource_objid` tinyint NOT NULL,
+  `ui` tinyint NOT NULL,
   `resource_name` tinyint NOT NULL,
   `block_objid` tinyint NOT NULL,
   `block_code` tinyint NOT NULL,
@@ -1701,7 +1803,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_application` AS select `a`.`objid` AS `objid`,`a`.`state` AS `state`,`a`.`online` AS `online`,`a`.`apptype` AS `apptype`,`a`.`appno` AS `appno`,`a`.`dtapplied` AS `dtapplied`,`a`.`dtapproved` AS `dtapproved`,`a`.`appyear` AS `appyear`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`a`.`dtexpiry` AS `dtexpiry`,`a`.`amount` AS `amount`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`age` AS `deceased_age`,`d`.`sex` AS `deceased_sex`,`d`.`dtdied` AS `deceased_dtdied`,`d`.`permissiontype` AS `deceased_permissiontype`,`cd`.`title` AS `deceased_causeofdeath`,`ri`.`objid` AS `resourceinfo_objid`,`ri`.`code` AS `resourceinfo_code`,`ri`.`name` AS `resourceinfo_name`,`ri`.`areasqm` AS `resource_areasqm`,`ri`.`length` AS `resource_length`,`ri`.`width` AS `resource_width`,`r`.`objid` AS `resource_objid`,`r`.`name` AS `resource_type`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name` from (((((((`application` `a` join `cemetery_section_resource` `sr` on((`a`.`objid` = `sr`.`currentappid`))) join `cemetery_section` `s` on((`sr`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) join `cemetery_section_resource_info` `ri` on((`sr`.`currentinfoid` = `ri`.`objid`))) join `resource` `r` on((`ri`.`resource_objid` = `r`.`objid`))) join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) */;
+/*!50001 VIEW `vw_application` AS select `a`.`objid` AS `objid`,`a`.`state` AS `state`,`a`.`online` AS `online`,`a`.`apptype` AS `apptype`,`a`.`appno` AS `appno`,`a`.`dtapplied` AS `dtapplied`,`a`.`dtapproved` AS `dtapproved`,`a`.`appyear` AS `appyear`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`a`.`dtexpiry` AS `dtexpiry`,`a`.`amount` AS `amount`,`a`.`amtpaid` AS `amtpaid`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`age` AS `deceased_age`,`d`.`sex` AS `deceased_sex`,`d`.`dtdied` AS `deceased_dtdied`,`d`.`permissiontype` AS `deceased_permissiontype`,`cd`.`title` AS `deceased_causeofdeath`,`sbri`.`objid` AS `resourceinfo_objid`,`sbri`.`code` AS `resourceinfo_code`,`sbri`.`name` AS `resourceinfo_name`,`sbri`.`areasqm` AS `resource_areasqm`,`sbri`.`length` AS `resource_length`,`sbri`.`width` AS `resource_width`,`sb`.`objid` AS `block_objid`,`sb`.`code` AS `block_code`,`sb`.`name` AS `block_name`,`r`.`objid` AS `resource_objid`,`r`.`name` AS `resource_type`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name`,`t`.`taskid` AS `task_objid`,`t`.`state` AS `task_state`,`t`.`enddate` AS `task_enddate`,`t`.`assignee_objid` AS `task_assignee_objid`,`t`.`actor_objid` AS `task_actor_objid`,`t`.`prevtaskid` AS `task_prevtaskid` from (((((((((`application` `a` left join `cemetery_section_block_resource_info` `sbri` on((`a`.`resourceinfo_objid` = `sbri`.`objid`))) left join `cemetery_section_block_resource` `sbr` on((`sbri`.`parentid` = `sbr`.`objid`))) left join `cemetery_section_block` `sb` on((`sbr`.`parentid` = `sb`.`objid`))) left join `cemetery_section` `s` on((`sb`.`parentid` = `s`.`objid`))) left join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) left join `resource` `r` on((`sbri`.`resource_objid` = `r`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) left join `application_task` `t` on((`a`.`taskid` = `t`.`taskid`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1720,7 +1822,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_cemetery_resource` AS select `sr`.`objid` AS `objid`,`sr`.`parentid` AS `parentid`,`sr`.`code` AS `code`,`sr`.`name` AS `name`,`sr`.`currentinfoid` AS `currentinfoid`,`sr`.`currentappid` AS `currentappid`,`sri`.`state` AS `state`,`sri`.`areasqm` AS `areasqm`,`sri`.`resource_objid` AS `resource_objid`,`r`.`name` AS `resource_name`,`b`.`objid` AS `block_objid`,`b`.`code` AS `block_code`,`b`.`name` AS `block_name`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`a`.`appno` AS `appno`,`a`.`apptype` AS `apptype`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`sex` AS `deceased_sex`,`d`.`age` AS `deceased_age`,`cd`.`title` AS `deceased_causeofdeath`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name`,`c`.`location` AS `cemetery_location`,`c`.`isnew` AS `cemetery_isnew` from ((((((((`cemetery_section_block_resource` `sr` join `cemetery_section_block_resource_info` `sri` on((`sr`.`currentinfoid` = `sri`.`objid`))) join `resource` `r` on((`sri`.`resource_objid` = `r`.`objid`))) join `cemetery_section_block` `b` on((`sr`.`parentid` = `b`.`objid`))) join `cemetery_section` `s` on((`b`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) left join `application` `a` on((`sr`.`currentappid` = `a`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) */;
+/*!50001 VIEW `vw_cemetery_resource` AS select `sr`.`objid` AS `objid`,`sr`.`parentid` AS `parentid`,`sr`.`code` AS `code`,`sr`.`name` AS `name`,`sr`.`currentinfoid` AS `currentinfoid`,`sr`.`currentappid` AS `currentappid`,`sri`.`state` AS `state`,`sri`.`areasqm` AS `areasqm`,`sri`.`resource_objid` AS `resource_objid`,`sri`.`ui` AS `ui`,`r`.`name` AS `resource_name`,`b`.`objid` AS `block_objid`,`b`.`code` AS `block_code`,`b`.`name` AS `block_name`,`s`.`objid` AS `section_objid`,`s`.`code` AS `section_code`,`s`.`name` AS `section_name`,`a`.`appno` AS `appno`,`a`.`apptype` AS `apptype`,`a`.`applicant_name` AS `applicant_name`,`a`.`applicant_address` AS `applicant_address`,`d`.`name` AS `deceased_name`,`d`.`nationality` AS `deceased_nationality`,`d`.`sex` AS `deceased_sex`,`d`.`age` AS `deceased_age`,`cd`.`title` AS `deceased_causeofdeath`,`c`.`objid` AS `cemetery_objid`,`c`.`code` AS `cemetery_code`,`c`.`name` AS `cemetery_name`,`c`.`location` AS `cemetery_location`,`c`.`isnew` AS `cemetery_isnew` from ((((((((`cemetery_section_block_resource` `sr` join `cemetery_section_block_resource_info` `sri` on((`sr`.`currentinfoid` = `sri`.`objid`))) join `resource` `r` on((`sri`.`resource_objid` = `r`.`objid`))) join `cemetery_section_block` `b` on((`sr`.`parentid` = `b`.`objid`))) join `cemetery_section` `s` on((`b`.`parentid` = `s`.`objid`))) join `cemetery` `c` on((`s`.`parentid` = `c`.`objid`))) left join `application` `a` on((`sr`.`currentappid` = `a`.`objid`))) left join `deceased` `d` on((`a`.`deceased_objid` = `d`.`objid`))) left join `causeofdeath` `cd` on((`d`.`causeofdeath_objid` = `cd`.`objid`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1734,4 +1836,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-26 16:43:52
+-- Dump completed on 2021-07-06 11:08:04

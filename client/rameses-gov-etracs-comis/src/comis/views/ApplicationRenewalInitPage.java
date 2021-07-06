@@ -4,11 +4,10 @@
  */
 package comis.views;
 
-import com.rameses.rcp.ui.annotations.StyleSheet;
+import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
-import com.rameses.seti2.views.CrudFormPage;
 
-@Template(CrudFormPage.class)
+@Template(FormPage.class)
 public class ApplicationRenewalInitPage extends javax.swing.JPanel {
 
     /**
@@ -28,9 +27,9 @@ public class ApplicationRenewalInitPage extends javax.swing.JPanel {
     private void initComponents() {
 
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
         xLookupField3 = new com.rameses.rcp.control.XLookupField();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
-        xLookupField2 = new com.rameses.rcp.control.XLookupField();
         xLabel8 = new com.rameses.rcp.control.XLabel();
         xLabel1 = new com.rameses.rcp.control.XLabel();
         xLabel2 = new com.rameses.rcp.control.XLabel();
@@ -44,24 +43,6 @@ public class ApplicationRenewalInitPage extends javax.swing.JPanel {
         xFormPanel1.setCaptionWidth(120);
         xFormPanel1.setPreferredSize(new java.awt.Dimension(0, 100));
 
-        xLookupField3.setCaption("Applicant");
-        xLookupField3.setExpression("#{item.name}");
-        xLookupField3.setHandler("lookupApplicant");
-        xLookupField3.setName("entity.applicant"); // NOI18N
-        xLookupField3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xLookupField3.setRequired(true);
-        xFormPanel1.add(xLookupField3);
-
-        xComboBox2.setCaption("Relationship");
-        xComboBox2.setDepends(new String[] {"entity.applicant"});
-        xComboBox2.setExpression("#{item.title}");
-        xComboBox2.setItems("relations");
-        xComboBox2.setName("entity.relation"); // NOI18N
-        xComboBox2.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
-        xComboBox2.setPreferredSize(new java.awt.Dimension(0, 20));
-        xComboBox2.setRequired(true);
-        xFormPanel1.add(xComboBox2);
-
         xLookupField2.setCaption("Application No.");
         xLookupField2.setExpression("#{item.appno}");
         xLookupField2.setHandler("lookupApplication");
@@ -69,6 +50,28 @@ public class ApplicationRenewalInitPage extends javax.swing.JPanel {
         xLookupField2.setPreferredSize(new java.awt.Dimension(0, 20));
         xLookupField2.setRequired(true);
         xFormPanel1.add(xLookupField2);
+
+        xLookupField3.setCaption("Applicant");
+        xLookupField3.setDepends(new String[] {"entity.prevapp"});
+        xLookupField3.setDisableWhen("#{entity.prevapp == null}");
+        xLookupField3.setExpression("#{item.name}");
+        xLookupField3.setHandler("lookupApplicant");
+        xLookupField3.setName("entity.applicant"); // NOI18N
+        xLookupField3.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
+        xLookupField3.setPreferredSize(new java.awt.Dimension(0, 20));
+        xLookupField3.setRequired(true);
+        xFormPanel1.add(xLookupField3);
+
+        xComboBox2.setCaption("Relationship");
+        xComboBox2.setDepends(new String[] {"entity.prevapp"});
+        xComboBox2.setDisableWhen("#{entity.prevapp == null}");
+        xComboBox2.setExpression("#{item.title}");
+        xComboBox2.setItems("relations");
+        xComboBox2.setName("entity.relation"); // NOI18N
+        xComboBox2.setCellPadding(new java.awt.Insets(0, 0, 10, 0));
+        xComboBox2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xComboBox2.setRequired(true);
+        xFormPanel1.add(xComboBox2);
 
         xLabel8.setDepends(new String[] {"entity.prevapp"});
         xLabel8.setExpression("#{\"APPLICANT\"}");
