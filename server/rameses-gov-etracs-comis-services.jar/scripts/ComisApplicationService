@@ -69,17 +69,36 @@ class ComisApplicationService {
         app.amount = 0;
         app.amtpaid = 0;
         app.balance = 0;
-        app.lessor = [:];
+        setLessor(app);
         app.lessee = [:];
-
-        def params = reportSvc.getStandardParameter();
-        app.lessor = [:];
-        app.lessor.name = params.MAYORNAME;
-        app.lessor.title = params.MAYORTITLE;
-        app.lessor.ctcplaceissued = params.LGUADDRESS;
-        app.lessee.ctcplaceissued = params.LGUADDRESS;
-
         app.deceased = createDeceased(app);
+        app = em_app.create(app);
+        startWorkflow(app);
+        return app;
+    }
+
+    @ProxyMethod
+    public def renew(param) {
+        def prevapp = em_app.read(param.prevapp);
+        if (!prevapp) throw new Exception('Application does not exist or has already been deleted.');
+
+        def app = [:];
+        app.state = 'DRAFT';
+        app.apptype = 'RENEWAL';
+        app.online = true;
+        app.dtapplied = dtSvc.serverDate;
+        app.appyear = dtSvc.serverYear;
+        app.applicant = param.applicant;
+        app.relation = param.relation;
+        app.resourceinfo = prevapp.resourceinfo;
+        app.leaseduration = prevapp.leaseduration;
+        app.deceased = prevapp.deceased;
+        app.amount = 0;
+        app.amtpaid = 0;
+        app.renewable = true;
+        setLessor(app);
+        app.lessee = [:];
+        app.prevappid = prevapp.objid;
         app = em_app.create(app);
         startWorkflow(app);
         return app;
@@ -107,10 +126,11 @@ class ComisApplicationService {
             entity.state = STATE_FORPAYMENT;
         } else {
             entity.state = STATE_ACTIVE;
-            def task = signalWf(app, 'release');
+            def task = signalWf(app, 'active');
             entity.taskid = task.taskid;
         }
         em_app.update(entity);
+        em_app.find([objid: app.prevappid]).update([state: STATE_RENEWED]);
         em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: entity.objid]);
         em_deceased.find([objid: app.deceased.objid]).update([state: STATE_APPROVED]);
         return entity;
@@ -167,6 +187,14 @@ class ComisApplicationService {
         task.state = action;
         task.dtcreated = app.dtapproved;
         return em_task.create(task);
+    }
+
+    void setLessor(app) {
+        def params = reportSvc.getStandardParameter();
+        app.lessor = [:];
+        app.lessor.name = params.MAYORNAME;
+        app.lessor.title = params.MAYORTITLE;
+        app.lessor.ctcplaceissued = params.LGUADDRESS;
     }
 
 }
