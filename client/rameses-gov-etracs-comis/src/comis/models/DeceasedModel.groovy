@@ -18,6 +18,10 @@ class DeceasedModel extends CrudFormModel {
         return svc.getNationalities();
     }
     
+    def getLgus() {
+        return svc.getLgus();
+    }
+    
     void afterCreate() {
         entity.state = 'DRAFT';
         entity.permissiontype = 'INTER';

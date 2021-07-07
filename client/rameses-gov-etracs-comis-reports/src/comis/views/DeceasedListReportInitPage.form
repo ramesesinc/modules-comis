@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="xFormPanel1" min="-2" pref="420" max="-2" attributes="0"/>
+              <EmptySpace pref="49" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="xFormPanel1" min="-2" pref="229" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel1">
+      <Properties>
+        <Property name="captionWidth" type="int" value="100"/>
+      </Properties>
+      <SubComponents>
+        <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox1">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Period"/>
+            <Property name="items" type="java.lang.String" value="periods"/>
+            <Property name="name" type="java.lang.String" value="query.period" noResource="true"/>
+            <Property name="emptyText" type="java.lang.String" value="ALL"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XIntegerField" name="xIntegerField1">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Year"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="query.period"/>
+              </StringArray>
+            </Property>
+            <Property name="name" type="java.lang.String" value="query.year" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox4">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Quarter"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="query.period"/>
+              </StringArray>
+            </Property>
+            <Property name="items" type="java.lang.String" value="quarters"/>
+            <Property name="name" type="java.lang.String" value="query.qtr" noResource="true"/>
+            <Property name="allowNull" type="boolean" value="false"/>
+            <Property name="emptyText" type="java.lang.String" value="ALL"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox5">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Month"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="query.period"/>
+              </StringArray>
+            </Property>
+            <Property name="expression" type="java.lang.String" value="#{item.caption}"/>
+            <Property name="items" type="java.lang.String" value="months"/>
+            <Property name="name" type="java.lang.String" value="query.month" noResource="true"/>
+            <Property name="allowNull" type="boolean" value="false"/>
+            <Property name="emptyText" type="java.lang.String" value="ALL"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox6">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Age Group"/>
+            <Property name="expression" type="java.lang.String" value="#{item.caption}"/>
+            <Property name="items" type="java.lang.String" value="agegroups"/>
+            <Property name="name" type="java.lang.String" value="query.agegroup" noResource="true"/>
+            <Property name="emptyText" type="java.lang.String" value="ALL"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel2">
+          <Properties>
+            <Property name="captionBorder" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="orientation" type="java.lang.String" value="HORIZONTAL"/>
+            <Property name="padding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 0, 0, 0]"/>
+            </Property>
+            <Property name="showCaption" type="boolean" value="false"/>
+          </Properties>
+          <SubComponents>
+            <Component class="com.rameses.rcp.control.XIntegerField" name="xIntegerField4">
+              <Properties>
+                <Property name="caption" type="java.lang.String" value="Age From"/>
+                <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="query.agegroup"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="query.agefrom" noResource="true"/>
+                <Property name="captionWidth" type="int" value="100"/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[70, 20]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox7">
+              <Properties>
+                <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="query.agegroup"/>
+                  </StringArray>
+                </Property>
+                <Property name="items" type="java.lang.String" value="agetypes"/>
+                <Property name="name" type="java.lang.String" value="query.agefromtype" noResource="true"/>
+                <Property name="allowNull" type="boolean" value="false"/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[128, 20]"/>
+                </Property>
+                <Property name="showCaption" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel3">
+          <Properties>
+            <Property name="captionBorder" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="orientation" type="java.lang.String" value="HORIZONTAL"/>
+            <Property name="padding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 0, 0, 0]"/>
+            </Property>
+            <Property name="showCaption" type="boolean" value="false"/>
+          </Properties>
+          <SubComponents>
+            <Component class="com.rameses.rcp.control.XIntegerField" name="xIntegerField5">
+              <Properties>
+                <Property name="caption" type="java.lang.String" value="Age To"/>
+                <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="query.agegroup"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="query.ageto" noResource="true"/>
+                <Property name="captionWidth" type="int" value="100"/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[70, 20]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox8">
+              <Properties>
+                <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="query.agegroup"/>
+                  </StringArray>
+                </Property>
+                <Property name="items" type="java.lang.String" value="agetypes"/>
+                <Property name="name" type="java.lang.String" value="query.agetotype" noResource="true"/>
+                <Property name="allowNull" type="boolean" value="false"/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[128, 20]"/>
+                </Property>
+                <Property name="showCaption" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox9">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="LGU"/>
+            <Property name="items" type="java.lang.String" value="lgus"/>
+            <Property name="name" type="java.lang.String" value="query.lgu" noResource="true"/>
+            <Property name="emptyText" type="java.lang.String" value="ALL"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

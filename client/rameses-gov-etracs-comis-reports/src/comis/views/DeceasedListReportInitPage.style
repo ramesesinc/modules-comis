@@ -1,0 +1,24 @@
+"query.(year|qtr|month|agefrom|ageto|agefrom|agefromtype|agetotype)" [true] {
+    visible:false;
+    required:false;
+}
+
+"query.year" [query.period == 'YEAR'] {
+    visible:true;
+    required:true;
+}
+
+"query.(year|qtr)" [query.period == 'QUARTER'] {
+    visible:true;
+    required:true;
+}
+
+"query.(year|month)" [query.period == 'MONTH'] {
+    visible:true;
+    required:true;
+}
+
+"query.(agefrom|ageto|agefromtype|agetotype)" [query.agegroup && query.agegroup.id == 'range'] {
+    visible:true;
+    required:true;
+}
