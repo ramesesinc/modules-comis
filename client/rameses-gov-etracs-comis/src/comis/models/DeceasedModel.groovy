@@ -10,6 +10,7 @@ class DeceasedModel extends CrudFormModel {
     
     def afterSaveCallback = {};
     
+    def agetypes = ['DAY', 'MONTH', 'YEAR'];
     def sexes = ['MALE', 'FEMALE'];
     def permissiontypes = ['INTER', 'DISINTER', 'REMOVE'];
     

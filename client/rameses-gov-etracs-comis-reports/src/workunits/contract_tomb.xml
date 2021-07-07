@@ -1,0 +1,11 @@
+<workunit extends="com/rameses/jasper/templates/JasperFormReport.xml"> 
+    <invokers>
+        <invoker type="application:form:reports" 
+                 caption="Contract of Lease - Tomb/Mausoleum"
+                 action="preview" 
+                 visibleWhen="#{ !entity.state.matches('DRAFT|FORAPPROVAL')  &amp;&amp; entity.resourceinfo.resource.objid != 'NICHE' }"
+                 reportId="comis_contract_tomb" 
+                 reportName="comis/reports/contract_tomb.jasper"
+        />
+    </invokers>
+</workunit>

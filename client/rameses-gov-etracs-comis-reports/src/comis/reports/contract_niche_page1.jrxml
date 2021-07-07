@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="contract_niche_page1"
+
+		 language="groovy"		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="594"
+		 columnSpacing="0"
+		 leftMargin="9"
+		 rightMargin="9"
+		 topMargin="9"
+		 bottomMargin="9"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="PARENTLGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="RPTBillingLedger" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="RPTBillingLedgerItem" isForPrompting="false" class="java.lang.Object"/>
+	<parameter name="LGUFORMALNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBY" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTDATE" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="TREASUREROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TREASURERTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PRINTEDBYTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="USERJOBTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="TOPN" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="USERFULLNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="year" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="basicrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="sefrate" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="ASSESSORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ASSESSORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYOROFFICENAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="MAYORTITLE" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUNAME" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="LGUADDRESS" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="applicant.name" class="java.lang.String"/>
+	<field name="applicant.address" class="java.lang.String"/>
+	<field name="resourceinfo.name" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Number"/>
+	<field name="leaseperiod" class="java.lang.String"/>
+	<field name="dtexpiry" class="java.util.Date"/>
+	<field name="datesigned" class="java.lang.String"/>
+	<field name="lessor.name" class="java.lang.String"/>
+	<field name="lessor.title" class="java.lang.String"/>
+	<field name="witness1.name" class="java.lang.String"/>
+	<field name="witness2.name" class="java.lang.String"/>
+	<field name="lessor.ctcno" class="java.lang.String"/>
+	<field name="lessor.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessor.ctcdtissued" class="java.lang.String"/>
+	<field name="lessee.ctcno" class="java.lang.String"/>
+	<field name="lessee.ctcplaceissued" class="java.lang.String"/>
+	<field name="lessee.ctcdtissued" class="java.lang.String"/>
+	<field name="cemetery.name" class="java.lang.String"/>
+	<field name="cemetery.location" class="java.lang.String"/>
+	<field name="cemetery.isnew" class="java.lang.Boolean"/>
+	<field name="resourceinfo.title" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="498"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="486"
+						height="40"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="16" isBold="true"/>
+					</textElement>
+				<text><![CDATA[CONTRACT OF LEASE FOR
+INDIVIDUAL APARTMENT TYPE NICHE]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="59"
+						width="486"
+						height="71"
+						key="textField-1"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         This contract of lease executed and entered into by and between the " + $P{LGUFORMALNAME} + ", city corporation only existing and created under the  laws of the Republic of the Philippines with principal address at " + $P{LGUADDRESS} + ", Philippines represented in this instance by the " + $F{lessor.title} + ", <style isBold=\"true\" isUnderline=\"true\">Hon. " + $F{lessor.name} + "</style> herein referred to as the LESSOR and <style isBold=\"true\" isUnderline=\"true\">" + $F{applicant.name} + "</style> of legal age married/single residing at <style isBold=\"true\" isUnderline=\"true\">" + $F{applicant.address} + "</style> herein referred to as the LESSEE."]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="152"
+						width="486"
+						height="13"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[WITNESSETH:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="168"
+						width="486"
+						height="28"
+						key="textField-2"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSOR is the owner and the operator of the " + ($F{cemetery.isnew} ? "New" : "Old") +  " Cemetery situated at " + $F{cemetery.location} + ";"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="196"
+						width="486"
+						height="28"
+						key="textField-3"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Whereas</style>, the LESSEE is desirous of leasing available Individual Apartment Type Niche which will be used by the Lessee for the interment of his/her departed family member;"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="224"
+						width="486"
+						height="28"
+						key="textField-4"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["         <style isBold=\"true\">Now, therefore</style>, for and in consideration of the hereunder specified mutual covenants and stipulations, the parties have agreed and do hereby agree to the following, to wit:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="28"
+						y="266"
+						width="458"
+						height="13"
+						key="textField-5"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["1. That the Lessor does hereby let, as it hereby lets in Individual Apartment Type <style isBold=\"true\" i1sUnderline=\"true\">" + $F{resourceinfo.title} + "</style> for use as interment of departed member/s."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="283"
+						width="459"
+						height="13"
+						key="textField-6"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["2. In the said city public cemetery in favor of the Lessee to be used solely as the Temporary resting place of his/her family member."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="300"
+						width="459"
+						height="13"
+						key="textField-7"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["3. That the Lessee in consideration of the use of the aforementioned Individual Apartment Type Niche hereby agrees to pay in advance the amount of <style isBold=\"true\" isUnderline=\"true\">Php " + $F{amount} + "</style> as lease rental for a period of  <style isBold=\"true\" isUnderline=\"true\">" + $F{leaseperiod} + "</style> to the Lessor/Treasurer."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="317"
+						width="459"
+						height="13"
+						key="textField-8"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["4. That the Lessee hereby agrees to occupy the said Individual Apartment Type Niche pursuant to and in accordance with Ordinance No. 95-10 series of 1995."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="334"
+						width="459"
+						height="13"
+						key="textField-9"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["5. That it is understood that Lease Contract shall only have a fix period of <style isItalic=\"true\">" + $F{leaseperiod} + "</style>."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="351"
+						width="459"
+						height="13"
+						key="textField-10"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["6. That upon the expiry of the <style isItalic=\"true\">" + $F{leaseperiod} + "</style> term, the Lessee obliges himself/herself to remove the mortal remains of the person interred in the said Individual Apartment Type Niche."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="368"
+						width="459"
+						height="13"
+						key="textField-11"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["7. That the Lessee shall not sell or encumber the niche covered by this agreement."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="385"
+						width="459"
+						height="13"
+						key="textField-12"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["8. That the Lessee shall not make alterations of the lease niche without written notice and consent given by the Lessor."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="402"
+						width="459"
+						height="13"
+						key="textField-13"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["9. The Lessee, however, shall be allowed to put a \"lapida\" in the niche as specified by the Lessor."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="419"
+						width="459"
+						height="13"
+						key="textField-14"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["10. That the individual niche containing the cadaver of the interred person shall not be opened for any reason within the period of <style isItalic=\"true\">" + $F{leaseperiod} + "</style>, except when there is an order coming from competent authority for exhumation of the said cadaver."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="436"
+						width="459"
+						height="13"
+						key="textField-15"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["11. That with the respect to the mortal remains of the interred cadaver, which under the previous stipulation mandates the Lessee to remove the same after the expiry of the <style isItalic=\"true\">" + $F{leaseperiod} + "</style> period, the Lessor obliges to construct an ossuary specifically for the upkeep of all mortal remains, subject however to the provision that the Lessee shall enter into another contract with the Lessor for th euse of the ossuary at the rates, terms and condition stipulated under Ordinance No. 95-10 series of 1995."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="26"
+						y="453"
+						width="459"
+						height="13"
+						key="textField-16"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["12. That the Lessor shall keep the cemetery in a clean and orderly manner and shall at all times keep the security and integrity of the cemetery in accordance with the culture, customs and traditions."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="28"
+						y="465"
+						width="459"
+						height="13"
+						key="textField-17"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Justified" isStyledText="true">
+						<font fontName="Times New Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["13. That the efficacy of this contract shall be in force upon signing of this contract by the parties and until <style isBold=\"true\" isUnderline=\"true\">" + $F{dtexpiry} + "</style>."]]></textFieldExpression>
+				</textField>
+				<image  onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="4"
+						y="0"
+						width="50"
+						height="50"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["classpath://images/lgu-logo.png"]]></imageExpression>
+				</image>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
