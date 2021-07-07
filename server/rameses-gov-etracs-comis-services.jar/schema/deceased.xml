@@ -3,6 +3,8 @@
         <field name="objid" primary="true" prefix="D" />
         <field name="state" caption="State" required="true" searchable="true" />
         <field name="name" caption="Deceased" searchable="true" />
+        <field name="address" caption="Address" />
+        <field name="lgu" caption="LGU" />
         <field name="nationality" caption="Nationality" />
         <field name="age" caption="Age" type="integer" />
         <!-- day, month, year -->
@@ -10,6 +12,8 @@
         <field name="ageinmon" type="integer" />
         <field name="sex" caption="Sex" />
         <field name="dtdied" caption="Date of Death" type="date" />
+        <field name="placeofdeath" caption="Place of Death" />
+        <field name="placeofburial" caption="Place of Burial" />
         <!-- INTER, DISINTER, REMOVE -->
         <field name="permissiontype" caption="Permission" />
         <field name="infectious"  />

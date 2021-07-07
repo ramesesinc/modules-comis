@@ -8,6 +8,9 @@ class ComisDeceasedPersonService {
     @DataContext('nationality')
     def em_nationality;
 
+    @DataContext('lgu')
+    def em_lgu;
+
 
     @ProxyMethod
     public def getNationalities() {
@@ -17,6 +20,11 @@ class ComisDeceasedPersonService {
     @ProxyMethod
     public def getCauseofdeaths() {
         return em_causeofdeath.find([state: 'ACTIVE']).orderBy('title').list();
+    }
+
+    @ProxyMethod
+    public def getLgus() {
+        return em_lgu.where("1=1").orderBy("objid").list().objid;
     }
 
 }

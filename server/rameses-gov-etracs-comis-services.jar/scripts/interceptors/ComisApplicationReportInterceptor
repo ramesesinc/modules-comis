@@ -2,7 +2,7 @@ import com.rameses.annotations.*
 import com.rameses.common.*;
 import com.rameses.services.extended.*
 
-class ComisReportInterceptor {
+class ComisApplicationReportInterceptor {
 	@Service('DateService')
 	def dtSvc;
 
