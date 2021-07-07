@@ -1,40 +1,44 @@
 package comis.models;
 
-import com.rameses.rcp.common.*;
 import com.rameses.rcp.annotations.*;
+import com.rameses.rcp.common.*;
 import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
 
-class ApplicationRenewalModel extends ApplicationModel {
+class ApplicationRenewalModel  {
+    @Binding
+    def binding;
     
-    void afterCreate() {
-        def params = reportSvc.getStandardParameter();
-        def pdate = dtSvc.parseCurrentDate();
-        
-        entity.online = true;
-        entity.appyear = pdate.year;
-        entity.dtapplied = pdate.date;
-        entity.apptype = 'RENEWAL';
-        entity.amount = 0;
-        entity.amtpaid = 0;
-        entity.applicant = [:];
-        entity.lessor = [:];
-        entity.lessor.name = params.MAYORNAME;
-        entity.lessor.title = params.MAYORTITLE;
-        entity.lessor.ctcplaceissued = params.LGUADDRESS;
-        entity.lessee.ctcplaceissued = params.LGUADDRESS;
+    @Invoker
+    def invoker;
+
+    @Service("ComisApplicationService")
+    def appSvc;
+    
+    @FormTitle
+    public String getTitle() {
+        return "Application Renewal";
     }
     
+    def entity = [:];
+    
+    def create() {
+        def app = appSvc.renew(entity);
+        def op = Inv.lookupOpener("application:open", [entity: app]);
+        op.target = "topwindow";
+        return op;
+    }
     
     def getLookupApplication() {
         return Inv.lookupOpener("burialpermitapplication:lookup", [
-            onselect: { 
-                if (!it.state.matches('ACTIVE|EXPIRED'))
+            onselect: { app ->
+                if (!app.state.matches('ACTIVE|EXPIRED'))
                     throw new Exception('Application must be in active or expired state.');
-
-                entity.prevapp = it;
-                entity.prevappid = it.objid;
-                println entity.prevapp
+                
+                entity.prevapp = app;
+                entity.prevappid = app.objid;
+                entity.applicant = app.applicant;
+                entity.relation  = relations.find{it.objid == app.relation.objid};
                 binding.refresh('entity.prevapp.*');
             },
             onempty: {
@@ -45,5 +49,21 @@ class ApplicationRenewalModel extends ApplicationModel {
         ]);
     }
     
-
+    def getLookupApplicant() {
+        return Inv.lookupOpener("entity:lookup", [
+                onselect: { 
+                    entity.applicant = it;
+                    entity.applicant.address = it.address.text.replaceAll('\n','');
+                    binding.refresh('entity.lessee.*');
+                },
+                onempty: {
+                    entity.applicant = [:];
+                }
+        ]);
+    }    
+    
+        
+    def getRelations() {
+        appSvc.getRelations();
+    }
 }

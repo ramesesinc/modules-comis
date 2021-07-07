@@ -29,7 +29,9 @@ public class DeceasedPage extends javax.swing.JPanel {
         xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
         xTextField1 = new com.rameses.rcp.control.XTextField();
         xComboBox1 = new com.rameses.rcp.control.XComboBox();
-        xTextField2 = new com.rameses.rcp.control.XTextField();
+        xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
+        xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
+        xComboBox5 = new com.rameses.rcp.control.XComboBox();
         xComboBox2 = new com.rameses.rcp.control.XComboBox();
         xDateField1 = new com.rameses.rcp.control.XDateField();
         xComboBox3 = new com.rameses.rcp.control.XComboBox();
@@ -54,22 +56,37 @@ public class DeceasedPage extends javax.swing.JPanel {
         xComboBox1.setRequired(true);
         xFormPanel1.add(xComboBox1);
 
-        xTextField2.setCaption("Age");
-        xTextField2.setName("entity.age"); // NOI18N
-        xTextField2.setPreferredSize(new java.awt.Dimension(200, 20));
-        xTextField2.setRequired(true);
-        xFormPanel1.add(xTextField2);
+        xFormPanel2.setCaptionBorder(null);
+        xFormPanel2.setCaptionWidth(130);
+        xFormPanel2.setOrientation(com.rameses.rcp.constant.UIConstants.HORIZONTAL);
+        xFormPanel2.setPadding(new java.awt.Insets(0, 0, 0, 0));
+        xFormPanel2.setShowCaption(false);
+
+        xIntegerField1.setCaption("Age");
+        xIntegerField1.setName("entity.age"); // NOI18N
+        xIntegerField1.setPreferredSize(new java.awt.Dimension(50, 20));
+        xIntegerField1.setRequired(true);
+        xFormPanel2.add(xIntegerField1);
+
+        xComboBox5.setItems("agetypes");
+        xComboBox5.setName("entity.agetype"); // NOI18N
+        xComboBox5.setPreferredSize(new java.awt.Dimension(98, 20));
+        xComboBox5.setShowCaption(false);
+        xFormPanel2.add(xComboBox5);
+
+        xFormPanel1.add(xFormPanel2);
 
         xComboBox2.setCaption("Sex");
         xComboBox2.setItems("sexes");
         xComboBox2.setName("entity.sex"); // NOI18N
-        xComboBox2.setPreferredSize(new java.awt.Dimension(100, 20));
+        xComboBox2.setPreferredSize(new java.awt.Dimension(150, 20));
         xComboBox2.setRequired(true);
         xFormPanel1.add(xComboBox2);
 
         xDateField1.setCaption("Date of Death");
         xDateField1.setName("entity.dtdied"); // NOI18N
         xDateField1.setCellPadding(new java.awt.Insets(0, 0, 20, 0));
+        xDateField1.setPreferredSize(new java.awt.Dimension(150, 20));
         xDateField1.setRequired(true);
         xFormPanel1.add(xDateField1);
 
@@ -132,7 +149,7 @@ public class DeceasedPage extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -141,11 +158,13 @@ public class DeceasedPage extends javax.swing.JPanel {
     private com.rameses.rcp.control.XComboBox xComboBox2;
     private com.rameses.rcp.control.XComboBox xComboBox3;
     private com.rameses.rcp.control.XComboBox xComboBox4;
+    private com.rameses.rcp.control.XComboBox xComboBox5;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel2;
+    private com.rameses.rcp.control.XIntegerField xIntegerField1;
     private com.rameses.rcp.control.XLabel xLabel2;
     private com.rameses.rcp.control.XTextField xTextField1;
-    private com.rameses.rcp.control.XTextField xTextField2;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     private com.rameses.rcp.control.XTextField xTextField5;

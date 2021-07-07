@@ -8,12 +8,12 @@ import com.rameses.osiris2.themes.FormPage;
 import com.rameses.rcp.ui.annotations.Template;
 
 @Template(FormPage.class)
-public class ExpiredLeaseContractInitReportPage extends javax.swing.JPanel {
+public class CemeteryFilterReportPage extends javax.swing.JPanel {
 
     /**
      * Creates new form ExpiredLeaseContractInitReportPage
      */
-    public ExpiredLeaseContractInitReportPage() {
+    public CemeteryFilterReportPage() {
         initComponents();
     }
 

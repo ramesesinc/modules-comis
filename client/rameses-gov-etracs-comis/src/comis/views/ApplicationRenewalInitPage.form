@@ -42,12 +42,33 @@
         </Property>
       </Properties>
       <SubComponents>
+        <Component class="com.rameses.rcp.control.XLookupField" name="xLookupField2">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Application No."/>
+            <Property name="expression" type="java.lang.String" value="#{item.appno}"/>
+            <Property name="handler" type="java.lang.String" value="lookupApplication"/>
+            <Property name="name" type="java.lang.String" value="entity.prevapp" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 20]"/>
+            </Property>
+            <Property name="required" type="boolean" value="true"/>
+          </Properties>
+        </Component>
         <Component class="com.rameses.rcp.control.XLookupField" name="xLookupField3">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Applicant"/>
+            <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="entity.prevapp"/>
+              </StringArray>
+            </Property>
+            <Property name="disableWhen" type="java.lang.String" value="#{entity.prevapp == null}"/>
             <Property name="expression" type="java.lang.String" value="#{item.name}"/>
             <Property name="handler" type="java.lang.String" value="lookupApplicant"/>
             <Property name="name" type="java.lang.String" value="entity.applicant" noResource="true"/>
+            <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[10, 0, 0, 0]"/>
+            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[0, 20]"/>
             </Property>
@@ -59,27 +80,16 @@
             <Property name="caption" type="java.lang.String" value="Relationship"/>
             <Property name="depends" type="[Ljava.lang.String;" editor="org.netbeans.beaninfo.editors.StringArrayEditor">
               <StringArray count="1">
-                <StringItem index="0" value="entity.applicant"/>
+                <StringItem index="0" value="entity.prevapp"/>
               </StringArray>
             </Property>
+            <Property name="disableWhen" type="java.lang.String" value="#{entity.prevapp == null}"/>
             <Property name="expression" type="java.lang.String" value="#{item.title}"/>
             <Property name="items" type="java.lang.String" value="relations"/>
             <Property name="name" type="java.lang.String" value="entity.relation" noResource="true"/>
             <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[0, 0, 10, 0]"/>
             </Property>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[0, 20]"/>
-            </Property>
-            <Property name="required" type="boolean" value="true"/>
-          </Properties>
-        </Component>
-        <Component class="com.rameses.rcp.control.XLookupField" name="xLookupField2">
-          <Properties>
-            <Property name="caption" type="java.lang.String" value="Application No."/>
-            <Property name="expression" type="java.lang.String" value="#{item.appno}"/>
-            <Property name="handler" type="java.lang.String" value="lookupApplication"/>
-            <Property name="name" type="java.lang.String" value="entity.prevapp" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[0, 20]"/>
             </Property>

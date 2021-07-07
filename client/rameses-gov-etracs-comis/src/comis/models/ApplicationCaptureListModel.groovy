@@ -7,6 +7,10 @@ import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
 
 class ApplicationCaptureListModel extends CrudListModel {
+    public String getEntitySchemaName() {
+        return "application";
+    }
+    
     def open() {
         if ( !isOpenAllowed() )
             throw new Exception("Open not allowed");

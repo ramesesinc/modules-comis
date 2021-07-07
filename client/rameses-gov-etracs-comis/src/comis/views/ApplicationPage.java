@@ -629,7 +629,7 @@ public class ApplicationPage extends javax.swing.JPanel {
         xButton3.setDisableWhen("#{entity.balance == 0}");
         xButton3.setMnemonic('a');
         xButton3.setName("addPayment"); // NOI18N
-        xButton3.setVisibleWhen("#{ entity.state == 'ACTIVE' && ( entity.online == 0 || !entity.online) }");
+        xButton3.setVisibleWhen("#{ entity.state == 'ACTIVE' && ( entity.online == 0 || !entity.online)}");
         xButton3.setText("Capture Payment");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -649,8 +649,8 @@ public class ApplicationPage extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xDataTable2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xDataTable2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(xButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

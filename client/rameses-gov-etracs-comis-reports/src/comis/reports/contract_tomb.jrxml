@@ -2,8 +2,9 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="contract_niche"
-		 columnCount="1"
+		 name="contract_tomb"
+
+		 language="groovy"		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Landscape"
 		 pageWidth="612"
@@ -64,7 +65,7 @@
 						height="26"
 						key="subreport-1"/>
 					<dataSourceExpression><![CDATA[$F{app1}]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA["contract_niche_page1.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["contract_tomb_page1.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 			</groupHeader>
@@ -85,7 +86,7 @@
 						height="26"
 						key="subreport-2"/>
 					<dataSourceExpression><![CDATA[$F{app2}]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA["contract_niche_page2.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["contract_tomb_page2.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 			</groupHeader>
