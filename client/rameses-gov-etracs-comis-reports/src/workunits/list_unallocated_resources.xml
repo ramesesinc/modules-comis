@@ -1,0 +1,16 @@
+<!-- workunit extends="com/rameses/jasper/templates/JasperFormReport.xml"--> 
+<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+    <invokers>
+        <invoker folderid="/menucategory/comis/reports"  
+                 caption="List of Unallocated Resources"
+                 action="query" 
+                 reportId="comis_unallocated_resources" 
+                 reportName="comis/reports/list_unallocated_resources.jasper"
+                 role="REPORTS" 
+        />
+    </invokers>
+    <code class="comis.models.UnallocatedResourcesListReportModel" />
+    <pages>
+        <page name="query" template="comis.views.CemeteryFilterReportPage" />
+    </pages>
+</workunit>

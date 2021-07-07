@@ -6,7 +6,7 @@ import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
 import com.rameses.seti2.models.FormReportModel;
 
-class ExpiredLeaseContractReportModel extends FormReportModel {
+class CemeteryFilterReportModel extends FormReportModel {
     @Service('QueryService')
     def querySvc;
     

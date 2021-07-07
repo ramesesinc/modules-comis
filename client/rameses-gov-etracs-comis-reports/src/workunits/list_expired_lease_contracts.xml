@@ -4,13 +4,13 @@
         <invoker folderid="/menucategory/comis/reports"  
                  caption="List of Expired Lease Contract"
                  action="query" 
-                 reportId="expired_lease_contract_listing" 
-                 reportName="comis/reports/expired_lease_contract_listing.jasper"
+                 reportId="comis_expired_lease_contracts" 
+                 reportName="comis/reports/list_expired_lease_contracts.jasper"
                  role="REPORTS" 
         />
     </invokers>
     <code class="comis.models.ExpiredLeaseContractReportModel" />
     <pages>
-        <page name="query" template="comis.views.ExpiredLeaseContractInitReportPage" />
+        <page name="query" template="comis.views.CemeteryFilterReportPage" />
     </pages>
 </workunit>
