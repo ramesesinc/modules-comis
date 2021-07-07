@@ -4,7 +4,10 @@
         <field name="state" caption="State" required="true" searchable="true" />
         <field name="name" caption="Deceased" searchable="true" />
         <field name="nationality" caption="Nationality" />
-        <field name="age" caption="Age" />
+        <field name="age" caption="Age" type="integer" />
+        <!-- day, month, year -->
+        <field name="agetype" />
+        <field name="ageinmon" type="integer" />
         <field name="sex" caption="Sex" />
         <field name="dtdied" caption="Date of Death" type="date" />
         <!-- INTER, DISINTER, REMOVE -->
