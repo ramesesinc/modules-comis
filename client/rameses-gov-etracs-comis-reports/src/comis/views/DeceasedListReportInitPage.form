@@ -204,6 +204,7 @@
         <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox9">
           <Properties>
             <Property name="caption" type="java.lang.String" value="LGU"/>
+            <Property name="expression" type="java.lang.String" value="#{item.objid}"/>
             <Property name="items" type="java.lang.String" value="lgus"/>
             <Property name="name" type="java.lang.String" value="query.lgu" noResource="true"/>
             <Property name="emptyText" type="java.lang.String" value="ALL"/>

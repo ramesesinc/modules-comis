@@ -129,6 +129,7 @@ public class DeceasedListReportInitPage extends javax.swing.JPanel {
         xFormPanel1.add(xFormPanel3);
 
         xComboBox9.setCaption("LGU");
+        xComboBox9.setExpression("#{item.objid}");
         xComboBox9.setItems("lgus");
         xComboBox9.setName("query.lgu"); // NOI18N
         xComboBox9.setEmptyText("ALL");

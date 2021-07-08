@@ -1,4 +1,3 @@
-<!-- workunit extends="com/rameses/jasper/templates/JasperFormReport.xml"--> 
 <workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
     <invokers>
         <invoker folderid="/menucategory/comis/reports"  
