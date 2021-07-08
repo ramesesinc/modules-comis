@@ -1,0 +1,11 @@
+<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+    <invokers>
+        <invoker folderid="/menucategory/comis/reports"  
+                 caption="Target Collectible"
+                 action="query" 
+                 reportId="comis_target_collectible" 
+                 reportName="comis/reports/target_collectible.jasper"
+                 role="REPORTS" 
+        />
+    </invokers>
+</workunit>

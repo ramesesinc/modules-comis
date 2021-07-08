@@ -1,0 +1,15 @@
+<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+    <invokers>
+        <invoker folderid="/menucategory/comis/reports"  
+                 caption="List of Deceased"
+                 action="init" 
+                 reportId="comis_list_of_deceased" 
+                 reportName="comis/reports/list_of_deceased.jasper"
+                 role="REPORTS" 
+        />
+    </invokers>
+    <code class="comis.models.DeceasedListReportModel" />
+    <pages>
+        <page name="query" template="comis.views.DeceasedListReportInitPage" />
+    </pages>
+</workunit>
