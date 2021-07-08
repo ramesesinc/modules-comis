@@ -18,19 +18,21 @@ class ComisReportDeceasedListInterceptor {
 		def params  = evt.args[0].parameters;
 
 		params.query = [period: 'ALL', age: 'ALL'];
-		params.query.lgu = params.lgu ? params.lgu : 'ALL';
-
+		
 		params.filters = [];
 		params.filters << ' state = :state ';
 		params.state = 'APPROVED';
 		util.buildStartEndDateFilter(params);
 		buildAgeGroupFilter(params);
+		buildLguFilter(params);
 		
+		em_deceased.debug = true;
 		def where = params.filters.join(' AND ');
 		def list = em_deceased.where([where, params]).orderBy('name').list();
 		if (list) {
 			list.each{
-				it.age = toAgeStr(it.age, it.agetype)
+				it.age = toAgeStr(it.age, it.agetype);
+				it.address = it.address + ', ' + it.lgu;
 			}
 			list[0].query = params.query;
 		}
@@ -84,6 +86,16 @@ class ComisReportDeceasedListInterceptor {
 			}
 		}
 		return str.toLowerCase();
+	}
+
+	void buildLguFilter(params) {
+		if (params.lgu) {
+			params.filters << ' lgu = :lguid ';
+			params.lguid = params.lgu.objid;
+			params.query.lgu = params.lgu.objid;
+		} else {
+			params.query.lgu = 'ALL';
+		}
 	}
 
 	
