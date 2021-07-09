@@ -720,7 +720,9 @@
                           <Component id="xDataTable1" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="xButton2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="299" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="xButton4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="228" max="32767" attributes="0"/>
                               <Component id="xFormPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -736,7 +738,10 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="xFormPanel3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="xButton2" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="xButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="xButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -777,6 +782,13 @@
                 <Property name="name" type="java.lang.String" value="addFee" noResource="true"/>
                 <Property name="visibleWhen" type="java.lang.String" value="#{ mode== &apos;edit&apos; &amp;&amp; ( entity.online == 0 || !entity.online) }"/>
                 <Property name="text" type="java.lang.String" value="Add"/>
+              </Properties>
+            </Component>
+            <Component class="com.rameses.rcp.control.XButton" name="xButton4">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="assess" noResource="true"/>
+                <Property name="visibleWhen" type="java.lang.String" value="#{ mode== &apos;read&apos; &amp;&amp; ( entity.online == 1 || entity.online) &amp;&amp; entity.state == &apos;DRAFT&apos; }"/>
+                <Property name="text" type="java.lang.String" value="Assess"/>
               </Properties>
             </Component>
           </SubComponents>

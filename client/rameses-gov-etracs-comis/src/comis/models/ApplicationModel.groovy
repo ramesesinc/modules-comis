@@ -87,4 +87,9 @@ class ApplicationModel extends AbstractApplicationModel {
     void required(caption, value) {
         if (!value) throw new Exception(caption + ' is required.');
     }
+    
+    void assess() {
+        appSvc.assess(entity);
+        reload();
+    }
 }
