@@ -1,0 +1,28 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" 
+          schemaName="application" 
+          allowEdit="#{entity &amp;&amp; entity.state.matches('DRAFT|FORAPPROVAL')}"
+>
+    <invokers>
+        <invoker folderid="/menucategory/comis/burial"  
+            caption="Transfer Application" 
+            index="3"  
+            role="RECEIVER"
+        />
+        
+        <invoker type="formActions" 
+            action="_close"
+            caption="Close"
+            immediate="true"
+        />
+        
+        <invoker type="formActions" 
+            action="create"
+            caption="Save"
+        />
+        
+    </invokers>
+    <code class="comis.models.ApplicationTransferModel" />
+    <pages>
+        <page template="comis.views.ApplicationTransferInitPage" />
+    </pages>
+</workunit>

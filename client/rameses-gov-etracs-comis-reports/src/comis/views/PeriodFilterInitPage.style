@@ -1,0 +1,19 @@
+"query.(year|qtr|month)" [true] {
+    visible:false;
+    required:false;
+}
+
+"query.year" [query.period == 'YEAR'] {
+    visible:true;
+    required:true;
+}
+
+"query.(year|qtr)" [query.period == 'QUARTER'] {
+    visible:true;
+    required:true;
+}
+
+"query.(year|month)" [query.period == 'MONTH'] {
+    visible:true;
+    required:true;
+}

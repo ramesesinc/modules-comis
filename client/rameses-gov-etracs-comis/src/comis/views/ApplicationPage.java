@@ -233,7 +233,7 @@ public class ApplicationPage extends javax.swing.JPanel {
         xFormPanel1.add(xLabel6);
 
         xLookupField1.setCaption("Resource");
-        xLookupField1.setExpression("#{item.name}");
+        xLookupField1.setExpression("#{item.name} (Section ${item.section.code}  Block ${item.block.code})");
         xLookupField1.setHandler("resourceLookup");
         xLookupField1.setName("entity.resourceinfo"); // NOI18N
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));

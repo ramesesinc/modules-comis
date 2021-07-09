@@ -1,0 +1,15 @@
+<workunit extends="com/rameses/seti2/templates/FormReport.xml"> 
+    <invokers>
+        <invoker folderid="/menucategory/comis/reports"  
+                 caption="List of Transferred Remains"
+                 action="query" 
+                 reportId="comis_list_transferred_remains" 
+                 reportName="comis/reports/list_transferred_remains.jasper"
+                 role="REPORTS" 
+        />
+    </invokers>
+    <code class="comis.models.TransferredRemainsReportModel" />
+    <pages>
+        <page name="query" template="comis.views.PeriodFilterInitPage" />
+    </pages>
+</workunit>
