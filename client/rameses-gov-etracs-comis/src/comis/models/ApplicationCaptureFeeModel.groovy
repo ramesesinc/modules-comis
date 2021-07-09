@@ -22,6 +22,9 @@ class ApplicationCaptureFeeModel  {
     }
     
     def addFee() {
+        if (entity.amount <= 0) 
+            throw new Exception('Amount must be greater than zero');
+            
         if (MsgBox.confirm('Add fee?')) {
             onadd(entity);
             return "_close";

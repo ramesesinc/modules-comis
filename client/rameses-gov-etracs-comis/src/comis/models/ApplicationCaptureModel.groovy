@@ -132,7 +132,8 @@ class ApplicationCaptureModel extends CrudFormModel {
             fee.parentid = entity.objid;
             addItem("fees", fee);
             entity.amount = entity.fees.sum{ it.amount + it.surcharge + it.penalty }
-            binding.refresh("selectedFee|amount");
+            itemHandlers.fees.reload();
+            binding.refresh("amount");
         }
         return Inv.lookupOpener('application_fee:create', [onadd: onadd]);
     }
