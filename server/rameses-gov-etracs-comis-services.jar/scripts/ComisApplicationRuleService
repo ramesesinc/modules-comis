@@ -10,8 +10,12 @@ public class ComisApplicationRuleService  {
 	@Service("RuleExecutorService")
 	def ruleSvc;
 
+	@DataContext('application')
+	def em_app;
+	
 	@DataContext('vw_cemetery_resource')
 	def em_view_resource;
+
 
 	@ProxyMethod
 	public def execute( app ) {
@@ -53,6 +57,11 @@ public class ComisApplicationRuleService  {
 		request.facts << new CemeteryResource(vwresource);
 		request.facts << new Cemetery(vwresource.cemetery);
 		request.facts << new BurialPermitApplication(app);
+
+		def prevapp  = em_app.read([objid: app.prevappid]);
+		if (prevapp) {
+			request.facts << new PrevBurialPermitApplication(prevapp);
+		}
 
 		request.actions = buildActions(request);
 		return request

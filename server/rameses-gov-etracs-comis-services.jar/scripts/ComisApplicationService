@@ -23,6 +23,9 @@ class ComisApplicationService {
     @DataContext('application')
     def em_app;
 
+    @DataContext('application_fee')
+    def em_fee;
+
     @DataContext('application_task')
     def em_task;
 
@@ -84,6 +87,15 @@ class ComisApplicationService {
     }
 
     @ProxyMethod
+    public def assess(app) {
+        ruleSvc.execute(app);
+        updateExpiryDate(app);
+        em_fee.find([parentid: app.objid]).delete();
+        em_app.update(app);
+        return app;
+    }
+
+    @ProxyMethod
     public def renew(param) {
         def prevapp = openValidatePrevApp(param);
         def app = initApp(prevapp)
@@ -126,6 +138,10 @@ class ComisApplicationService {
         def app = em_app.read(entity);
         if (app.state != STATE_DRAFT) 
         throw new Exception('Unable to approve application. Only draft application is allowed.');
+
+        em_fee.debug = true;
+        def feecnt = em_fee.select('cnt:{COUNT(*)}').find([parentid: app.objid]).val();
+        if (feecnt == 0) throw new Exception('Kindly assess the application before approving.');
 
         if (app.online == 1 || app.online) {
             entity.appno = getNextSeries()
@@ -244,5 +260,22 @@ class ComisApplicationService {
         app.lessor.title = params.MAYORTITLE;
         app.lessor.ctcplaceissued = params.LGUADDRESS;
     }
+
+    
+	def updateExpiryDate(app) {
+		if (!app.leaseduration || app.leaseduration == 0)
+			app.dtexpiry = null;
+
+		if (app.online || app.online == 1) {
+			def prevapp = em_app.select('dtexpiry').find([objid: app.prevappid]).first();
+			def interval = app.leaseduration+"y";
+			if (prevapp) {
+				app.dtexpiry = dtSvc.add(prevapp.dtexpiry, interval);
+			} else {
+				app.dtexpiry = dtSvc.add(app.dtapproved, interval);
+			}
+		}
+    }
+
 
 }

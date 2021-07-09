@@ -27,16 +27,6 @@ class ComisApplicationInterceptor {
 	@DataContext('cemetery_resource')
     def em_cem_resource;
 
-	@Before(pattern="PersistenceService.update", eval="#{args[0]._schemaname=='application'}") 
-	public void beforeUpdate( evt ) {
-		def app = evt.args[0];
-		if (app.online == true || app.online == 1) {
-			ruleSvc.execute(app);
-			updateExpiryDate(app);
-			em_fee.find([parentid: app.objid]).delete();
-		}
-	}
-
 	@After(pattern="PersistenceService.update", eval="#{args[0]._schemaname=='application'}") 
 	public void afterUpdate( evt ) {
 		def app = evt.args[0];
@@ -71,27 +61,6 @@ class ComisApplicationInterceptor {
 		//release transferred resource
 		em_cem_resource.find([currentappid: app.prevappid]).update([currentappid: '{NULL}']);
 	}
-
-	void executeApplicationRule(app) {
-		ruleSvc.execute(app);
-		updateExpiryDate(app);
-		em_fee.find([parentid: app.objid]).delete();
-	}
-
-	def updateExpiryDate(app) {
-		if (!app.leaseduration || app.leaseduration == 0)
-			app.dtexpiry = null;
-
-		if (app.online || app.online == 1) {
-			def prevapp = em_app.select('dtexpiry').find([objid: app.prevappid]).first();
-			def interval = app.leaseduration+"y";
-			if (prevapp) {
-				app.dtexpiry = dtSvc.add(prevapp.dtexpiry, interval);
-			} else {
-				app.dtexpiry = dtSvc.add(app.dtapproved, interval);
-			}
-		}
-    }
 
     void signalWf(app, action) {
         def taskid = em_app.select('taskid').find([objid: app.objid]).val();
