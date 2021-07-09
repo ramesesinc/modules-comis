@@ -71,8 +71,13 @@ public class ComisApplicationBillingRuleService  {
 		request.facts << new CemeteryResource(vwresource);
 		request.facts << new Cemetery(vwresource.cemetery);
 		request.facts << new BurialPermitApplication(app);
+		
+		def prevapp  = em_app.read([objid: app.prevappid]);
+		if (prevapp) {
+			request.facts << new PrevBurialPermitApplication(prevapp);
+		}
+
 		app.fees.each{fee ->
-			println 'fee => ' + fee;
 			request.facts << new Fee(fee);
 		}
 		request.actions = buildActions(request);
