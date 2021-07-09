@@ -17,13 +17,6 @@
             caption="Approve"
             visibleWhen="#{entity.state == 'DRAFT' &amp;&amp; mode == 'read'}"
         />
-        
-        <invoker type="formActions" 
-            action="deactivate"
-            caption="Deactivate"
-            visibleWhen="#{entity.state == 'ACTIVE' &amp;&amp; mode == 'read'}"
-        />
-        
     </invokers>
     <code class="comis.models.CemeteryModel" />
     <pages>

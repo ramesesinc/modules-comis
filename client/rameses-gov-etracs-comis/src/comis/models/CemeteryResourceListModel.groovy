@@ -14,7 +14,7 @@ class CemeteryResourceListModel extends CrudListModel {
     }
     
     def getCustomFilter() {
-        return ["parentid = :objid", parent ? parent : [:]];
+        return ["blockid = :objid", parent ? parent : [:]];
     }    
     
 }
