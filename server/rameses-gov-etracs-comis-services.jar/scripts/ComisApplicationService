@@ -56,11 +56,17 @@ class ComisApplicationService {
     }
 
     @ProxyMethod
+    public void afterUpdate(app) {
+        em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: app.objid]);
+    }
+
+    @ProxyMethod
     public def create() {
         def pdate = dtSvc.parseCurrentDate();
         def app = [:];
         app.state = 'DRAFT';
         app.online = true;
+        app.appno = getNextTempSeries();
         app.apptype = 'NEW';
         app.dtapplied = pdate.date;
         app.appyear = pdate.year;
@@ -79,49 +85,50 @@ class ComisApplicationService {
 
     @ProxyMethod
     public def renew(param) {
-        def prevapp = em_app.read(param.prevapp);
-        if (!prevapp) throw new Exception('Application does not exist or has already been deleted.');
-
-        def app = [:];
-        app.state = 'DRAFT';
+        def prevapp = openValidatePrevApp(param);
+        def app = initApp(prevapp)
         app.apptype = 'RENEWAL';
-        app.online = true;
-        app.dtapplied = dtSvc.serverDate;
-        app.appyear = dtSvc.serverYear;
         app.applicant = param.applicant;
         app.relation = param.relation;
-        app.resourceinfo = prevapp.resourceinfo;
-        app.leaseduration = prevapp.leaseduration;
-        app.deceased = prevapp.deceased;
-        app.amount = 0;
-        app.amtpaid = 0;
-        app.renewable = true;
-        setLessor(app);
-        app.lessee = [:];
-        app.prevappid = prevapp.objid;
         app = em_app.create(app);
+        em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: app.objid]);
+        startWorkflow(app);
+        return app;
+    }
+
+    @ProxyMethod
+    public def transfer(param) {
+        def prevapp = openValidatePrevApp(param);
+        def app = initApp(prevapp)
+        app.apptype = 'TRANSFER';
+        app.applicant = prevapp.applicant;
+        app.relation = prevapp.relation;
+        app.resourceinfo = param.resourceinfo;
+        app = em_app.create(app);
+        em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: app.objid]);
         startWorkflow(app);
         return app;
     }
 
     @ProxyMethod
     public void beforeDelete(app) {
-        app = em_app.select('objid,deceased.objid').find([objid: app.objid]).first()
+        app = em_app.select('objid,apptype,deceased.objid').find([objid: app.objid]).first()
         em_cem_resource.find([currentappid: app.objid]).update([currentappid: '{NULL}']);
         em_task.find([refid: app.objid]).delete();
-        em_app.find([objid: app.objid]).update([deceased_objid: '{NULL}'])
-        em_deceased.find([objid: app.deceased.objid]).delete();
+        em_app.find([objid: app.objid]).update([deceased_objid: '{NULL}']);
+        if ('NEW'.equalsIgnoreCase(app.apptype)) {
+            em_deceased.find([objid: app.deceased.objid]).delete();
+        }
     }
 
     @ProxyMethod
     public def approve(entity) {
         def app = em_app.read(entity);
-
         if (app.state != STATE_DRAFT) 
         throw new Exception('Unable to approve application. Only draft application is allowed.');
 
         if (app.online == 1 || app.online) {
-            entity.appno = getNextSeries('BURIAL-PERMIT-APP')
+            entity.appno = getNextSeries()
             entity.dtapproved = dtSvc.serverDate;
             entity.state = STATE_FORPAYMENT;
         } else {
@@ -133,7 +140,8 @@ class ComisApplicationService {
         em_app.find([objid: app.prevappid]).update([state: STATE_RENEWED]);
         em_cem_resource.find([objid: app.resourceinfo.parentid]).update([currentappid: entity.objid]);
         em_deceased.find([objid: app.deceased.objid]).update([state: STATE_APPROVED]);
-        return entity;
+        app.putAll(entity);
+        return app;
     }
 
     @ProxyMethod
@@ -156,6 +164,39 @@ class ComisApplicationService {
         return payment;
     }
 
+    def openValidatePrevApp(param) {
+        def prevapp = em_app.read(param.prevapp);
+
+        if (!prevapp) throw new Exception('Application does not exist or has already been deleted.');
+
+        if (!prevapp.state.matches('ACTIVE|EXPIRED')) {
+            throw new Exception('Application must be in active or expired state.');
+        }
+
+        def refapp = em_app.select('appno').find([prevappid: prevapp.objid]).first();
+        if (refapp) throw new Exception('Application is currently referenced by app no. ' + refapp.appno);
+
+        return prevapp;
+    }
+
+    def initApp(prevapp) {
+        def app = [:];
+        app.state = 'DRAFT';
+        app.online = true;
+        app.dtapplied = dtSvc.serverDate;
+        app.appno = getNextTempSeries();
+        app.appyear = dtSvc.serverYear;
+        app.resourceinfo = prevapp.resourceinfo;
+        app.leaseduration = prevapp.leaseduration;
+        app.deceased = prevapp.deceased;
+        app.amount = 0;
+        app.amtpaid = 0;
+        app.renewable = true;
+        setLessor(app);
+        app.lessee = [:];
+        app.prevappid = prevapp.objid;
+        return app;
+    }
 
     void startWorkflow(app) {
         def task = [:];
@@ -167,11 +208,18 @@ class ComisApplicationService {
         wfSvc.start(task);			
     }
 
-    def getNextSeries(prefix) {
+    def getNextSeries() {
         def cy = dtSvc.serverYear;
-        def keyid = prefix + '-' + cy;
+        def keyid = 'BURIAL-PERMIT-APP-' + cy;
         def series = seqSvc.getNextFormattedSeries(keyid);
         return cy + '' + series;
+    }
+
+    def getNextTempSeries() {
+        def cy = dtSvc.serverYear;
+        def keyid = 'BURIAL-PERMIT-APP-TEMP-' + cy;
+        def series = seqSvc.getNextFormattedSeries(keyid);
+        return 'T' + cy + '' + series;
     }
 
     def createDeceased(app) {

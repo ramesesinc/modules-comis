@@ -41,8 +41,70 @@ public class ComisUtil  {
 		} 
 	}
 
-	def padLeft(val, padcount, padstr) {
+	@ProxyMethod
+	public void buildAgeGroupFilter(params) {
+		if (!params.agegroup) return;
+		if ('INFANT'.equalsIgnoreCase(params.agegroup.id)) {
+			params.filters << ' ageinmon <= 11 ';
+			params.query.age = '0 TO 11 MONTHS';
+		} else if ('18below'.equalsIgnoreCase(params.agegroup.id)) {
+			params.filters << ' ageinmon <= :18below ';
+			params['18below'] = 18 * 12;
+			params.query.age = '18 YEARS OLD AND BELOW';
+		} else if ('60above'.equalsIgnoreCase(params.agegroup.id)) {
+			params.filters << ' ageinmon >= :60above ';
+			params['60above'] = 60 * 12;
+			params.query.age = '60 YEARS OLD AND ABOVE';
+		} else if ('range'.equalsIgnoreCase(params.agegroup.id)) {
+			params.filters << ' ageinmon >= :agefrom AND ageinmon <= :ageto ';
+			params.agefrom = getAgeInMonth(params.agefrom, params.agefromtype);
+			params.ageto = getAgeInMonth(params.ageto, params.agetotype);
+			params.query.age = 'BETWEEN ' + toAgeStr(params.agefrom, params.agefromtype) + ' AND ' + toAgeStr(params.ageto, params.agetotype);
+		} else {
+			throw new Exception('agegroup ' + params.agegroup.id + ' is not supported.');
+		}
+	}
+
+	@ProxyMethod
+	public void buildLguFilter(params) {
+		if (params.lgu) {
+			params.filters << ' lgu = :lguid ';
+			params.lguid = params.lgu.objid;
+			params.query.lgu = params.lgu.objid;
+		} else {
+			params.query.lgu = 'ALL';
+		}
+	}
+
+	@ProxyMethod
+	public def padLeft(val, padcount, padstr) {
 		return val.toString().padLeft(padcount, padstr);
+	}
+
+	@ProxyMethod
+	public def getAgeInMonth(age, agetype) {
+		if ('DAY'.equalsIgnoreCase(agetype )) {
+			return 0;
+		} else if ('MONTH'.equalsIgnoreCase(agetype )) {
+			return age;
+		} else if ('YEAR'.equalsIgnoreCase(agetype )) {
+			return age * 12;
+		} else {
+			throw new Exception('agetype ' + agetype + ' is not supported.');
+		}
+	}
+
+	@ProxyMethod
+	public def toAgeStr(age, agetype) {
+		def str = age+'';
+		if (!'YEAR'.equalsIgnoreCase(agetype )) {
+			str += ' ' + agetype;
+
+			if (age > 1) {
+				str += 's';
+			}
+		}
+		return str.toLowerCase();
 	}
 
 }

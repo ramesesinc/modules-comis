@@ -24,6 +24,9 @@ class ComisApplicationInterceptor {
 	@DataContext('application_fee')
 	def em_fee;
 
+	@DataContext('cemetery_resource')
+    def em_cem_resource;
+
 	@Before(pattern="PersistenceService.update", eval="#{args[0]._schemaname=='application'}") 
 	public void beforeUpdate( evt ) {
 		def app = evt.args[0];
@@ -32,6 +35,12 @@ class ComisApplicationInterceptor {
 			updateExpiryDate(app);
 			em_fee.find([parentid: app.objid]).delete();
 		}
+	}
+
+	@After(pattern="PersistenceService.update", eval="#{args[0]._schemaname=='application'}") 
+	public void afterUpdate( evt ) {
+		def app = evt.args[0];
+		svc.afterUpdate(app);
 	}
 
 	@Before(pattern="PersistenceService.removeEntity", eval="#{args[0]._schemaname=='application'}") 
@@ -50,6 +59,17 @@ class ComisApplicationInterceptor {
 	public void releaseApplication(evt) {
 		def res = evt.result;
 		svc.release([objid: res.refid]);
+	}
+
+	@After(pattern="ComisApplicationService.approve", eval="#{result.apptype == 'TRANSFER'}")
+	public void afterApproveTransfer(evt) {
+		def app = evt.result;
+		//close prevapp 
+		em_app.find([objid: app.prevappid]).update([state: 'CLOSED']);
+		signalWf([objid: app.prevappid], 'closed');
+
+		//release transferred resource
+		em_cem_resource.find([currentappid: app.prevappid]).update([currentappid: '{NULL}']);
 	}
 
 	void executeApplicationRule(app) {
@@ -71,6 +91,16 @@ class ComisApplicationInterceptor {
 				app.dtexpiry = dtSvc.add(app.dtapproved, interval);
 			}
 		}
+    }
+
+    void signalWf(app, action) {
+        def taskid = em_app.select('taskid').find([objid: app.objid]).val();
+        def wf = [:];
+        wf.taskid = taskid;
+        wf.processname = 'application';
+		wf.action = action;
+		wf.refid = app.objid;
+		wfSvc.signal(wf);
     }
 
 }
