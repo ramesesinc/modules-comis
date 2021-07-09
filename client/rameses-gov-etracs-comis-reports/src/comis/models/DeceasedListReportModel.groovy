@@ -6,16 +6,9 @@ import com.rameses.osiris2.common.*;
 import com.rameses.osiris2.client.*;
 import com.rameses.seti2.models.FormReportModel;
 
-class DeceasedListReportModel extends FormReportModel {
-    @Service('DateService')
-    def dtSvc;
-    
+class DeceasedListReportModel extends PeriodFilterReportModel {
     @Service('QueryService')
     def querySvc;
-    
-    
-    def periods = ['YEAR', 'QUARTER', 'MONTH'];
-    def quarters = [1,2,3,4];
     
     def agegroups = [
         [id: 'infant', caption: '0 TO 11 MONTHS'],
@@ -25,10 +18,6 @@ class DeceasedListReportModel extends FormReportModel {
     ]
     
     def agetypes = ['DAY', 'MONTH', 'YEAR'];
-    
-    def getMonths() {
-        return dtSvc.getMonths();
-    }
     
     def getLgus() {
         return querySvc.getList([

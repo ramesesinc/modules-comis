@@ -12,7 +12,7 @@ class ApplicationModel extends AbstractApplicationModel {
     @Service('DateService')
     def dtSvc;
 
-    def apptypes = ['NEW', 'RENEWAL'];
+    def apptypes = ['NEW', 'RENEWAL', 'TRANSFER'];
     
     boolean isShowConfirm() {
         return false;

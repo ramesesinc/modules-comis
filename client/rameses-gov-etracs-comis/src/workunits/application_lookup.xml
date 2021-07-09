@@ -2,7 +2,7 @@
     <invokers>
         <invoker type="burialpermitapplication:lookup" caption="Lookup Burial Permit Application" 
             cols="appno,apptype,appyear,applicant.name,deceased.name,deceased.age,state"
-            hiddenCols="balance,applicant.address,dtapproved,relation.objid,relation.title,deceased.nationality,deceased.age,deceased.sex"
+            hiddenCols="balance,applicant.address,dtapproved,relation.objid,relation.title,deceased.nationality,deceased.age,deceased.sex,resourceinfo.*"
             maxRows="50"
             rows="50"
             orderBy="appno"
